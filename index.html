@@ -1787,9 +1787,8 @@
     .qpaper-modal {
       background: #fff;
       border-radius: 14px;
-      width: 960px;
-      max-width: 96vw;
-      max-height: 88vh;
+      width: min(1200px, 96vw);
+      max-height: 92vh;
       display: flex;
       flex-direction: column;
       box-shadow: 0 20px 60px rgba(0,0,0,0.2);
@@ -1860,6 +1859,8 @@
       color: var(--g-neutral-800);
       line-height: 1.6;
       word-break: break-word;
+      overflow-x: auto;
+      min-width: 0;
     }
     .qpaper-q-stem img {
       max-width: 100%;
@@ -1867,6 +1868,25 @@
       display: block;
       margin: 8px 0;
       border-radius: 4px;
+    }
+    .qpaper-passage-row {
+      background: var(--g-neutral-50);
+      border-bottom: 2px solid var(--g-neutral-300);
+      padding: 16px 24px;
+    }
+    .qpaper-passage-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--g-neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 10px;
+    }
+    .qpaper-passage-text {
+      font-size: 13px;
+      color: var(--g-neutral-800);
+      line-height: 1.7;
+      overflow-x: auto;
     }
     .qpaper-q-stem table {
       width: 100%;
@@ -3407,15 +3427,33 @@
 
     function openQPaperModal() {
       qpaperList.innerHTML = '';
+      let lastPassage = null;
+
       QUESTIONS.forEach((q, i) => {
+        /* Insert passage block once before first question of each group */
+        if (q.type === 'group' && q.passage && q.passage !== lastPassage) {
+          lastPassage = q.passage;
+          const p = PASSAGES[q.passage];
+          if (p) {
+            const pr = document.createElement('div');
+            pr.className = 'qpaper-passage-row';
+            pr.innerHTML = `<div class="qpaper-passage-label">${p.label}</div><div class="qpaper-passage-text">${p.html}</div>`;
+            qpaperList.appendChild(pr);
+          }
+        }
+
         const row = document.createElement('div');
         row.className = 'qpaper-q-row';
 
-        // Strip HTML tags for plain-text preview, truncate at 120 chars
-        const tmp = document.createElement('div');
-        tmp.innerHTML = q.stem || (q.items ? q.items[0] : '');
-        const stemText = (tmp.textContent || '').trim().replace(/\s+/g, ' ');
-        const preview = stemText.length > 120 ? stemText.slice(0, 120) + '…' : stemText;
+        /* Build full stem HTML */
+        let stemHTML = q.stem || '';
+        if (q.type === 'parajumble' && q.sentences) {
+          stemHTML += '<ol type="A" style="margin:8px 0 0 16px;padding:0;">' +
+            q.sentences.map(s => `<li style="margin-bottom:4px">${s.text}</li>`).join('') + '</ol>';
+        } else if (q.type === 'tita' && q.sentences) {
+          stemHTML += '<ol style="margin:8px 0 0 16px;padding:0;">' +
+            q.sentences.map(s => `<li style="margin-bottom:4px">${s}</li>`).join('') + '</ol>';
+        }
 
         const marksC = q.marks ? q.marks.c : 1;
         const marksW = q.marks ? q.marks.w : 0;
@@ -3425,7 +3463,7 @@
 
         row.innerHTML = `
           <div class="qpaper-q-num">Q${i + 1}</div>
-          <div class="qpaper-q-stem">${preview}</div>
+          <div class="qpaper-q-stem">${stemHTML}</div>
           <div class="qpaper-q-marks"><strong>+${marksC}</strong> / ${negStr}</div>
         `;
         qpaperList.appendChild(row);
