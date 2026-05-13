@@ -2003,7 +2003,10 @@
       gap: 5px;
       color: #fff;
     }
-    .qnav__icon { width: 22px; height: 22px; font-size: 11px; flex-shrink: 0; }
+    .qnav__icon { width: 28px; height: 28px; font-size: 12px; flex-shrink: 0; }
+    .qnav__icon--info   { background: rgba(87,102,242,0.15); color: var(--g-brand-300); }
+    .qnav__icon--paper  { background: #22C55E; color: #fff; }
+    .qnav__icon--report { background: rgba(87,102,242,0.15); color: var(--g-brand-300); }
 
     /* Screen-4 quiz-header matches same two-row style */
     .quiz-header {
@@ -2100,7 +2103,9 @@
       min-height: 0 !important;
       overflow-y: auto !important;
     }
-    .quiz-main { overflow-y: hidden !important; overflow-x: hidden; }
+    /* quiz-main is a flex column — content area scrolls, footer stays pinned at bottom */
+    .quiz-main { overflow: hidden !important; display: flex !important; flex-direction: column !important; }
+    #quiz-content-area { overflow-y: auto !important; overflow-x: hidden !important; flex: 1 !important; }
 
     /* ── Quiz footer: 2-row layout ── */
     .quiz-footer-mobile {
@@ -2111,9 +2116,6 @@
       padding: 10px 12px;
       border-top: 1px solid var(--g-neutral-300);
       background: var(--g-neutral-100);
-      position: sticky;
-      bottom: 0;
-      z-index: 10;
     }
     .quiz-footer-mobile__row {
       display: flex;
@@ -2299,7 +2301,7 @@
           Instruction
         </button>
         <button class="qnav__btn" onclick="openQPaperModal()">
-          <span class="qnav__icon qnav__icon--paper">&#9654;</span>
+          <span class="qnav__icon qnav__icon--paper">&#9783;</span>
           Question Paper
         </button>
         <button class="qnav__btn" onclick="openReportModal()">
@@ -3638,9 +3640,6 @@
       }
     });
 
-    document.getElementById('tabswitch-close').addEventListener('click', () => {
-      tabswitchBackdrop.classList.remove('open');
-    });
 
     /* ══════════════════════════════════════════
        Report an Error modal
