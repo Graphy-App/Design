@@ -39,18 +39,68 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+    }
+
     body {
       font-family: var(--g-font-sans);
-      background: var(--g-neutral-100);
+      background: #1A1B2E;
       color: var(--g-neutral-800);
       font-size: 14px;
       line-height: 1.5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    /* ── Phone mockup ── */
+    .phone-frame {
+      width: 380px;
+      height: 900px;
+      flex-shrink: 0;
+      border-radius: 48px;
+      background: #111318;
+      box-shadow:
+        0 0 0 1.5px #2A2D38,
+        0 0 0 3.5px #0B0C10,
+        0 48px 96px rgba(0,0,0,0.65),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+      padding: 16px;
+      position: relative;
+    }
+
+    /* Dynamic island pill */
+    .phone-frame::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 8px;
+      background: #0D0F14;
+      border-radius: 4px;
+      z-index: 1001;
+    }
+
+    .phone-frame__screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 34px;
+      overflow: hidden;
+      position: relative;
+      /* Creates new containing block for position:fixed children */
+      transform: translateZ(0);
+      background: var(--g-neutral-100);
     }
 
     /* ── Screen shell ── */
     .screen {
       display: none;
-      height: 100vh;
+      height: 100%;
     }
 
     body:not(:has(.screen:target)) #screen-1 { display: flex; }
@@ -64,7 +114,7 @@
     .layout {
       display: flex;
       width: 100%;
-      height: 100vh;
+      height: 100%;
       overflow: hidden;
     }
 
@@ -292,7 +342,7 @@
       display: flex;
       flex-direction: column;
       width: 100%;
-      height: 100vh;
+      height: 100%;
       overflow: hidden;
     }
 
@@ -1048,8 +1098,8 @@
     .calc-widget {
       position: fixed;
       top: 80px;
-      right: 260px;
-      width: 272px;
+      right: 8px;
+      width: 260px;
       background: #DEDEDE;
       border: 1px solid #B0B0B0;
       border-radius: 10px;
@@ -1933,10 +1983,47 @@
     .g-content            { padding: 20px 16px 16px; }
     .g-footer             { padding: 12px 16px; }
 
-    /* ── Quiz top nav (dark bar) — compact ── */
-    .qnav { padding: 0 10px; gap: 0; }
-    .qnav__btn { padding: 0 8px; font-size: 11px; gap: 4px; }
-    .qnav__icon { width: 14px; height: 14px; font-size: 9px; }
+    /* ── Quiz top nav (dark bar) — two-row mobile layout ── */
+    .qnav {
+      flex-direction: column;
+      align-items: flex-start;
+      height: auto;
+      padding: 10px 14px 10px;
+      gap: 8px;
+    }
+    .qnav__title { font-size: 15px; font-weight: 700; }
+    .qnav__actions { width: 100%; justify-content: flex-start; gap: 4px; }
+    .qnav__btn {
+      flex: 1;
+      justify-content: center;
+      padding: 6px 4px;
+      height: auto;
+      font-size: 11px;
+      font-weight: 600;
+      gap: 5px;
+      color: #fff;
+    }
+    .qnav__icon { width: 22px; height: 22px; font-size: 11px; flex-shrink: 0; }
+
+    /* Screen-4 quiz-header matches same two-row style */
+    .quiz-header {
+      flex-direction: column;
+      align-items: flex-start;
+      height: auto;
+      padding: 10px 14px;
+      gap: 8px;
+    }
+    .quiz-header__left { width: 100%; }
+    .quiz-header__right { width: 100%; justify-content: flex-start; gap: 4px; }
+    .quiz-header__right .qnav__btn {
+      flex: 1;
+      justify-content: center;
+      padding: 6px 4px;
+      height: auto;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .quiz-header__right .qnav__icon { width: 22px; height: 22px; font-size: 11px; }
 
     /* ── Section nav pills ── */
     .section-nav-bar { padding: 0 6px 0 8px; }
@@ -2024,6 +2111,9 @@
       padding: 10px 12px;
       border-top: 1px solid var(--g-neutral-300);
       background: var(--g-neutral-100);
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
     }
     .quiz-footer-mobile__row {
       display: flex;
@@ -2059,20 +2149,22 @@
     .ns-btn { padding: 0 12px; height: 36px; font-size: 12px; }
 
     /* ── Submit modal ── */
-    .submit-modal { width: calc(100vw - 32px) !important; max-width: 400px; }
+    .submit-modal { width: calc(100% - 32px) !important; max-width: 400px; }
 
     /* ── Disqualification modal ── */
     .tabswitch-modal { border-radius: 8px; }
 
     /* ── Report modal ── */
-    .report-modal { width: calc(100vw - 24px) !important; }
+    .report-modal { width: calc(100% - 24px) !important; }
 
     /* ── Question paper modal ── */
-    .qpaper-modal { width: calc(100vw - 16px) !important; max-height: 92vh; }
+    .qpaper-modal { width: calc(100% - 16px) !important; max-height: 88%; }
 
   </style>
 </head>
 <body>
+<div class="phone-frame">
+<div class="phone-frame__screen" id="phone-screen">
 <!-- Global SVG gradient defs for status indicator shapes -->
 <svg style="display:none" aria-hidden="true">
   <defs>
@@ -2888,9 +2980,6 @@
       <div class="tabswitch-modal__body">
         <p class="tabswitch-modal__desc">You have been automatically disqualified from the test for switching tabs or leaving this window.</p>
       </div>
-      <div class="tabswitch-modal__foot">
-        <button class="btn btn--secondary" id="tabswitch-close">Close</button>
-      </div>
     </div>
   </div>
 
@@ -2975,15 +3064,7 @@
     showScreen(hash && document.getElementById(hash) ? hash : 'screen-1');
 
     /* ── Sidebar toggles (screen 3 + screen 4) ── */
-    document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
-      toggle.addEventListener('click', function () {
-        const wrap = this.closest('.quiz-main');
-        const sidebar = wrap.parentElement.querySelector('.quiz-sidebar');
-        const isHidden = sidebar.style.display === 'none';
-        sidebar.style.display = isHidden ? 'flex' : 'none';
-        this.innerHTML = isHidden ? '&#9654;' : '&#9664;';
-      });
-    });
+    /* Handled below via openMobDrawer/closeMobDrawer */
 
     /* ══════════════════════════════════════════
        QUESTION DATA
@@ -3340,6 +3421,11 @@
       renderAll();
     });
 
+    /* Previous */
+    document.getElementById('btn-prev-s3').addEventListener('click', () => {
+      if (currentQ > 0) goToQuestion(currentQ - 1);
+    });
+
     /* Clear response */
     document.getElementById('btn-clear').addEventListener('click', () => {
       clearAnswer();
@@ -3425,8 +3511,13 @@
     });
     document.addEventListener('mousemove', e => {
       if (!isDragging) return;
-      calcWidget.style.left   = (e.clientX - dragOffX) + 'px';
-      calcWidget.style.top    = (e.clientY - dragOffY) + 'px';
+      const fr = document.getElementById('phone-screen').getBoundingClientRect();
+      const cw = calcWidget.offsetWidth;
+      const ch = calcWidget.offsetHeight;
+      const newLeft = Math.max(0, Math.min(e.clientX - dragOffX - fr.left, fr.width - cw));
+      const newTop  = Math.max(0, Math.min(e.clientY - dragOffY - fr.top,  fr.height - ch));
+      calcWidget.style.left   = newLeft + 'px';
+      calcWidget.style.top    = newTop  + 'px';
       calcWidget.style.right  = 'auto';
       calcWidget.style.bottom = 'auto';
     });
@@ -3664,16 +3755,29 @@
       document.getElementById(backdropId).classList.remove('open');
     }
 
+    function toggleMobDrawer(sidebarId, backdropId, toggleEl) {
+      const sidebar = document.getElementById(sidebarId);
+      if (sidebar.classList.contains('drawer-open')) {
+        closeMobDrawer(sidebarId, backdropId);
+        if (toggleEl) toggleEl.innerHTML = '&#9654;';
+      } else {
+        openMobDrawer(sidebarId, backdropId);
+        if (toggleEl) toggleEl.innerHTML = '&#9664;';
+      }
+    }
+
     const mobToggleS3 = document.getElementById('mob-sidebar-toggle-s3');
     const mobBackdropS3 = document.getElementById('mob-backdrop-s3');
-    if (mobToggleS3) mobToggleS3.addEventListener('click', () => openMobDrawer('mob-sidebar-s3', 'mob-backdrop-s3'));
-    if (mobBackdropS3) mobBackdropS3.addEventListener('click', () => closeMobDrawer('mob-sidebar-s3', 'mob-backdrop-s3'));
+    if (mobToggleS3) mobToggleS3.addEventListener('click', () => toggleMobDrawer('mob-sidebar-s3', 'mob-backdrop-s3', mobToggleS3));
+    if (mobBackdropS3) mobBackdropS3.addEventListener('click', () => { closeMobDrawer('mob-sidebar-s3', 'mob-backdrop-s3'); mobToggleS3.innerHTML = '&#9654;'; });
 
     const mobToggleS4 = document.getElementById('mob-sidebar-toggle-s4');
     const mobBackdropS4 = document.getElementById('mob-backdrop-s4');
-    if (mobToggleS4) mobToggleS4.addEventListener('click', () => openMobDrawer('mob-sidebar-s4', 'mob-backdrop-s4'));
-    if (mobBackdropS4) mobBackdropS4.addEventListener('click', () => closeMobDrawer('mob-sidebar-s4', 'mob-backdrop-s4'));
+    if (mobToggleS4) mobToggleS4.addEventListener('click', () => toggleMobDrawer('mob-sidebar-s4', 'mob-backdrop-s4', mobToggleS4));
+    if (mobBackdropS4) mobBackdropS4.addEventListener('click', () => { closeMobDrawer('mob-sidebar-s4', 'mob-backdrop-s4'); mobToggleS4.innerHTML = '&#9654;'; });
   </script>
 
+</div><!-- /.phone-frame__screen -->
+</div><!-- /.phone-frame -->
 </body>
 </html>
