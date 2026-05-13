@@ -1,40 +1,3471 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.3">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #454aee; -webkit-text-stroke: #454aee}
-    p.p2 {margin: 0.0px 0.0px 20.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #0c0c0f; -webkit-text-stroke: #0c0c0f}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #1a191e; -webkit-text-stroke: #1a191e; min-height: 17.0px}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #1a191e; -webkit-text-stroke: #1a191e}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #989c9f; -webkit-text-stroke: #989c9f; min-height: 17.0px}
-    li.li3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #2b3032; -webkit-text-stroke: #2b3032}
-    span.s1 {font-kerning: none; background-color: #d9e3ff}
-    span.s2 {font-kerning: none}
-    span.s3 {-webkit-text-stroke: 0px #000000}
-    span.s4 {font-kerning: none; background-color: #ffffff}
-    span.s5 {font-kerning: none; background-color: #f5f7f9}
-    ol.ol1 {list-style-type: decimal}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAT Mock Exam — Instructions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Design-system tokens ── */
+    :root {
+      --g-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+
+      --g-brand-500:        #1A1B4C;
+      --g-brand-400:        #2F31A4;
+      --g-brand-300:        #5766F2;
+      --g-brand-300-hover:  #4A58D8;
+      --g-brand-200:        #A4BAFD;
+      --g-brand-100:        #E0E9FF;
+
+      --g-neutral-900: #0E0E12;
+      --g-neutral-800: #232228;
+      --g-neutral-700: #393F41;
+      --g-neutral-650: #5C6166;
+      --g-neutral-600: #878C90;
+      --g-neutral-500: #AAB1B7;
+      --g-neutral-400: #D2D6D8;
+      --g-neutral-350: #DEE0E2;
+      --g-neutral-300: #E5E5E5;
+      --g-neutral-250: #ECEEEF;
+      --g-neutral-200: #F1F3F4;
+      --g-neutral-150: #F7F9FA;
+      --g-neutral-100: #ffffff;
+
+      --g-error-300: #DE1135;
+      --g-slate-stroke: #E5E5E5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--g-font-sans);
+      background: var(--g-neutral-100);
+      color: var(--g-neutral-800);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── Screen shell ── */
+    .screen {
+      display: none;
+      height: 100vh;
+    }
+
+    body:not(:has(.screen:target)) #screen-1 { display: flex; }
+    .screen:target, .screen.active          { display: flex; }
+
+    /* ─────────────────────────────────────────
+       Two-column layout
+       Left: label bar + scrollable content + footer
+       Right: sidebar with user block at top
+    ───────────────────────────────────────── */
+    .layout {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Left column ── */
+    .layout__main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      border-right: 1px solid var(--g-neutral-300);
+    }
+
+    /* Label strip — brand-100 bg */
+    .g-label-bar {
+      flex-shrink: 0;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      background: var(--g-brand-100);
+      border-bottom: 1px solid var(--g-neutral-300);
+    }
+
+    .g-label-bar__text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--g-brand-300);
+      letter-spacing: 0.1px;
+    }
+
+    /* Scrollable content */
+    .g-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 32px 24px;
+    }
+
+    .g-content__title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--g-neutral-900);
+      margin-bottom: 20px;
+    }
+
+    .g-content ol {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .g-content ol li {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--g-neutral-700);
+      font-weight: 400;
+    }
+
+    /* Table */
+    .g-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    .g-table th, .g-table td {
+      border: 1px solid var(--g-neutral-300);
+      padding: 8px 14px;
+      text-align: left;
+    }
+
+    .g-table th {
+      background: var(--g-neutral-200);
+      font-weight: 600;
+      color: var(--g-neutral-800);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .g-table td { color: var(--g-neutral-700); }
+
+    /* Footer */
+    .g-footer {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      border-top: 1px solid var(--g-neutral-300);
+      background: var(--g-neutral-100);
+    }
+
+    .g-footer--stacked {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 20px;
+    }
+
+    .g-footer--stacked .g-footer__actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* T&C checkbox */
+    .g-terms {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--g-neutral-700);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .g-terms input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      accent-color: var(--g-brand-300);
+      flex-shrink: 0;
+    }
+
+    /* ── Right column — user sidebar ── */
+    .layout__sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--g-neutral-100);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar__user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 16px;
+      height: 48px;        /* must match .g-label-bar height exactly */
+      background: var(--g-neutral-150);
+      border-bottom: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+    }
+
+    .sidebar__avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--g-neutral-300);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #A8ACAF;
+    }
+
+    .sidebar__avatar svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .sidebar__name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--g-neutral-800);
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 18px;
+      height: 40px;
+      font-family: var(--g-font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 0;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      line-height: 1;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+    }
+    .btn:active { opacity: 0.88; }
+    .btn--secondary:active { background: var(--g-neutral-200); border-color: var(--g-neutral-400); }
+
+    .btn--primary {
+      background: var(--g-brand-300);
+      color: #fff;
+      border-color: var(--g-brand-300);
+    }
+    .btn--primary:hover { background: var(--g-brand-300-hover); border-color: var(--g-brand-300-hover); }
+
+    .btn--save-next {
+      background: var(--g-brand-300);
+      color: #fff;
+      border-color: var(--g-brand-300);
+    }
+    .btn--save-next:hover { background: var(--g-brand-300-hover); border-color: var(--g-brand-300-hover); }
+
+    .btn--secondary {
+      background: var(--g-neutral-100);
+      color: var(--g-neutral-800);
+      border-color: var(--g-slate-stroke);
+    }
+    .btn--secondary:hover { background: var(--g-neutral-150); border-color: var(--g-neutral-400); }
+
+    /* ════════════════════════════════════════
+       Quiz screen (screen-3) styles
+    ════════════════════════════════════════ */
+    .screen--quiz {
+      flex-direction: column;
+    }
+
+    /* quiz-wrap: full-height flex column used by screen-4 */
+    .quiz-wrap {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Screen-4 top nav bar */
+    .quiz-header {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      padding: 0 16px;
+      background: #232228;
+    }
+
+    .quiz-header__left .quiz-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #F59E0B;
+      letter-spacing: 0.2px;
+    }
+
+    .quiz-header__right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Dark top nav */
+    .qnav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      padding: 0 16px;
+      background: #232228;
+      flex-shrink: 0;
+    }
+
+    .qnav__title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #F59E0B;
+      letter-spacing: 0.2px;
+    }
+
+    .qnav__actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qnav__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 12px;
+      height: 30px;
+      font-family: var(--g-font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: #fff;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+    }
+
+    .qnav__icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .qnav__icon--info   { background: var(--g-brand-300); color: #fff; }
+    .qnav__icon--paper  { background: #22C55E; color: #fff; }
+    .qnav__icon--report { background: #F59E0B; color: #fff; }
+
+    /* Quiz body: left panel + right sidebar */
+    .quiz-body {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* Left panel */
+    .quiz-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      border-right: 1px solid var(--g-neutral-300);
+      position: relative;
+    }
+
+    /* Section tabs bar */
+    /* Row 1: arrows + pills + calc */
+    .section-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+      padding: 0 10px 0 12px;
+      background: #EEEEEE;
+    }
+    .section-nav-bar__left {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      gap: 6px;
+    }
+
+    /* Row 2: "Sections" label + time */
+    .section-info-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      height: 36px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+      background: var(--g-neutral-50, #FAFBFC);
+    }
+
+    /* Legacy — keep for any residual references */
+    .section-tabs-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      height: 48px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+      gap: 8px;
+    }
+
+    .section-tabs-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sections-label-accent {
+      display: inline-block;
+      width: 3px;
+      height: 18px;
+      background: var(--g-neutral-800);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .sections-label-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--g-neutral-800);
+    }
+
+    .section-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 12px;
+      height: 30px;
+      font-family: var(--g-font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 0;
+      border: 1px solid var(--g-neutral-300);
+      background: var(--g-neutral-100);
+      color: var(--g-neutral-700);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .section-pill.active {
+      background: var(--g-brand-300);
+      border-color: var(--g-brand-300);
+      color: #fff;
+      position: relative;
+    }
+    .section-pill.active::after {
+      content: '';
+      position: absolute;
+      bottom: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 7px solid var(--g-brand-300);
+    }
+
+    .section-pill__badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 700;
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+
+    .section-pill:not(.active) .section-pill__badge {
+      background: var(--g-neutral-300);
+      color: var(--g-neutral-700);
+    }
+
+    .section-pill__info {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--g-neutral-300);
+      color: var(--g-neutral-700);
+      font-size: 9px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section-tabs-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--g-neutral-700);
+    }
+
+    .section-tabs-right .arrow-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--g-neutral-500);
+      font-size: 12px;
+      padding: 4px;
+    }
+
+    /* Calculator icon button in section tabs bar */
+    .calc-icon-btn {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      background: #FEF3C7;
+      border: 1px solid #F6D86F;
+      color: #B45309;
+      font-size: 15px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.12s;
+    }
+    .calc-icon-btn:hover { background: #FDE68A; }
+    .calc-icon-btn svg { display: block; }
+
+    .divider-v {
+      width: 1px;
+      height: 24px;
+      background: var(--g-neutral-300);
+    }
+
+    .time-info {
+      font-size: 12px;
+      color: var(--g-neutral-700);
+    }
+
+    .time-info strong { color: var(--g-neutral-900); font-weight: 600; }
+
+    /* Sub-section bar */
+    .subsection-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      height: 44px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+    }
+
+    .arrow-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--g-neutral-500);
+      font-size: 11px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Marks bar */
+    .marks-bar {
+      display: flex;
+      justify-content: flex-end;
+      padding: 6px 16px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      font-size: 12px;
+      color: var(--g-neutral-700);
+      flex-shrink: 0;
+    }
+
+    .marks-bar strong { color: var(--g-neutral-900); }
+    .marks-bar .neg { color: #DE1135; font-weight: 600; }
+
+    /* Question area */
+    .quiz-question {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 32px 24px 32px;
+    }
+
+    .question-no {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--g-neutral-900);
+      margin: -28px -32px 20px -32px;
+      padding: 11px 32px 11px 16px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      border-left: 4px solid var(--g-neutral-800);
+      line-height: 1.4;
+    }
+    .quiz-group__questions .question-no {
+      margin: -28px -24px 20px -28px;
+      padding: 11px 24px 11px 16px;
+    }
+
+    .question-stem {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--g-neutral-900);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .question-body {
+      font-size: 13px;
+      color: var(--g-neutral-700);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    /* MCQ options */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid var(--g-neutral-300);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--g-neutral-800);
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s;
+    }
+
+    .option-item:hover { background: var(--g-neutral-150); border-color: var(--g-neutral-400); }
+
+    .option-item input[type="radio"] {
+      accent-color: var(--g-brand-300);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Quiz footer */
+    .quiz-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-top: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+      background: #F7F9FA;
+    }
+
+    .quiz-footer__left { display: flex; gap: 8px; }
+
+    /* Sidebar collapse toggle — sits on the right edge, inside the main panel */
+    .sidebar-toggle {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 64px;
+      background: #BDBDBD;
+      border: none;
+      border-radius: 10px 0 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: #2D3136;
+      z-index: 2;
+    }
+
+    /* Right sidebar */
+    .quiz-sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--g-neutral-100);
+    }
+
+    /* Status legend */
+    .status-legend {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 8px;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--g-neutral-700);
+      line-height: 1.3;
+    }
+
+    .status-item--full { grid-column: span 2; }
+
+    /* ══ Status indicator shapes ══ */
+    .status-dot {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    /* Answered — now rendered as inline SVG; keep class as no-op */
+    .status-dot--answered { }
+
+    /* Not Answered — now rendered as inline SVG; keep class as no-op */
+    .status-dot--not-ans { }
+
+    /* Not visited — white rounded square, gray border */
+    .status-dot--not-visit {
+      background: linear-gradient(180deg, #F7F7F7 0%, #C5C5C5 100%);
+      border: 1.65px solid #B7B7B7;
+      border-radius: 8px;
+      color: #303030;
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.9);
+    }
+
+    /* Marked for Review — purple circle + #5C3E72 border + white inner highlight */
+    .status-dot--review {
+      background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 45%), #7752C6;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2.5px #5C3E72;
+    }
+
+    /* Answered & Marked composite */
+    .status-ans-rev-wrap {
+      position: relative;
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+    }
+    .status-ans-rev-wrap .status-dot--review { width: 34px; height: 34px; }
+    .status-ans-rev-badge {
+      position: absolute;
+      bottom: -3px;
+      right: -5px;
+      width: 16px;
+      height: 16px;
+      background: #3CB345;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: #fff;
+      line-height: 1;
+    }
+
+    /* ══ Q-num grid buttons — base (unvisited) ══ */
+    .q-num {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--g-font-sans);
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 8px !important;
+      border: 1.65px solid #B7B7B7;
+      background: linear-gradient(180deg, #F7F7F7 0%, #C5C5C5 100%);
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.9);
+      color: #303030;
+      cursor: pointer;
+      position: relative;
+      clip-path: none !important;
+      transition: filter 0.12s;
+    }
+    .q-num:hover { filter: brightness(0.95); }
+
+    /* Unvisited (explicit) */
+    .q-num.state-unvisited {
+      background: linear-gradient(180deg, #F7F7F7 0%, #C5C5C5 100%);
+      border: 1.65px solid #B7B7B7 !important;
+      color: #303030;
+      border-radius: 8px !important;
+      clip-path: none !important;
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.9) !important;
+    }
+
+    /* Current — inverted-shield, same as not-answered */
+    .q-num.state-current {
+      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 45%), #E84820 !important;
+      border: none !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      border-radius: 0 !important;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%) !important;
+      filter: drop-shadow(0 0 0 #761700)
+              drop-shadow(3px 0 0 #761700) drop-shadow(-3px 0 0 #761700)
+              drop-shadow(0 3px 0 #761700) drop-shadow(0 -3px 0 #761700)
+              drop-shadow(2px 2px 0 #761700) drop-shadow(-2px 2px 0 #761700)
+              drop-shadow(2px -2px 0 #761700) drop-shadow(-2px -2px 0 #761700) !important;
+    }
+
+    /* Answered — green house/pentagon */
+    .q-num.state-answered {
+      background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 45%), #3CB345 !important;
+      border: none !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      clip-path: polygon(50% 0%, 100% 32%, 100% 100%, 0% 100%, 0% 32%) !important;
+      border-radius: 0 !important;
+      filter: drop-shadow(0 0 0 #358200)
+              drop-shadow(3px 0 0 #358200) drop-shadow(-3px 0 0 #358200)
+              drop-shadow(0 3px 0 #358200) drop-shadow(0 -3px 0 #358200)
+              drop-shadow(2px 2px 0 #358200) drop-shadow(-2px 2px 0 #358200)
+              drop-shadow(2px -2px 0 #358200) drop-shadow(-2px -2px 0 #358200) !important;
+    }
+
+    /* Not answered — red inverted shield */
+    .q-num.state-not-answered {
+      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 45%), #E84820 !important;
+      border: none !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%) !important;
+      border-radius: 0 !important;
+      filter: drop-shadow(0 0 0 #761700)
+              drop-shadow(3px 0 0 #761700) drop-shadow(-3px 0 0 #761700)
+              drop-shadow(0 3px 0 #761700) drop-shadow(0 -3px 0 #761700)
+              drop-shadow(2px 2px 0 #761700) drop-shadow(-2px 2px 0 #761700)
+              drop-shadow(2px -2px 0 #761700) drop-shadow(-2px -2px 0 #761700) !important;
+    }
+
+    /* Marked for review — purple circle */
+    .q-num.state-review {
+      background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 45%), #7752C6 !important;
+      border: none !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      border-radius: 50% !important;
+      clip-path: none !important;
+      box-shadow: 0 0 0 2.5px #5C3E72 !important;
+      filter: none !important;
+    }
+
+    /* Answered & marked — purple circle + green badge */
+    .q-num.state-answered-review {
+      background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 45%), #7752C6 !important;
+      border: none !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      border-radius: 50% !important;
+      clip-path: none !important;
+      box-shadow: 0 0 0 2.5px #5C3E72 !important;
+      filter: none !important;
+    }
+    .q-num.state-answered-review::after {
+      content: "≡";
+      position: absolute;
+      bottom: -3px;
+      right: -3px;
+      width: 14px;
+      height: 14px;
+      background: #3CB345;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      font-size: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    /* Question navigator */
+    .qnav-section {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .qnav-section__header {
+      padding: 10px 16px;
+      background: var(--g-brand-300);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      flex-shrink: 0;
+    }
+
+    .qnav-section__label {
+      padding: 10px 16px 6px;
+      font-size: 13px;
+      color: var(--g-neutral-600);
+      font-weight: 500;
+    }
+
+    .q-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 6px 16px 16px;
+    }
+
+    .q-num {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--g-font-sans);
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 8px !important;
+      border: 1.65px solid #B7B7B7;
+      background: linear-gradient(180deg, #F7F7F7 0%, #C5C5C5 100%);
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.9);
+      color: #303030;
+      cursor: pointer;
+      transition: filter 0.12s;
+    }
+
+    .q-num:hover { filter: brightness(0.95); }
+    .q-num.current  { background: #E84820; border-color: #E84820; color: #fff; font-weight: 700; border-radius: 8px; }
+    .q-num.answered { background: #22C55E; border-color: #22C55E; color: #fff; }
+    .q-num.review   { background: #7C3AED; border-color: #7C3AED; color: #fff; }
+
+    /* Sidebar submit footer */
+    .quiz-sidebar__footer {
+      padding: 12px 14px;
+      border-top: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+    }
+
+    .quiz-sidebar__footer .btn {
+      width: 100%;
+    }
+
+    /* ── Question type badges & TITA ── */
+    .q-type-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      background: var(--g-brand-100);
+      color: var(--g-brand-400, #2F31A4);
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .q-type-badge--tita { background: #FEE2D4; color: #C54600; }
+    .q-type-badge--group { background: #DEEEC6; color: #1B2D00; }
+
+    .tita-wrap { margin-top: 24px; }
+    .tita-label { font-size: 12px; font-weight: 600; color: var(--g-neutral-600); margin-bottom: 8px; }
+    .tita-input {
+      width: 200px;
+      padding: 10px 14px;
+      font-family: var(--g-font-sans);
+      font-size: 16px;
+      font-weight: 500;
+      border: 1.5px solid var(--g-neutral-300);
+      border-radius: 8px;
+      color: var(--g-neutral-900);
+      outline: none;
+      transition: border-color 0.12s;
+    }
+    .tita-input:focus { border-color: var(--g-brand-300); box-shadow: 0 0 0 3px rgba(87,102,242,.15); }
+
+    .sentences-list { margin: 16px 0; display: flex; flex-direction: column; gap: 10px; }
+    .sentence-item {
+      display: flex;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--g-neutral-50, #FAFBFC);
+      border: 1px solid var(--g-neutral-300);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--g-neutral-800);
+      line-height: 1.55;
+    }
+    .sentence-item__id {
+      font-weight: 700;
+      color: var(--g-brand-300);
+      flex-shrink: 0;
+      min-width: 18px;
+    }
+
+    .passage-q-number {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--g-neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    /* ── Draggable calculator widget ── */
+    .calc-widget {
+      position: fixed;
+      top: 80px;
+      right: 260px;
+      width: 272px;
+      background: #DEDEDE;
+      border: 1px solid #B0B0B0;
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+      z-index: 900;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      user-select: none;
+    }
+    .calc-widget.open { display: flex; }
+
+    .calc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--g-brand-300);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: move;
+      flex-shrink: 0;
+    }
+    .calc-header-btns { display: flex; align-items: center; gap: 8px; }
+    .calc-min-btn,
+    .calc-close-btn {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.9);
+      font-size: 18px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 2px;
+      font-weight: 400;
+    }
+    .calc-min-btn:hover, .calc-close-btn:hover { color: #fff; }
+
+    .calc-display-wrap {
+      background: #fff;
+      border-bottom: 1px solid #C8C8C8;
+    }
+    .calc-expr {
+      font-size: 11px;
+      color: var(--g-neutral-500);
+      text-align: right;
+      padding: 6px 12px 0;
+      min-height: 20px;
+      background: #F0F0F0;
+      border-bottom: 1px solid #D8D8D8;
+    }
+    .calc-display {
+      padding: 8px 12px 10px;
+      text-align: right;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--g-neutral-900);
+      min-height: 48px;
+      word-break: break-all;
+      line-height: 1.3;
+      background: #fff;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+      padding: 8px;
+      background: #DEDEDE;
+    }
+    .calc-btn {
+      padding: 9px 4px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--g-font-sans);
+      background: #fff;
+      border: 1px solid #C0C0C0;
+      border-radius: 0;
+      cursor: pointer;
+      color: var(--g-neutral-800);
+      transition: background 0.1s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .calc-btn:hover { background: #F0F0F0; }
+    .calc-btn:active { background: #E0E0E0; box-shadow: none; }
+    .calc-btn.mem { font-size: 11.5px; color: var(--g-neutral-700); background: #EFEFEF; }
+    .calc-btn.mem:hover { background: #E4E4E4; }
+    .calc-btn.red { background: #C94B42; color: #fff; border-color: #A83830; font-weight: 600; }
+    .calc-btn.red:hover { background: #B83F37; }
+    .calc-btn.red-wide { grid-column: span 2; background: #C94B42; color: #fff; border-color: #A83830; font-weight: 600; }
+    .calc-btn.red-wide:hover { background: #B83F37; }
+    .calc-btn.eq { background: var(--g-brand-300); color: #fff; font-weight: 700; border-color: #4255D4; grid-row: span 2; }
+    .calc-btn.eq:hover { background: #4A58D8; }
+    .calc-btn.zero { grid-column: span 2; }
+
+    /* ── Submit quiz modal ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 800;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-backdrop.open { display: flex; }
+
+    .submit-modal {
+      background: #fff;
+      border-radius: 14px;
+      width: 480px;
+      max-width: 96vw;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    .submit-modal__head {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--g-neutral-300);
+    }
+    .submit-modal__title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--g-neutral-900);
+      letter-spacing: -0.5px;
+      margin: 0;
+    }
+    .submit-modal__body {
+      padding: 24px 28px 16px;
+    }
+    .submit-modal__stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 20px;
+      margin-bottom: 24px;
+    }
+    .submit-stat {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--g-neutral-700);
+    }
+    .submit-stat--full { grid-column: span 2; }
+    .submit-stat__icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .submit-stat__icon--answered {
+      background: #3CB345;
+      clip-path: polygon(50% 0%, 100% 32%, 100% 100%, 0% 100%, 0% 32%);
+    }
+    .submit-stat__icon--not-answered {
+      background: #E84820;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%);
+    }
+    .submit-stat__icon--not-visited {
+      background: linear-gradient(180deg, #f5f5f5 0%, #ddd 100%);
+      border: 1.5px solid #bbb;
+      border-radius: 10px;
+      color: #333;
+    }
+    .submit-stat__icon--review {
+      background: #7752C6;
+      border-radius: 50%;
+    }
+    .submit-stat__ans-rev-wrap {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+    .submit-stat__ans-rev-wrap .submit-stat__icon--review { width: 40px; height: 40px; }
+    .submit-stat__ans-rev-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -4px;
+      width: 17px;
+      height: 17px;
+      background: #3CB345;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: #fff;
+    }
+
+    .submit-modal__remaining {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--g-neutral-900);
+      margin-bottom: 8px;
+    }
+    .submit-modal__early-msg {
+      font-size: 13px;
+      color: #DE1135;
+      font-style: italic;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .submit-modal__foot {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 16px 28px 20px;
+      border-top: 1px solid var(--g-neutral-300);
+    }
+    .btn--disabled {
+      opacity: 0.5;
+      cursor: not-allowed !important;
+      pointer-events: none;
+    }
+
+    /* ── Group question split layout ── */
+    .quiz-group {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .quiz-group__passage {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 20px 24px;
+      border-right: 1px solid var(--g-neutral-300);
+      background: var(--g-neutral-50, #FAFBFC);
+    }
+
+    .quiz-group__passage-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--g-neutral-500);
+      margin-bottom: 12px;
+    }
+
+    .quiz-group__passage-text {
+      font-size: 13px;
+      color: var(--g-neutral-800);
+      line-height: 1.85;
+    }
+
+    .quiz-group__passage-text p { margin-bottom: 14px; }
+
+    .quiz-group__questions {
+      width: 48%;
+      flex-shrink: 0;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 28px 24px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      background: var(--g-neutral-100);
+    }
+
+    .group-q-item {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--g-neutral-300);
+    }
+
+    .group-q-item:last-child { border-bottom: none; }
+
+    .group-q-item .question-no {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--g-neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 8px;
+    }
+
+    .group-q-item .question-stem {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--g-neutral-900);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    /* ── Report an Error button ── */
+    .report-error-row {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--g-neutral-250);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .report-error-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      font-family: var(--g-font-sans);
+      font-size: 12px;
+      color: var(--g-neutral-500);
+      cursor: pointer;
+      padding: 4px 2px;
+    }
+    .report-error-btn:hover { color: var(--g-error-300, #DE1135); }
+    .report-error-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+    /* ── Tab-switch disqualification modal ── */
+    .tabswitch-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.62);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .tabswitch-backdrop.open { display: flex; }
+    .tabswitch-modal {
+      background: #fff;
+      border-radius: 14px;
+      width: 520px;
+      max-width: 96vw;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+      overflow: hidden;
+    }
+    .tabswitch-modal__head {
+      padding: 28px 32px 24px;
+      border-bottom: 1px solid var(--g-neutral-300);
+    }
+    .tabswitch-modal__title {
+      font-size: 20px;
+      font-weight: 700;
+      font-family: var(--g-font-sans);
+      color: var(--g-neutral-900);
+      letter-spacing: -0.3px;
+      line-height: 1.3;
+      margin: 0;
+    }
+    .tabswitch-modal__body {
+      padding: 24px 32px 28px;
+    }
+    .tabswitch-modal__desc {
+      font-size: 15px;
+      color: var(--g-neutral-700);
+      line-height: 1.65;
+      margin: 0;
+    }
+    .tabswitch-modal__foot {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 16px 32px 20px;
+      border-top: 1px solid var(--g-neutral-300);
+    }
+
+    /* ── Exam Summary screen (#summary) ── */
+    .exam-summary { flex-direction: column; background: #F8F9FA; overflow: hidden; }
+    .exam-summary__scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 48px 120px;
+    }
+    .exam-summary__title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #3A3D5C;
+      text-align: center;
+      margin: 0 0 30px;
+    }
+    .exam-summary__group { margin-bottom: 28px; }
+    .exam-summary__group-label {
+      font-size: 13px;
+      color: #3A4A6B;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .exam-summary__table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 13px;
+      table-layout: fixed;
+    }
+    .exam-summary__table th,
+    .exam-summary__table td {
+      width: calc(100% / 7);
+      padding: 11px 8px;
+      text-align: center;
+      border: 1px solid #C8CCDC;
+      color: #3A4A6B;
+      word-break: break-word;
+    }
+    .exam-summary__table th { font-weight: 700; background: #F8F9FA; }
+    .exam-summary__table td:first-child { font-weight: 500; }
+    .exam-summary__foot {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #fff;
+      border-top: 1px solid #D8D8D8;
+      padding: 14px 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+    }
+    .exam-summary__auto-msg {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3A3D5C;
+      display: block;
+    }
+
+    /* ════════════════════════════════════════
+       Screen 6: Non-Sectional Exam
+    ════════════════════════════════════════ */
+    .ns-screen { flex-direction: column; }
+
+    .ns-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: 52px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      background: var(--g-neutral-100);
+      flex-shrink: 0;
+    }
+    .ns-header__title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--g-neutral-900);
+      margin: 0;
+    }
+    .ns-header__right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .ns-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--g-font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--g-neutral-700);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    .ns-nav-link:hover { color: var(--g-neutral-900); }
+    .ns-nav-link__icon {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; flex-shrink: 0;
+    }
+    .ns-nav-link__icon--info  { border: 1.5px solid var(--g-neutral-500); color: var(--g-neutral-600); }
+    .ns-nav-link__icon--paper { border: 1.5px solid var(--g-neutral-500); color: var(--g-neutral-600); font-size: 10px; }
+
+    .ns-body {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+    .ns-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      border-right: 1px solid var(--g-neutral-300);
+      position: relative;
+    }
+    .ns-info-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: 44px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+    }
+    .ns-info-bar__text {
+      font-size: 13px;
+      color: var(--g-neutral-700);
+    }
+    .ns-calc-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 14px;
+      height: 32px;
+      font-family: var(--g-font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--g-neutral-800);
+      background: var(--g-neutral-100);
+      border: 1px solid var(--g-neutral-350);
+      cursor: pointer;
+    }
+    .ns-timer-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 20px;
+      height: 36px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      font-size: 13px;
+      color: var(--g-neutral-700);
+      flex-shrink: 0;
+    }
+    .ns-timer-dots {
+      display: inline-block;
+      letter-spacing: 2px;
+      color: var(--g-neutral-500);
+      margin-left: 4px;
+    }
+    .ns-marks-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 20px;
+      height: 36px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      font-size: 13px;
+      color: var(--g-neutral-700);
+      flex-shrink: 0;
+    }
+    .ns-question-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px 80px;
+    }
+    .ns-q-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--g-neutral-800);
+      margin: 0 0 12px;
+    }
+    .ns-q-divider {
+      border: none;
+      border-top: 1px solid var(--g-neutral-300);
+      margin: 0 0 16px;
+    }
+    .ns-q-stem-bold {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--g-neutral-900);
+      line-height: 1.65;
+      margin: 0 0 16px;
+    }
+    .ns-q-para {
+      font-size: 13px;
+      color: var(--g-neutral-700);
+      line-height: 1.75;
+      margin: 0 0 14px;
+    }
+
+    /* NS Sidebar */
+    .ns-sidebar {
+      width: 210px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--g-neutral-100);
+    }
+    .ns-status-grid {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 6px;
+    }
+    .ns-status-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--g-neutral-700);
+      line-height: 1.3;
+    }
+    .ns-status-item--full { grid-column: span 2; }
+    .ns-q-nav {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .ns-q-nav__label {
+      padding: 10px 14px 6px;
+      font-size: 13px;
+      color: var(--g-neutral-600);
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+    .ns-q-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 6px 14px 14px;
+    }
+
+    /* NS Footer */
+    .ns-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      height: 60px;
+      border-top: 1px solid var(--g-neutral-300);
+      background: var(--g-neutral-100);
+      flex-shrink: 0;
+    }
+    .ns-footer__left { display: flex; gap: 8px; }
+    .ns-footer__right { display: flex; gap: 8px; }
+    .ns-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0 18px; height: 40px;
+      font-family: var(--g-font-sans); font-size: 13px; font-weight: 500;
+      border: 1px solid var(--g-slate-stroke); background: var(--g-neutral-100);
+      color: var(--g-neutral-800); cursor: pointer; white-space: nowrap;
+    }
+    .ns-btn:hover { background: var(--g-neutral-150); }
+    .ns-btn--save {
+      background: #22C55E; border-color: #22C55E; color: #fff;
+    }
+    .ns-btn--save:hover { background: #16A34A; border-color: #16A34A; }
+    .ns-btn--submit {
+      background: #1A1B4C; border-color: #1A1B4C; color: #fff;
+    }
+    .ns-btn--submit:hover { background: #13144A; }
+
+    /* ── Report Error modal ── */
+    .report-modal {
+      background: #fff;
+      border-radius: 14px;
+      width: 560px;
+      max-width: 96vw;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    .report-modal__head {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+    }
+    .report-modal__head h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--g-neutral-900);
+      letter-spacing: -0.3px;
+      margin: 0;
+    }
+    .report-modal__body {
+      padding: 22px 28px;
+      flex: 1;
+    }
+    .report-modal__q-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--g-neutral-700);
+      margin-bottom: 18px;
+    }
+    .report-modal__q-label strong { color: var(--g-neutral-900); }
+    .report-modal__field-label {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--g-neutral-800);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .report-modal__field-label .req { color: #E84820; font-size: 13px; }
+    .report-modal__textarea {
+      width: 100%;
+      min-height: 160px;
+      border: 1px solid var(--g-neutral-300);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: var(--g-font-sans);
+      font-size: 13.5px;
+      color: var(--g-neutral-800);
+      resize: vertical;
+      outline: none;
+      line-height: 1.5;
+      transition: border-color 0.15s;
+    }
+    .report-modal__textarea::placeholder { color: var(--g-neutral-500); }
+    .report-modal__textarea:focus { border-color: var(--g-brand-300); }
+    .report-modal__foot {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 16px 28px;
+      border-top: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+    }
+    .report-modal__success {
+      display: none;
+      padding: 16px 28px 8px;
+      text-align: center;
+    }
+    .report-modal__success-icon { font-size: 36px; margin-bottom: 10px; }
+    .report-modal__success p { font-size: 14px; color: var(--g-neutral-700); line-height: 1.55; }
+
+    /* ── Question Paper modal ── */
+    .qpaper-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 900;
+      align-items: center;
+      justify-content: center;
+    }
+    .qpaper-backdrop.open { display: flex; }
+    .qpaper-modal {
+      background: #fff;
+      border-radius: 14px;
+      width: 960px;
+      max-width: 96vw;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    .qpaper-modal__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px 16px;
+      border-bottom: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+    }
+    .qpaper-modal__title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--g-neutral-900);
+      letter-spacing: -0.3px;
+      margin: 0;
+    }
+    .qpaper-modal__close {
+      width: 30px; height: 30px;
+      border: none; background: none;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 18px;
+      color: var(--g-neutral-600);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.1s;
+    }
+    .qpaper-modal__close:hover { background: var(--g-neutral-150); }
+    .qpaper-modal__warning {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: #FFF3F3;
+      border-bottom: 1px solid #FFCDD2;
+      padding: 10px 24px;
+      font-size: 12.5px;
+      color: #C62828;
+      font-weight: 500;
+      line-height: 1.5;
+      flex-shrink: 0;
+    }
+    .qpaper-modal__warning-icon { font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+    .qpaper-modal__body {
+      overflow-y: auto;
+      flex: 1;
+      padding: 0;
+    }
+    .qpaper-q-row {
+      display: grid;
+      grid-template-columns: 44px 1fr auto;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--g-neutral-200);
+      font-size: 13px;
+    }
+    .qpaper-q-row:last-child { border-bottom: none; }
+    .qpaper-q-num {
+      font-weight: 700;
+      color: var(--g-neutral-800);
+      font-size: 13px;
+      padding-top: 2px;
+    }
+    .qpaper-q-stem {
+      color: var(--g-neutral-800);
+      line-height: 1.6;
+      word-break: break-word;
+    }
+    .qpaper-q-stem img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 8px 0;
+      border-radius: 4px;
+    }
+    .qpaper-q-stem table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 12px;
+      overflow-x: auto;
+      display: block;
+    }
+    .qpaper-q-stem table td,
+    .qpaper-q-stem table th {
+      border: 1px solid var(--g-neutral-300);
+      padding: 6px 10px;
+      text-align: left;
+    }
+    .qpaper-q-stem table th { background: var(--g-neutral-150); font-weight: 600; }
+    .qpaper-q-marks {
+      font-size: 12px;
+      color: var(--g-neutral-600);
+      white-space: nowrap;
+      text-align: right;
+      padding-top: 2px;
+    }
+    .qpaper-q-marks strong { color: #3CB345; font-weight: 600; }
+    .qpaper-q-marks span.neg { color: #E84820; }
+    .qpaper-modal__foot {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 14px 24px;
+      border-top: 1px solid var(--g-neutral-300);
+      flex-shrink: 0;
+    }
+
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1">Instructions</span></p>
-<p class="p2"><span class="s2">General Instructions:</span></p>
-<ol class="ol1">
-  <li class="li3"><span class="s3"></span><span class="s2">The number, type and pattern of questions and as well as sequence of sections in the Mock Exam are only indicative and these are subject to variations from year to year as per the CAT authorities.</span></li>
-  <li class="li3"><span class="s3"></span><span class="s2">The test has 3 (three) sections. The total duration of the test is 120 minutes. PwD candidates will have 13 minutes and 20 seconds extra time for each section.</span></li>
-  <li class="li3"><span class="s3"></span><span class="s2">Each section has (3) three sections. The total duration of each section is 40 minutes and 20 seconds extra time. So, PwD candidates will have extra time of 53 minutes and 20 seconds for each section. The same process will be repeated for the other two sections. On submission of all three sections, a summary of all your answers will be displayed on your screen.</span></li>
-  <li class="li3"><span class="s3"></span><span class="s2">You will be free to answer the questions within a section at any point of time before the clock runs out. The server clock at the top right corner of the screen will start with the commencement of the test for each section. On completion of a section the answer of the questions will be saved automatically.</span></li>
-  <li class="li3"><span class="s3"></span><span class="s2">You will be allowed to leave the test hall only after a minimum of 120 minutes.</span></li>
-  <li class="li3"><span class="s3"></span><span class="s2">The question paper will have a mix of Multiple Choice Question (MCQ) type with options and Non-MCQ type.</span></li>
-</ol>
-<p class="p4"><span class="s2"></span><br></p>
-<p class="p5"><span class="s4">Next</span></p>
-<p class="p6"><span class="s2"></span><br></p>
-<p class="p5"><span class="s5">Bob Marley</span></p>
+<!-- Global SVG gradient defs for status indicator shapes -->
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <linearGradient id="hl-ans" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,.22)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <linearGradient id="hl-notans" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,.18)"/>
+      <stop offset="45%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+  <!-- ═══════════════════════════════
+       Reusable sidebar snippet
+  ═══════════════════════════════ -->
+
+  <!-- ── Screen 1: General Instructions ── -->
+  <section id="screen-1" class="screen">
+    <div class="layout">
+
+      <div class="layout__main">
+        <div class="g-label-bar">
+          <span class="g-label-bar__text">Instructions</span>
+        </div>
+
+        <div class="g-content">
+          <p class="g-content__title">General Instructions:</p>
+          <ol>
+            <li>The number, type and pattern of questions and as well as sequence of sections in the Mock Exam are only indicative and these are subject to variations from year to year as per the CAT authorities.</li>
+            <li>The test has 3 (three) sections. The total duration of the test is 120 minutes. PwD candidates will have 13 minutes and 20 seconds extra time for each section.</li>
+            <li>Each section has (3) three sections. The total duration of each section is 40 minutes and 20 seconds extra time. So, PwD candidates will have extra time of 53 minutes and 20 seconds for each section. The same process will be repeated for the other two sections. On submission of all three sections, a summary of all your answers will be displayed on your screen.</li>
+            <li>You will be free to answer the questions within a section at any point of time before the clock runs out. The server clock at the top right corner of the screen will start with the commencement of the test for each section. On completion of a section the answer of the questions will be saved automatically.</li>
+            <li>You will be allowed to leave the test hall only after a minimum of 120 minutes.</li>
+            <li>The question paper will have a mix of <strong>Multiple Choice Question (MCQ) type</strong> with options and <strong>Non-MCQ type</strong>.</li>
+          </ol>
+        </div>
+
+        <footer class="g-footer">
+          <span></span>
+          <a href="#screen-2" class="btn btn--secondary" data-nav="screen-2">Next</a>
+        </footer>
+      </div>
+
+      <aside class="layout__sidebar">
+        <div class="sidebar__user">
+          <div class="sidebar__avatar">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" fill="currentColor"/>
+              <path d="M4 20c0-4.418 3.582-7 8-7s8 2.582 8 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <span class="sidebar__name">Bob Marley</span>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+
+  <!-- ── Screen 2: Subject Specific Instructions ── -->
+  <section id="screen-2" class="screen">
+    <div class="layout">
+
+      <div class="layout__main">
+        <div class="g-label-bar">
+          <span class="g-label-bar__text">Other Important Instruction</span>
+        </div>
+
+        <div class="g-content">
+          <p class="g-content__title">Subject Specific Instructions:</p>
+          <ol>
+            <li>Go to the specific section and password following instructions provided to you by the invigilator.</li>
+            <li>Go through the various symbols used in the test and understand their meaning before the start of the test.</li>
+            <li>The paper covers of (3) three sections:
+              <table class="g-table">
+                <thead>
+                  <tr><th>Section</th><th>Test</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>I</td><td>Verbal Ability and Reading Comprehension (VARC)</td></tr>
+                  <tr><td>II</td><td>Data Interpretation and Logical Reasoning (DILR)</td></tr>
+                  <tr><td>III</td><td>Quantitative Aptitude (QA)</td></tr>
+                </tbody>
+              </table>
+            </li>
+            <li>The Data Interpretation and Logical Reasoning (DLR) section is based on situations or scenarios and can have any number of sub-questions. Similarly, for Reading Comprehension, each passage consists of a group of four questions.</li>
+            <li>For an MCQ, a candidate will be given 3 (three) marks for a correct answer, −1 (minus one) mark for a wrong answer and 0 (zero) mark for an un-attempted question.</li>
+            <li>For a Non-MCQ, a candidate will be given 3 (three) marks for a correct answer, and 0 (zero) mark for a wrong answer or an un-attempted question.</li>
+            <li>An MCQ will have choices only one will be the correct answer. The computer allocated to the candidate has only one correct answer from the options given on screen using the on-screen keyboard.</li>
+          </ol>
+        </div>
+
+        <footer class="g-footer g-footer--stacked">
+          <label class="g-terms">
+            <input type="checkbox">
+            I agree to the above Terms &amp; Conditions for this examination.
+          </label>
+          <div class="g-footer__actions">
+            <a href="#screen-1" class="btn btn--secondary" data-nav="screen-1">Previous</a>
+            <a href="#screen-3" class="btn btn--primary" data-nav="screen-3">I am ready to begin</a>
+          </div>
+        </footer>
+      </div>
+
+      <aside class="layout__sidebar">
+        <div class="sidebar__user">
+          <div class="sidebar__avatar">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" fill="currentColor"/>
+              <path d="M4 20c0-4.418 3.582-7 8-7s8 2.582 8 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <span class="sidebar__name">Bob Marley</span>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+
+  <!-- ── Screen 3: Quiz (No Group) ── -->
+  <section id="screen-3" class="screen screen--quiz">
+
+    <!-- Dark top nav -->
+    <div class="qnav">
+      <span class="qnav__title">CAT 2024 Mock Exam</span>
+      <div class="qnav__actions">
+        <button class="qnav__btn">
+          <span class="qnav__icon qnav__icon--info">i</span>
+          Instruction
+        </button>
+        <button class="qnav__btn" onclick="openQPaperModal()">
+          <span class="qnav__icon qnav__icon--paper">&#9654;</span>
+          Question Paper
+        </button>
+        <button class="qnav__btn" onclick="openReportModal()">
+          <span class="qnav__icon qnav__icon--report">!</span>
+          Report an Error
+        </button>
+      </div>
+    </div>
+
+    <div class="quiz-body">
+
+      <!-- Left panel -->
+      <div class="quiz-main">
+
+        <!-- Row 1: ◄ | pills | ► on left, calc on right -->
+        <div class="section-nav-bar">
+          <div class="section-nav-bar__left">
+            <button class="arrow-btn">&#9664;</button>
+            <button class="section-pill active">VARC <span class="section-pill__badge">1</span></button>
+            <button class="section-pill" onclick="openSubmitModal()">DILR <span class="section-pill__info">i</span></button>
+            <button class="section-pill" onclick="openSubmitModal()">QA <span class="section-pill__info">i</span></button>
+            <button class="arrow-btn">&#9654;</button>
+          </div>
+          <button class="calc-icon-btn" id="open-calc-s3" title="Calculator">
+            <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1.2" y="1.2" width="15.6" height="17.6" rx="3.5" stroke="currentColor" stroke-width="2.4" fill="none"/>
+              <rect x="3.5" y="3.5" width="11" height="3.5" rx="0.8" fill="currentColor"/>
+              <circle cx="5.5" cy="10.5" r="1.5" fill="currentColor"/>
+              <circle cx="9" cy="10.5" r="1.5" fill="currentColor"/>
+              <circle cx="12.5" cy="10.5" r="1.5" fill="currentColor"/>
+              <circle cx="5.5" cy="14" r="1.5" fill="currentColor"/>
+              <circle cx="9" cy="14" r="1.5" fill="currentColor"/>
+              <circle cx="12.5" cy="14" r="1.5" fill="currentColor"/>
+              <rect x="3.5" y="17" width="6.5" height="2" rx="1" fill="currentColor"/>
+              <circle cx="12.5" cy="18" r="1.5" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Row 2: Sections on left, Time left on right -->
+        <div class="section-info-bar">
+          <span class="sections-label-text">Sections</span>
+          <span class="time-info">Time left : <strong id="quiz-timer">67:45</strong></span>
+        </div>
+
+        <!-- Row 3: ◄ | active section | ► -->
+        <div class="subsection-bar">
+          <button class="arrow-btn">&#9664;</button>
+          <button class="section-pill active">VARC <span class="section-pill__badge">1</span></button>
+          <button class="arrow-btn">&#9654;</button>
+        </div>
+
+        <!-- Marks bar -->
+        <div class="marks-bar">
+          Marks for correct answer : <strong>&nbsp;3&nbsp;</strong> | Negative marks : <span class="neg">&nbsp;1</span>
+        </div>
+
+        <!-- Dynamic content: switches between single-question and group (passage) mode -->
+        <div id="quiz-content-area" style="flex:1;display:flex;overflow:hidden;min-height:0;position:relative">
+          <!-- Single question mode -->
+          <div class="quiz-question" id="mode-single"></div>
+          <!-- Group mode: passage left, one sub-question right -->
+          <div class="quiz-group" id="mode-group" style="display:none">
+            <div class="quiz-group__passage">
+              <p class="quiz-group__passage-label" id="group-passage-label">Passage</p>
+              <div class="quiz-group__passage-text" id="group-passage-text">
+                <p>The paradox of modern democracy is that it has simultaneously expanded the scope of popular participation and narrowed the range of meaningful choice. Over the past century, universal suffrage has extended the franchise to virtually every adult citizen in democratic nations, yet the actual influence of individual voters on policy outcomes has arguably diminished as governance has grown more complex and technocratic.</p>
+                <p>Political theorists have long grappled with what Robert Dahl called the problem of scale: as democratic units grow larger, direct participation becomes impractical, requiring the delegation of authority to representatives who inevitably develop interests and expertise distinct from their constituents.</p>
+                <p>Contemporary democracies have attempted to manage this tension through institutional design: independent judiciaries, regulatory agencies, central banks, and international bodies that insulate certain decisions from electoral pressure.</p>
+                <p>The rise of populist movements across the globe can be read, in part, as a reaction to this perceived democratic deficit. When citizens feel that formal electoral mechanisms no longer translate their preferences into policy, they may turn to charismatic outsiders who promise to dismantle the insulating layers and restore unmediated popular sovereignty.</p>
+              </div>
+            </div>
+            <div class="quiz-group__questions" id="group-q-panel"></div>
+          </div>
+        </div>
+
+        <!-- Sidebar collapse toggle -->
+        <div class="sidebar-toggle">&#9654;</div>
+
+        <!-- Footer actions -->
+        <div class="quiz-footer">
+          <div class="quiz-footer__left">
+            <button class="btn btn--secondary" id="btn-mark-review">Mark for Review &amp; Next</button>
+            <button class="btn btn--secondary" id="btn-clear">Clear response</button>
+          </div>
+          <button class="btn btn--save-next" id="btn-save-next">Save &amp; Next</button>
+        </div>
+
+      </div>
+
+
+      <!-- Right sidebar (drawer on mobile) -->
+      <div class="quiz-sidebar">
+
+        <!-- User block -->
+        <div class="sidebar__user">
+          <div class="sidebar__avatar">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" fill="currentColor"/>
+              <path d="M4 20c0-4.418 3.582-7 8-7s8 2.582 8 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <span class="sidebar__name">Bob Marley</span>
+        </div>
+
+        <!-- Status legend -->
+        <div class="status-legend">
+          <div class="status-item">
+            <svg class="status-dot" id="cnt-answered" viewBox="0 0 34 34" width="34" height="34" overflow="visible" style="flex-shrink:0">
+              <polygon points="17,0 34,11 34,34 0,34 0,11" fill="#3CB345" stroke="#358200" stroke-width="4" paint-order="stroke fill"/>
+              <polygon points="17,0 34,11 34,34 0,34 0,11" fill="url(#hl-ans)"/>
+              <text x="17" y="21" text-anchor="middle" dominant-baseline="central" fill="white" font-family="Inter,sans-serif" font-size="13" font-weight="700">0</text>
+            </svg>
+            <span>Answered</span>
+          </div>
+          <div class="status-item">
+            <svg class="status-dot" id="cnt-not-answered" viewBox="0 0 34 34" width="34" height="34" overflow="visible" style="flex-shrink:0">
+              <polygon points="0,0 34,0 34,23 17,34 0,23" fill="#E84820" stroke="#761700" stroke-width="4" paint-order="stroke fill"/>
+              <polygon points="0,0 34,0 34,23 17,34 0,23" fill="url(#hl-notans)"/>
+              <text x="17" y="13" text-anchor="middle" dominant-baseline="central" fill="white" font-family="Inter,sans-serif" font-size="13" font-weight="700">0</text>
+            </svg>
+            <span>Not Answered</span>
+          </div>
+          <div class="status-item">
+            <div class="status-dot status-dot--not-visit" id="cnt-not-visit">0</div>
+            <span>Not visited</span>
+          </div>
+          <div class="status-item">
+            <div class="status-dot status-dot--review" id="cnt-review">0</div>
+            <span>Marked for Review</span>
+          </div>
+          <div class="status-item">
+            <div class="status-ans-rev-wrap">
+              <div class="status-dot status-dot--review" id="cnt-ans-rev">0</div>
+              <div class="status-ans-rev-badge">&#9776;</div>
+            </div>
+            <span>Answered &amp; Marked for review (will also be evaluated)</span>
+          </div>
+        </div>
+
+        <!-- Question navigator -->
+        <div class="qnav-section">
+          <div class="qnav-section__header">VARC</div>
+          <div class="qnav-section__label">Choose a Question</div>
+          <div class="q-grid" id="q-grid"></div>
+        </div>
+
+        <!-- Submit -->
+        <div class="quiz-sidebar__footer">
+          <button class="btn btn--primary" id="btn-submit-s3">Submit</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Screen 4: Group Questions (Passage + Sub-questions) ── -->
+  <section id="screen-4" class="screen">
+    <div class="quiz-wrap">
+
+      <!-- Top nav bar -->
+      <header class="quiz-header">
+        <div class="quiz-header__left">
+          <span class="quiz-title">CAT 2024 Mock Exam</span>
+        </div>
+        <div class="quiz-header__right">
+          <button class="qnav__btn"><span class="qnav__icon qnav__icon--info">i</span>Instruction</button>
+          <button class="qnav__btn" onclick="openQPaperModal()"><span class="qnav__icon qnav__icon--paper">&#9654;</span>Question Paper</button>
+          <button class="qnav__btn" onclick="openReportModal()"><span class="qnav__icon qnav__icon--report">!</span>Report an Error</button>
+        </div>
+      </header>
+
+      <div class="quiz-body">
+
+        <!-- Left panel -->
+        <div class="quiz-main">
+
+          <!-- Row 1: ◄ | pills | ► on left, calc on right -->
+          <div class="section-nav-bar">
+            <div class="section-nav-bar__left">
+              <button class="arrow-btn">&#9664;</button>
+              <button class="section-pill active">VARC <span class="section-pill__badge">1</span></button>
+              <button class="section-pill">DILR <span class="section-pill__info">i</span></button>
+              <button class="section-pill">QA <span class="section-pill__info">i</span></button>
+              <button class="arrow-btn">&#9654;</button>
+            </div>
+            <button class="calc-icon-btn" id="open-calc-s4" title="Calculator">
+              <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1.2" y="1.2" width="15.6" height="17.6" rx="3.5" stroke="currentColor" stroke-width="2.4" fill="none"/>
+                <rect x="3.5" y="3.5" width="11" height="3.5" rx="0.8" fill="currentColor"/>
+                <circle cx="5.5" cy="10.5" r="1.5" fill="currentColor"/>
+                <circle cx="9" cy="10.5" r="1.5" fill="currentColor"/>
+                <circle cx="12.5" cy="10.5" r="1.5" fill="currentColor"/>
+                <circle cx="5.5" cy="14" r="1.5" fill="currentColor"/>
+                <circle cx="9" cy="14" r="1.5" fill="currentColor"/>
+                <circle cx="12.5" cy="14" r="1.5" fill="currentColor"/>
+                <rect x="3.5" y="17" width="6.5" height="2" rx="1" fill="currentColor"/>
+                <circle cx="12.5" cy="18" r="1.5" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Row 2: Sections on left, Time left on right -->
+          <div class="section-info-bar">
+            <span class="sections-label-text">Sections</span>
+            <span class="time-info">Time left : <strong id="quiz-timer-g">67:45</strong></span>
+          </div>
+
+          <!-- Row 3: ◄ | active section | ► -->
+          <div class="subsection-bar">
+            <button class="arrow-btn">&#9664;</button>
+            <button class="section-pill active">VARC <span class="section-pill__badge">1</span></button>
+            <button class="arrow-btn">&#9654;</button>
+          </div>
+
+          <!-- Marks bar -->
+          <div class="marks-bar">
+            Marks for correct answer : <strong>&nbsp;3&nbsp;</strong> | Negative marks : <span class="neg">&nbsp;1</span>
+          </div>
+
+          <!-- GROUP SPLIT: passage left | questions right -->
+          <div class="quiz-group">
+
+            <!-- Left: passage -->
+            <div class="quiz-group__passage">
+              <p class="quiz-group__passage-label">Passage</p>
+              <div class="quiz-group__passage-text">
+                <p>The paradox of modern democracy is that it has simultaneously expanded the scope of popular participation and narrowed the range of meaningful choice. Over the past century, universal suffrage has extended the franchise to virtually every adult citizen in democratic nations, yet the actual influence of individual voters on policy outcomes has arguably diminished as governance has grown more complex and technocratic.</p>
+                <p>Political theorists have long grappled with what Robert Dahl called the problem of scale: as democratic units grow larger, direct participation becomes impractical, requiring the delegation of authority to representatives who inevitably develop interests and expertise distinct from their constituents. This delegation creates the principal-agent problem familiar to economists — the agent (elected official) may pursue goals that diverge from those of the principal (the voter).</p>
+                <p>Contemporary democracies have attempted to manage this tension through institutional design: independent judiciaries, regulatory agencies, central banks, and international bodies that insulate certain decisions from electoral pressure. Proponents argue that such arrangements protect minority rights and ensure technocratic competence; critics contend that they hollow out democratic accountability by placing key decisions beyond the reach of popular will.</p>
+                <p>The rise of populist movements across the globe can be read, in part, as a reaction to this perceived democratic deficit. When citizens feel that formal electoral mechanisms no longer translate their preferences into policy, they may turn to charismatic outsiders who promise to dismantle the insulating layers and restore unmediated popular sovereignty. Whether such movements represent a revitalisation of democracy or a threat to its liberal foundations remains deeply contested.</p>
+                <p>The tension between democratic ideals and technocratic governance is not new. From the Platonic critique of mob rule to Schumpeter's minimalist conception of democracy as elite competition, political thinkers have questioned whether ordinary citizens possess the knowledge and deliberative capacity to govern complex modern societies. What is new is the scale of institutional insulation that has developed since the mid-twentieth century.</p>
+                <p>International institutions such as the World Trade Organization, the International Monetary Fund, and increasingly the European Union have transferred substantial policy authority to arenas that are, by design, insulated from direct democratic control. Decisions affecting tariffs, currency, fiscal policy, and migration are shaped in forums where elected representatives play only a marginal role, and where technical expertise carries more weight than popular mandate.</p>
+                <p>Defenders of this arrangement point to the failures of purely majoritarian systems: the susceptibility to demagoguery, the short-termism induced by electoral cycles, and the well-documented tendency of voters to favour policies that benefit themselves in the immediate term at the expense of future generations or of minorities. Independent central banks, for example, were deliberately designed to resist the inflationary temptation that governments face when elections are near.</p>
+                <p>Critics, however, argue that the price of this insulation has been the erosion of political agency. When voters cannot meaningfully influence the decisions that most affect their lives — because those decisions have been delegated to technocrats, bound by international treaty, or shielded by constitutional entrenchment — the formal machinery of democracy becomes a kind of theatre. The ballot retains its symbolic power while losing its practical efficacy.</p>
+                <p>This disjunction between formal democracy and substantive self-governance is felt most acutely by those at the economic margins, for whom abstract commitments to procedural fairness offer little comfort. The communities that have experienced deindustrialisation, wage stagnation, and the withdrawal of public services have little reason to feel represented by institutions that prioritise macroeconomic stability and investor confidence over local livelihoods.</p>
+                <p>Whether democracy can reinvent itself to close this gap — by deepening participation at the local level, by redesigning supranational institutions to be more accountable, or by recovering a richer vocabulary of public deliberation — remains the central political challenge of the twenty-first century. The answer will depend not only on institutional engineering but on whether citizens can be persuaded that collective self-governance is worth the effort it requires.</p>
+                <p>The digital revolution has introduced a new and unresolved dimension to these debates. On the one hand, the internet and social media have dramatically lowered the barriers to political organisation, enabling citizens to coordinate across geographic and social boundaries in ways that were previously impossible. Movements such as the Arab Spring, Occupy Wall Street, and more recently the global climate strikes have demonstrated the mobilising power of networked communication.</p>
+                <p>On the other hand, the same platforms that empower citizens also concentrate extraordinary influence in the hands of a small number of private corporations. Algorithmic curation shapes what citizens see and believe; micro-targeted advertising allows well-funded interests to tailor political messages with unprecedented precision; and the architecture of engagement — designed to maximise time-on-platform rather than to foster deliberation — tends to reward outrage over nuance.</p>
+                <p>Political scientists have begun to document what some call the paradox of hyper-connectivity: that an increase in the quantity of political communication has been accompanied by a decline in its quality. Echo chambers and filter bubbles reinforce existing beliefs rather than challenging them; misinformation spreads faster than corrections; and the sheer volume of information makes it increasingly difficult for citizens to distinguish credible sources from unreliable ones.</p>
+                <p>Responses to this crisis of information have been varied and, so far, inadequate. Platform companies have introduced content moderation policies, but these are applied inconsistently and are often perceived as politically biased. Governments have passed legislation requiring greater transparency in political advertising, but enforcement remains patchy and the pace of regulatory change lags far behind the pace of technological development.</p>
+                <p>Some theorists argue that the solution lies in redesigning the platforms themselves — replacing engagement-maximising algorithms with ones that prioritise accuracy, diversity of viewpoint, and constructive dialogue. Others contend that platform regulation alone cannot restore democratic health, and that deeper reforms to political education, media literacy, and the funding of public interest journalism are equally necessary.</p>
+                <p>At a deeper level, the crisis of democracy may reflect a crisis of trust — not only in institutions, but in the possibility of shared truth. When citizens inhabit different informational universes, democratic deliberation, which presupposes at least a minimal common factual basis, becomes extraordinarily difficult. Rebuilding that common epistemic ground is perhaps the most urgent and least tractable challenge facing democratic societies today.</p>
+              </div>
+            </div>
+
+            <!-- Right: sub-questions -->
+            <div class="quiz-group__questions">
+
+              <div class="group-q-item">
+                <p class="question-no">Question No. 1</p>
+                <p class="question-stem">According to the passage, what does Robert Dahl's "problem of scale" primarily refer to?</p>
+                <div class="options-list">
+                  <label class="option-item"><input type="radio" name="gq1" value="A"> The difficulty of financing large democratic governments</label>
+                  <label class="option-item"><input type="radio" name="gq1" value="B"> The impracticality of direct participation as democratic units grow larger</label>
+                  <label class="option-item"><input type="radio" name="gq1" value="C"> The tendency of democracies to exclude minority groups from suffrage</label>
+                  <label class="option-item"><input type="radio" name="gq1" value="D"> The challenge of maintaining consistent policy across multiple territories</label>
+                </div>
+              </div>
+
+              <div class="group-q-item">
+                <p class="question-no">Question No. 2</p>
+                <p class="question-stem">The author uses the term "principal-agent problem" to illustrate which of the following?</p>
+                <div class="options-list">
+                  <label class="option-item"><input type="radio" name="gq2" value="A"> The economic consequences of poor electoral turnout</label>
+                  <label class="option-item"><input type="radio" name="gq2" value="B"> The divergence of interests between voters and their elected representatives</label>
+                  <label class="option-item"><input type="radio" name="gq2" value="C"> The conflict between regulatory agencies and elected governments</label>
+                  <label class="option-item"><input type="radio" name="gq2" value="D"> The tension between national and international governance bodies</label>
+                </div>
+              </div>
+
+              <div class="group-q-item">
+                <p class="question-no">Question No. 3</p>
+                <p class="question-stem">Which of the following best describes the author's view of populist movements as discussed in the final paragraph?</p>
+                <div class="options-list">
+                  <label class="option-item"><input type="radio" name="gq3" value="A"> They are unambiguously dangerous to democratic institutions</label>
+                  <label class="option-item"><input type="radio" name="gq3" value="B"> They represent a legitimate response to declining electoral efficacy</label>
+                  <label class="option-item"><input type="radio" name="gq3" value="C"> Their nature and implications remain a matter of ongoing debate</label>
+                  <label class="option-item"><input type="radio" name="gq3" value="D"> They are primarily an economic rather than a political phenomenon</label>
+                </div>
+              </div>
+
+              <div class="group-q-item">
+                <p class="question-no">Question No. 4</p>
+                <p class="question-stem">The passage suggests that critics of independent regulatory bodies and central banks argue that such institutions:</p>
+                <div class="options-list">
+                  <label class="option-item"><input type="radio" name="gq4" value="A"> Increase government expenditure without improving outcomes</label>
+                  <label class="option-item"><input type="radio" name="gq4" value="B"> Concentrate too much power in the hands of the judiciary</label>
+                  <label class="option-item"><input type="radio" name="gq4" value="C"> Undermine democratic accountability by removing decisions from popular control</label>
+                  <label class="option-item"><input type="radio" name="gq4" value="D"> Favour technocratic expertise over the needs of ordinary citizens in a benign way</label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Sidebar collapse toggle -->
+          <div class="sidebar-toggle sidebar-toggle-g">&#9654;</div>
+
+          <!-- Footer actions -->
+          <div class="quiz-footer">
+            <div class="quiz-footer__left">
+              <button class="btn btn--secondary">Mark for Review &amp; Next</button>
+              <button class="btn btn--secondary">Clear response</button>
+            </div>
+            <button class="btn btn--save-next">Save &amp; Next</button>
+          </div>
+
+        </div>
+
+
+        <!-- Right sidebar (drawer on mobile) -->
+        <div class="quiz-sidebar quiz-sidebar-g">
+
+          <div class="sidebar__user">
+            <div class="sidebar__avatar">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="8" r="4" fill="currentColor"/>
+                <path d="M4 20c0-4.418 3.582-7 8-7s8 2.582 8 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+              </svg>
+            </div>
+            <span class="sidebar__name">Bob Marley</span>
+          </div>
+
+          <!-- Status legend -->
+          <div class="status-legend">
+            <div class="status-item">
+              <svg class="status-dot" viewBox="0 0 34 34" width="34" height="34" overflow="visible" style="flex-shrink:0">
+                <polygon points="17,0 34,11 34,34 0,34 0,11" fill="#3CB345" stroke="#358200" stroke-width="4" paint-order="stroke fill"/>
+                <polygon points="17,0 34,11 34,34 0,34 0,11" fill="url(#hl-ans)"/>
+                <text x="17" y="21" text-anchor="middle" dominant-baseline="central" fill="white" font-family="Inter,sans-serif" font-size="13" font-weight="700">0</text>
+              </svg>
+              <span>Answered</span>
+            </div>
+            <div class="status-item">
+              <svg class="status-dot" viewBox="0 0 34 34" width="34" height="34" overflow="visible" style="flex-shrink:0">
+                <polygon points="0,0 34,0 34,23 17,34 0,23" fill="#E84820" stroke="#761700" stroke-width="4" paint-order="stroke fill"/>
+                <polygon points="0,0 34,0 34,23 17,34 0,23" fill="url(#hl-notans)"/>
+                <text x="17" y="13" text-anchor="middle" dominant-baseline="central" fill="white" font-family="Inter,sans-serif" font-size="13" font-weight="700">0</text>
+              </svg>
+              <span>Not Answered</span>
+            </div>
+            <div class="status-item">
+              <div class="status-dot status-dot--not-visit">0</div>
+              <span>Not visited</span>
+            </div>
+            <div class="status-item">
+              <div class="status-dot status-dot--review">0</div>
+              <span>Marked for Review</span>
+            </div>
+            <div class="status-item status-item--full">
+              <div class="status-ans-rev-wrap">
+                <div class="status-dot status-dot--review">0</div>
+                <div class="status-ans-rev-badge">&#9776;</div>
+              </div>
+              <span>Answered &amp; Marked for review (will also be evaluated)</span>
+            </div>
+          </div>
+
+          <!-- Question navigator -->
+          <div class="qnav-section">
+            <div class="qnav-section__header">VARC</div>
+            <div class="qnav-section__label">Choose a Question</div>
+            <div class="q-grid q-grid-g"></div>
+          </div>
+
+          <!-- Submit -->
+          <div class="quiz-sidebar__footer">
+            <button class="btn btn--primary" id="btn-submit-s4">Submit</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Screen 5: Exam Summary ── -->
+  <section id="summary" class="screen exam-summary">
+    <div class="exam-summary__scroll">
+      <h1 class="exam-summary__title">Exam Summary</h1>
+
+      <!-- QA group -->
+      <div class="exam-summary__group">
+        <div class="exam-summary__group-label">QA (current group)</div>
+        <div class="exam-summary__table-wrap"><table class="exam-summary__table">
+          <thead><tr>
+            <th>Section name</th><th>No. of Questions</th><th>Answered</th>
+            <th>Not answered</th><th>Marked for review</th>
+            <th>Answered &amp; Marked for review (will be evaluated)</th><th>Not visited</th>
+          </tr></thead>
+          <tbody><tr>
+            <td>QA</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+          </tr></tbody>
+        </table></div>
+      </div>
+
+      <!-- VARC group -->
+      <div class="exam-summary__group">
+        <div class="exam-summary__group-label">VARC (attempted group; view not allowed; edit not allowed)</div>
+        <div class="exam-summary__table-wrap"><table class="exam-summary__table">
+          <thead><tr>
+            <th>Section name</th><th>No. of Questions</th><th>Answered</th>
+            <th>Not answered</th><th>Marked for review</th>
+            <th>Answered &amp; Marked for review (will be evaluated)</th><th>Not visited</th>
+          </tr></thead>
+          <tbody><tr>
+            <td>VARC</td>
+            <td id="sum-varc-total">0</td>
+            <td id="sum-answered">0</td>
+            <td id="sum-not-answered">0</td>
+            <td id="sum-review">0</td>
+            <td id="sum-ans-rev">0</td>
+            <td id="sum-not-visited">0</td>
+          </tr></tbody>
+        </table></div>
+      </div>
+
+      <!-- DILR group -->
+      <div class="exam-summary__group">
+        <div class="exam-summary__group-label">DILR (attempted group; view not allowed; edit not allowed)</div>
+        <div class="exam-summary__table-wrap"><table class="exam-summary__table">
+          <thead><tr>
+            <th>Section name</th><th>No. of Questions</th><th>Answered</th>
+            <th>Not answered</th><th>Marked for review</th>
+            <th>Answered &amp; Marked for review (will be evaluated)</th><th>Not visited</th>
+          </tr></thead>
+          <tbody><tr>
+            <td>DILR</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+          </tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="exam-summary__foot">
+      <p class="exam-summary__auto-msg" id="sum-auto-msg">Your quiz has been submitted automatically as the time limit has expired</p>
+      <button class="btn btn--secondary" onclick="showScreen('screen-1')">Close</button>
+    </div>
+  </section>
+
+
+  <!-- ── Screen 6: Non-Sectional Exam ── -->
+  <section id="screen-6" class="screen ns-screen">
+
+    <!-- Top header -->
+    <header class="ns-header">
+      <h1 class="ns-header__title">Name of non sectional exam</h1>
+      <div class="ns-header__right">
+        <button class="ns-nav-link">
+          <span class="ns-nav-link__icon ns-nav-link__icon--info">i</span>
+          View Instructions
+        </button>
+        <button class="ns-nav-link">
+          <span class="ns-nav-link__icon ns-nav-link__icon--paper">&#9654;</span>
+          Question Paper
+        </button>
+      </div>
+    </header>
+
+    <!-- Body: left main + right sidebar -->
+    <div class="ns-body">
+
+      <!-- Left main -->
+      <div class="ns-main">
+
+        <!-- Row 1: instruction text | calculator -->
+        <div class="ns-info-bar">
+          <span class="ns-info-bar__text">Read each question carefully before answering</span>
+          <button class="ns-calc-btn">
+            <svg width="16" height="18" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1.2" y="1.2" width="15.6" height="17.6" rx="3.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <rect x="3.5" y="3.5" width="11" height="3" rx="0.7" fill="currentColor"/>
+              <circle cx="5.5" cy="10" r="1.3" fill="currentColor"/>
+              <circle cx="9" cy="10" r="1.3" fill="currentColor"/>
+              <circle cx="12.5" cy="10" r="1.3" fill="currentColor"/>
+              <circle cx="5.5" cy="14" r="1.3" fill="currentColor"/>
+              <circle cx="9" cy="14" r="1.3" fill="currentColor"/>
+              <circle cx="12.5" cy="14" r="1.3" fill="currentColor"/>
+            </svg>
+            Calculator
+          </button>
+        </div>
+
+        <!-- Row 2: remaining time (right-aligned) -->
+        <div class="ns-timer-bar">
+          Remaining Time: <span class="ns-timer-dots">&#183;&#183;&#183;&#183;&#183;&#183;&#183;&#183;</span>
+        </div>
+
+        <!-- Row 3: marks -->
+        <div class="ns-marks-bar">
+          Marks for correct answer : <strong>&nbsp;3&nbsp;</strong> | Negative marks : <span class="neg">&nbsp;1</span>
+        </div>
+
+        <!-- Question content -->
+        <div class="ns-question-area">
+          <p class="ns-q-label">Question No. 1</p>
+          <hr class="ns-q-divider">
+          <p class="ns-q-stem-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+          <p class="ns-q-para">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        </div>
+
+        <!-- Sidebar toggle -->
+        <div class="sidebar-toggle">&#9654;</div>
+
+      </div>
+
+      <!-- Right sidebar -->
+      <div class="ns-sidebar">
+
+        <!-- Status legend -->
+        <div class="ns-status-grid">
+          <div class="ns-status-item">
+            <svg viewBox="0 0 34 34" width="34" height="34" overflow="visible" style="flex-shrink:0">
+              <polygon points="17,0 34,11 34,34 0,34 0,11" fill="#3CB345" stroke="#358200" stroke-width="4" paint-order="stroke fill"/>
+              <polygon points="17,0 34,11 34,34 0,34 0,11" fill="url(#hl-ans)"/>
+              <text x="17" y="21" text-anchor="middle" dominant-baseline="central" fill="white" font-family="Inter,sans-serif" font-size="13" font-weight="700">0</text>
+            </svg>
+            <span>Answered</span>
+          </div>
+          <div class="ns-status-item">
+            <svg viewBox="0 0 34 34" width="34" height="34" overflow="visible" style="flex-shrink:0">
+              <polygon points="0,0 34,0 34,23 17,34 0,23" fill="#E84820" stroke="#761700" stroke-width="4" paint-order="stroke fill"/>
+              <polygon points="0,0 34,0 34,23 17,34 0,23" fill="url(#hl-notans)"/>
+              <text x="17" y="13" text-anchor="middle" dominant-baseline="central" fill="white" font-family="Inter,sans-serif" font-size="13" font-weight="700">20</text>
+            </svg>
+            <span>Not Answered</span>
+          </div>
+          <div class="ns-status-item">
+            <div class="status-dot status-dot--not-visit" style="width:34px;height:34px;border-radius:8px;flex-shrink:0">0</div>
+            <span>Not Visited</span>
+          </div>
+          <div class="ns-status-item">
+            <div class="status-dot status-dot--review" style="width:34px;height:34px;flex-shrink:0">0</div>
+            <span>Marked for Review</span>
+          </div>
+          <div class="ns-status-item ns-status-item--full">
+            <div class="status-ans-rev-wrap" style="flex-shrink:0">
+              <div class="status-dot status-dot--review" style="width:34px;height:34px">0</div>
+              <div class="status-ans-rev-badge">&#9776;</div>
+            </div>
+            <span>Answered &amp; Marked for Review (will be considered for evaluation)</span>
+          </div>
+        </div>
+
+        <!-- Question navigator -->
+        <div class="ns-q-nav">
+          <div class="ns-q-nav__label">Choose a Question</div>
+          <div class="ns-q-grid">
+            <button class="q-num state-current">1</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="ns-footer">
+      <div class="ns-footer__left">
+        <button class="ns-btn">Mark for Review &amp; Next</button>
+        <button class="ns-btn">Clear Response</button>
+      </div>
+      <div class="ns-footer__right">
+        <button class="ns-btn ns-btn--save">Save &amp; Next</button>
+        <button class="ns-btn ns-btn--submit">Submit</button>
+      </div>
+    </footer>
+
+  </section>
+
+
+  <!-- ── Draggable calculator widget (shared across quiz screens) ── -->
+  <div class="calc-widget" id="calc-widget">
+    <div class="calc-header" id="calc-drag-handle">
+      <span>Calculator</span>
+      <div class="calc-header-btns">
+        <button class="calc-min-btn" title="Minimise">&#8212;</button>
+        <button class="calc-close-btn" id="calc-close">&#10005;</button>
+      </div>
+    </div>
+    <div class="calc-display-wrap">
+      <div class="calc-expr" id="calc-expr"></div>
+      <div class="calc-display" id="calc-display">0</div>
+    </div>
+    <div class="calc-grid">
+      <!-- Memory row -->
+      <button class="calc-btn mem" onclick="calcMemClear()">MC</button>
+      <button class="calc-btn mem" onclick="calcMemRecall()">MR</button>
+      <button class="calc-btn mem" onclick="calcMemStore()">MS</button>
+      <button class="calc-btn mem" onclick="calcMemAdd()">M+</button>
+      <button class="calc-btn mem" onclick="calcMemSub()">M-</button>
+
+      <!-- Special row -->
+      <button class="calc-btn red-wide" onclick="calcBackspace()">&#8592;</button>
+      <button class="calc-btn red" onclick="calcClear()">C</button>
+      <button class="calc-btn red" onclick="calcToggleSign()">+/-</button>
+      <button class="calc-btn" onclick="calcSqrt()">&#8730;</button>
+
+      <!-- Row 7 8 9 -->
+      <button class="calc-btn" onclick="calcInput('7')">7</button>
+      <button class="calc-btn" onclick="calcInput('8')">8</button>
+      <button class="calc-btn" onclick="calcInput('9')">9</button>
+      <button class="calc-btn" onclick="calcOper('/')">/</button>
+      <button class="calc-btn" onclick="calcOper('%')">%</button>
+
+      <!-- Row 4 5 6 -->
+      <button class="calc-btn" onclick="calcInput('4')">4</button>
+      <button class="calc-btn" onclick="calcInput('5')">5</button>
+      <button class="calc-btn" onclick="calcInput('6')">6</button>
+      <button class="calc-btn" onclick="calcOper('*')">*</button>
+      <button class="calc-btn" onclick="calcReciprocal()">1/x</button>
+
+      <!-- Row 1 2 3 — = spans rows 1 2 3 → rows 5–6 in grid -->
+      <button class="calc-btn" onclick="calcInput('1')">1</button>
+      <button class="calc-btn" onclick="calcInput('2')">2</button>
+      <button class="calc-btn" onclick="calcInput('3')">3</button>
+      <button class="calc-btn" onclick="calcOper('-')">-</button>
+      <button class="calc-btn eq" onclick="calcEqual()">=</button>
+
+      <!-- Row 0 . + -->
+      <button class="calc-btn zero" onclick="calcInput('0')">0</button>
+      <button class="calc-btn" onclick="calcInput('.')">.</button>
+      <button class="calc-btn" onclick="calcOper('+')">+</button>
+      <!-- = occupies col 5 via grid-row: span 2 -->
+    </div>
+  </div>
+
+  <!-- ── Submit quiz modal ── -->
+  <div class="modal-backdrop" id="submit-modal-backdrop">
+    <div class="submit-modal">
+      <div class="submit-modal__head">
+        <h2 class="submit-modal__title">Submit quiz</h2>
+      </div>
+      <div class="submit-modal__body">
+        <div class="submit-modal__stats">
+          <div class="submit-stat">
+            <div class="submit-stat__icon submit-stat__icon--answered" id="modal-cnt-answered">0</div>
+            <span>Answered</span>
+          </div>
+          <div class="submit-stat">
+            <div class="submit-stat__icon submit-stat__icon--not-answered" id="modal-cnt-not-answered">0</div>
+            <span>Not Answered</span>
+          </div>
+          <div class="submit-stat">
+            <div class="submit-stat__icon submit-stat__icon--not-visited" id="modal-cnt-not-visited">0</div>
+            <span>Not Visited</span>
+          </div>
+          <div class="submit-stat">
+            <div class="submit-stat__icon submit-stat__icon--review" id="modal-cnt-review">0</div>
+            <span>Marked for Review</span>
+          </div>
+          <div class="submit-stat submit-stat--full">
+            <div class="submit-stat__ans-rev-wrap">
+              <div class="submit-stat__icon submit-stat__icon--review" id="modal-cnt-ans-rev">0</div>
+              <div class="submit-stat__ans-rev-badge">&#9776;</div>
+            </div>
+            <span>Answered &amp; Marked for Review<br><span style="color:var(--g-neutral-600)">(will be evaluated)</span></span>
+          </div>
+        </div>
+        <p class="submit-modal__remaining">Remaining time: <span id="modal-remaining-time">00:00:00</span></p>
+        <p class="submit-modal__early-msg" id="modal-early-msg">Submissions open at the 40-minute mark. Use the time to review and revise your answers.</p>
+      </div>
+      <div class="submit-modal__foot">
+        <button class="btn btn--secondary" id="modal-cancel">Cancel</button>
+        <button class="btn btn--primary btn--disabled" id="modal-submit">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Tab-switch disqualification modal ── -->
+  <div class="tabswitch-backdrop" id="tabswitch-backdrop">
+    <div class="tabswitch-modal">
+      <div class="tabswitch-modal__head">
+        <h2 class="tabswitch-modal__title">You are disqualified from the quiz</h2>
+      </div>
+      <div class="tabswitch-modal__body">
+        <p class="tabswitch-modal__desc">You have been automatically disqualified from the test for switching tabs or leaving this window.</p>
+      </div>
+      <div class="tabswitch-modal__foot">
+        <button class="btn btn--secondary" id="tabswitch-close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Report an Error modal ── -->
+  <div class="modal-backdrop" id="report-error-backdrop" style="z-index:850">
+    <div class="report-modal">
+      <div class="report-modal__head">
+        <h2>Report an Error</h2>
+      </div>
+      <div class="report-modal__body" id="report-modal-form">
+        <p class="report-modal__q-label">Question: <strong><span id="report-q-number">1</span></strong></p>
+        <div class="report-modal__field-label">Error Description <span class="req">*</span></div>
+        <textarea class="report-modal__textarea" id="report-description" placeholder="Start typing..."></textarea>
+      </div>
+      <div class="report-modal__success" id="report-modal-success">
+        <div class="report-modal__success-icon">✅</div>
+        <p>Your report has been submitted. Our team will review it shortly.</p>
+      </div>
+      <div class="report-modal__foot" id="report-modal-foot">
+        <button class="btn btn--secondary" id="report-cancel">Cancel</button>
+        <button class="btn btn--primary" id="report-submit-btn">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Question Paper modal ── -->
+  <div class="qpaper-backdrop" id="qpaper-backdrop">
+    <div class="qpaper-modal">
+      <div class="qpaper-modal__head">
+        <h2 class="qpaper-modal__title">Question Paper</h2>
+        <button class="qpaper-modal__close" id="qpaper-close" aria-label="Close">&#x2715;</button>
+      </div>
+      <div class="qpaper-modal__warning">
+        <span class="qpaper-modal__warning-icon">&#9888;</span>
+        The timer continues to run while you are viewing this screen. Please return to the test to save time.
+      </div>
+      <div class="qpaper-modal__body" id="qpaper-list"></div>
+      <div class="qpaper-modal__foot">
+        <button class="btn btn--secondary" id="qpaper-close-foot">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Instructions modal ── -->
+  <div class="qpaper-backdrop" id="instructions-backdrop">
+    <div class="qpaper-modal" style="width:960px">
+      <div class="qpaper-modal__head">
+        <h2 class="qpaper-modal__title">Instructions</h2>
+        <button class="qpaper-modal__close" id="instructions-close" aria-label="Close">&#x2715;</button>
+      </div>
+      <div class="qpaper-modal__body" style="padding:24px 28px">
+        <h3 style="font-size:15px;font-weight:600;color:var(--g-neutral-900);margin:0 0 14px">General Instructions:</h3>
+        <ol style="font-size:13.5px;line-height:1.7;color:var(--g-neutral-700);padding-left:20px;display:flex;flex-direction:column;gap:10px">
+          <li>The number, type and pattern of questions and as well as sequence of sections in the Mock Exam are only indicative and these are subject to variations from year to year as per the CAT authorities.</li>
+          <li>The test has 3 (three) sections. The total duration of the test is 120 minutes. PwD candidates will have 13 minutes and 20 seconds extra time for each section.</li>
+          <li>Each section has (3) three sections. The total duration of each section is 40 minutes and 20 seconds extra time. So, PwD candidates will have extra time of 53 minutes and 20 seconds for each section. The same process will be repeated for the other two sections. On submission of all three sections, a summary of all your answers will be displayed on your screen.</li>
+          <li>You will be free to answer the questions within a section at any point of time before the clock runs out. The server clock at the top right corner of the screen will start with the commencement of the test for each section. On completion of a section the answer of the questions will be saved automatically.</li>
+          <li>You will be allowed to leave the test hall only after a minimum of 120 minutes.</li>
+          <li>The question paper will have a mix of Multiple Choice Question (MCQ) type with options and Non-MCQ type.</li>
+        </ol>
+      </div>
+      <div class="qpaper-modal__foot">
+        <button class="btn btn--secondary" id="instructions-close-foot">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ── Screen navigation ── */
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      const t = document.getElementById(id);
+      if (t) t.classList.add('active');
+      if (id === 'summary') {
+        document.getElementById('tabswitch-backdrop').classList.remove('open');
+      }
+    }
+    document.querySelectorAll('[data-nav]').forEach(el => {
+      el.addEventListener('click', () => showScreen(el.dataset.nav));
+    });
+    const hash = location.hash.replace('#', '');
+    showScreen(hash && document.getElementById(hash) ? hash : 'screen-1');
+
+    /* ── Sidebar toggles (screen 3 + screen 4) ── */
+    document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
+      toggle.addEventListener('click', function () {
+        const wrap = this.closest('.quiz-main');
+        const sidebar = wrap.parentElement.querySelector('.quiz-sidebar');
+        const isHidden = sidebar.style.display === 'none';
+        sidebar.style.display = isHidden ? 'flex' : 'none';
+        this.innerHTML = isHidden ? '&#9654;' : '&#9664;';
+      });
+    });
+
+    /* ══════════════════════════════════════════
+       QUESTION DATA
+    ══════════════════════════════════════════ */
+    const PASSAGES = {
+      p1: {
+        label: 'Passage I — Democracy and Scale',
+        html: `<p><strong>The paradox of modern democracy</strong> is that it has simultaneously expanded the scope of popular participation and narrowed the range of meaningful choice. Over the past century, universal suffrage has extended the franchise to virtually every adult citizen in democratic nations, yet the actual influence of individual voters on policy outcomes has arguably diminished as governance has grown more complex and technocratic.</p>
+<p>Political theorists have long grappled with what Robert Dahl called the <em>problem of scale</em>: as democratic units grow larger, direct participation becomes impractical, requiring the delegation of authority to representatives who inevitably develop interests and expertise distinct from their constituents. This delegation creates the principal-agent problem familiar to economists — the agent (elected official) may pursue goals that diverge from those of the principal (the voter).</p>
+<p>Contemporary democracies have attempted to manage this tension through institutional design: independent judiciaries, regulatory agencies, central banks, and international bodies that insulate certain decisions from electoral pressure. Proponents argue that such arrangements protect minority rights and ensure technocratic competence; critics contend that they hollow out democratic accountability by placing key decisions beyond the reach of popular will.</p>
+<p>The rise of populist movements across the globe can be read, in part, as a reaction to this perceived democratic deficit. When citizens feel that formal electoral mechanisms no longer translate their preferences into policy, they may turn to charismatic outsiders who promise to dismantle the insulating layers and restore unmediated popular sovereignty. Whether such movements represent a revitalisation of democracy or a threat to its liberal foundations remains deeply contested.</p>`
+      },
+      p2: {
+        label: 'Passage II — Language and Cognition',
+        html: `<p><strong>The relationship between language and thought</strong> is one of the most enduring puzzles in cognitive science. The strong version of the Sapir-Whorf hypothesis — that language wholly determines thought — has been largely discredited, but the weaker claim that language influences cognition in significant ways continues to attract empirical support.</p>
+<p>Cross-linguistic studies have revealed that speakers of languages with rich spatial vocabulary (such as absolute directional systems like north/south/east/west rather than egocentric left/right) demonstrate superior spatial memory and navigation ability. Similarly, speakers of languages with grammaticalised evidentiality — grammatical markers obligating speakers to indicate the source of their information — are more attuned to epistemic distinctions in everyday reasoning.</p>
+<p>Perhaps the most celebrated example involves colour perception. Languages vary enormously in how they partition the colour spectrum into named categories. Speakers of languages that draw a lexical distinction between blue and green, for instance, show faster reaction times in perceptual tasks that require discriminating between those hues — an effect that is diminished when the relevant colour boundary falls outside the boundary maintained in one's own language.</p>
+<p>These findings suggest a nuanced picture: language does not create cognitive capacities ex nihilo, but it can sharpen, direct, and habituate certain modes of attention and categorisation. The implications extend beyond linguistics into education, translation, and even the design of interfaces that must communicate across linguistic communities.</p>`
+      }
+    };
+
+    const QUESTIONS = [
+      /* Q1 — MCQ: vocabulary */
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'Which of the following words is <strong>closest in meaning</strong> to the word <em>EPHEMERAL</em> as it might be used in academic writing?',
+        opts:['Enduring and long-lasting','Short-lived and transient','Extremely significant','Deeply philosophical'] },
+
+      /* Q2–Q5 — Group (Passage I) */
+      { type:'group', passage:'p1', marks:{c:3,w:-1},
+        stem:'According to the passage, Robert Dahl\'s <em>"problem of scale"</em> primarily refers to:',
+        opts:['The difficulty of financing large democratic governments','The impracticality of direct participation as democratic units grow larger','The tendency of democracies to exclude minority groups from suffrage','The challenge of maintaining consistent policy across multiple territories'] },
+      { type:'group', passage:'p1', marks:{c:3,w:-1},
+        stem:'The author introduces the <em>principal-agent problem</em> in order to illustrate:',
+        opts:['The economic consequences of poor electoral turnout','The divergence of interests between voters and their elected representatives','The conflict between regulatory agencies and elected governments','The tension between national and international governance bodies'] },
+      { type:'group', passage:'p1', marks:{c:3,w:-1},
+        stem:'Which of the following best describes the author\'s stance on populist movements, as expressed in the final paragraph?',
+        opts:['They are unambiguously dangerous to democratic institutions','They represent a wholly legitimate response to declining electoral efficacy','Their nature and long-term implications remain deeply contested','They are primarily an economic rather than a political phenomenon'] },
+      { type:'group', passage:'p1', marks:{c:3,w:-1},
+        stem:'The passage suggests that critics of independent regulatory bodies and central banks argue that such institutions:',
+        opts:['Increase government expenditure without improving outcomes','Concentrate too much power in the hands of the judiciary','Undermine democratic accountability by removing key decisions from popular control','Favour technocratic expertise over citizens in a benign and justified way'] },
+
+      /* Q6 — Para-jumble */
+      { type:'parajumble', marks:{c:3,w:-1},
+        stem:'The sentences below, when properly sequenced, form a coherent paragraph. Identify the <strong>correct sequence</strong>.',
+        sentences:[
+          {id:'A', text:'The invention of the printing press democratised knowledge, making books affordable and accessible to the rising middle class.'},
+          {id:'B', text:'Before Gutenberg, manuscripts were laboriously copied by hand, confining literacy almost entirely to the clergy and the nobility.'},
+          {id:'C', text:'This proliferation of printed material directly contributed to the Protestant Reformation and, later, the Scientific Revolution.'},
+          {id:'D', text:'Within decades, printing presses had spread across Europe, producing millions of books in a growing variety of vernacular languages.'}
+        ],
+        opts:['BADC','ABCD','BDCA','ABDC'] },
+
+      /* Q7 — TITA: odd sentence out (type the number) */
+      { type:'tita', marks:{c:3,w:0},
+        stem:'Five sentences related to a topic are given below. Four of them, when arranged in order, form a coherent short paragraph. Identify the <strong>odd sentence out</strong> and type its number.',
+        sentences:[
+          '1. Language is not merely a tool for communication but a conceptual framework through which we interpret reality.',
+          '2. The Sapir-Whorf hypothesis holds that the structure of a language significantly shapes its speakers\' cognition.',
+          '3. The Inuit languages are famously noted for having multiple distinct terms for different types of snow.',
+          '4. Music, like language, follows grammatical rules that listeners internalise through exposure rather than formal study.',
+          '5. Bilingual individuals often report experiencing the same emotions with different intensities in each of their languages.'
+        ],
+        placeholder:'Type sentence number (1 – 5)' },
+
+      /* Q8–Q11 — Group (Passage II) */
+      { type:'group', passage:'p2', marks:{c:3,w:-1},
+        stem:'The passage cites cross-linguistic research on spatial vocabulary primarily to illustrate that:',
+        opts:['Languages with more words are cognitively superior to those with fewer','Linguistic categories can shape non-linguistic cognitive performance','Navigation ability is genetically determined and language-independent','Absolute directional systems are universally more precise than egocentric ones'] },
+      { type:'group', passage:'p2', marks:{c:3,w:-1},
+        stem:'According to the passage, the effect of lexical colour distinctions on perception is best described as:',
+        opts:['Proving that all colour categories are culturally constructed','Showing that language can alter the physical properties of colour','Demonstrating that language boundaries can influence the speed of perceptual discrimination','Establishing that bilingual speakers perceive colours more accurately'] },
+      { type:'group', passage:'p2', marks:{c:3,w:-1},
+        stem:'The author\'s use of the phrase <em>"ex nihilo"</em> in the final paragraph serves to:',
+        opts:['Introduce a theological argument about the origins of language','Clarify that language does not create cognitive abilities from nothing, but refines existing ones','Suggest that cognitive capacities are entirely independent of linguistic input','Imply that cross-linguistic research has yet to find empirical evidence'] },
+      { type:'group', passage:'p2', marks:{c:3,w:-1},
+        stem:'Which of the following statements, if true, would most <strong>weaken</strong> the central argument of the passage?',
+        opts:['Speakers of tonal languages perform better on certain musical tasks','People who are congenitally deaf but sign-language fluent show no cognitive differences from hearing people in spatial tasks','Colour-blind individuals demonstrate the same colour-category reaction-time effects as sighted individuals','Translation software that ignores evidentiality markers produces less accurate renderings in legal contexts'] },
+
+      /* Q12 — Para-completion */
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'The paragraph below has a <strong>blank</strong> at the end. Choose the option that best completes it.<br><br><em>"All great literature is built on a tension between the familiar and the strange. The reader must feel grounded in a recognisable world while simultaneously unsettled by something new. Without the familiar, there is no foothold; without the strange, there is no reason to keep reading. __________"</em>',
+        opts:[
+          'This is why authors must conduct thorough research before writing their novels.',
+          'The most enduring works therefore achieve an uneasy but necessary equilibrium between comfort and disruption.',
+          'Genre fiction tends to emphasise the familiar, while literary fiction privileges the strange above all else.',
+          'Readers who prefer predictable narratives are less intellectually sophisticated than those who do not.'
+        ] },
+
+      /* Q13 — MCQ: inference */
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'Which of the following can be <strong>most reasonably inferred</strong> from the statement: <em>"The map is not the territory"</em>?',
+        opts:[
+          'Geographic maps are inherently inaccurate and should not be trusted for navigation.',
+          'Any representation of reality, however detailed, is an abstraction and not reality itself.',
+          'Language is a more reliable guide to truth than visual representations.',
+          'Scientists should abandon theoretical models and study the world directly.'
+        ] },
+
+      /* Q14 — MCQ: vocabulary in context */
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'In the sentence <em>"Her arguments were so pellucid that even the sceptics in the audience were persuaded"</em>, the word <strong>pellucid</strong> most nearly means:',
+        opts:['Forceful and assertive','Obscure and difficult to follow','Transparently clear and easy to understand','Emotionally compelling and passionate'] },
+
+      /* Q15 — TITA: sentence exclusion */
+      { type:'tita', marks:{c:3,w:0},
+        stem:'The four sentences below can be arranged to form a coherent paragraph — <strong>except one</strong>. Type the number of the sentence that does <strong>NOT</strong> fit.',
+        sentences:[
+          '1. The concept of "bounded rationality" acknowledges that human decision-making operates under cognitive and informational constraints.',
+          '2. Herbert Simon, who coined the term, argued that individuals "satisfice" — selecting the first option that meets a minimum threshold — rather than optimise.',
+          '3. Behavioural economics has since expanded this insight to map the systematic biases that consistently distort judgment.',
+          '4. Classical economic theory, by contrast, assumed a perfectly rational agent capable of processing unlimited information without error.',
+          '5. Despite decades of criticism, classical economics remains the dominant framework in most undergraduate curricula worldwide.'
+        ],
+        placeholder:'Type sentence number (1 – 5)' },
+
+      /* Q16–Q23 — Regular MCQ variety */
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'Choose the word that best <strong>fills the blank</strong>: <em>"The CEO\'s __________ management style, characterised by minute supervision of every task, demoralised the team and stifled creativity."</em>',
+        opts:['Laissez-faire','Autocratic','Micromanaging','Transformational'] },
+
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'Which of the following sentences is <strong>grammatically correct</strong>?',
+        opts:[
+          'Neither the manager nor the employees was informed of the decision.',
+          'The committee have reached their decision unanimously.',
+          'Having submitted the report, the deadline was no longer a concern.',
+          'It is she who deserves the credit for the project\'s success.'
+        ] },
+
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'The author of a persuasive essay argues: <em>"If we do not act on climate change today, our children will inherit an uninhabitable planet."</em> This statement is best described as:',
+        opts:['A logical deduction from established scientific consensus','An appeal to fear intended to motivate immediate action','A well-supported empirical claim based on current projections','A slippery-slope fallacy with no basis in evidence'] },
+
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'In a paragraph, the sentence <em>"Yet this optimism must be tempered by the sobering reality of implementation"</em> most likely functions as:',
+        opts:['A topic sentence introducing the paragraph\'s main idea','A concluding sentence that summarises the argument','A transitional sentence that pivots from agreement to qualification','An illustrative example supporting the preceding claim'] },
+
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'Which of the following best describes an <strong>analogy</strong>?',
+        opts:[
+          'A direct contradiction between two ideas presented in the same argument.',
+          'A comparison between two different things that highlights a structural similarity to aid understanding.',
+          'A statement that repeats an argument in different words without adding new information.',
+          'A rhetorical question designed to make the reader accept an unstated premise.'
+        ] },
+
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'Choose the option that best <strong>replaces the underlined portion</strong>: <em>"The data <u>clearly shows</u> that sleep deprivation has measurable effects on cognitive function."</em>',
+        opts:['clearly show','are clearly showing','clearly showed','clearly having shown'] },
+
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'A writer claims: <em>"Studies show that listening to classical music makes children smarter."</em> The most significant flaw in this reasoning is:',
+        opts:[
+          'Classical music has not been studied in controlled environments.',
+          'The claim conflates correlation with causation and ignores confounding variables.',
+          'Intelligence cannot be meaningfully measured in children.',
+          'The word "smarter" is too vague to appear in a scientific study.'
+        ] },
+
+      { type:'mcq', marks:{c:3,w:-1},
+        stem:'<em>"To be, or not to be — that is the question."</em> The rhetorical device most prominently employed in this line is:',
+        opts:['Hyperbole','Antithesis','Synecdoche','Alliteration'] }
+    ];
+
+    /* ══════════════════════════════════════════
+       QUIZ ENGINE
+    ══════════════════════════════════════════ */
+    const TOTAL = QUESTIONS.length;
+    const states   = Array(TOTAL).fill('unvisited');
+    const answers  = Array(TOTAL).fill(null);  /* null | option-index | string */
+    let currentQ   = 0;
+
+    /* Build the q-grid */
+    const grid = document.getElementById('q-grid');
+    for (let i = 0; i < TOTAL; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'q-num';
+      btn.dataset.index = i;
+      btn.textContent = i + 1;
+      btn.addEventListener('click', () => goToQuestion(i));
+      grid.appendChild(btn);
+    }
+
+    /* ── Answer helpers ── */
+    function getAnswer() {
+      const q = QUESTIONS[currentQ];
+      if (q.type === 'tita') {
+        const el = document.getElementById('tita-input');
+        return el && el.value.trim() !== '' ? el.value.trim() : null;
+      }
+      if (q.type === 'mcq' || q.type === 'group' || q.type === 'parajumble') {
+        const checked = document.querySelector('input[name="qcurrent"]:checked');
+        return checked ? parseInt(checked.value, 10) : null;
+      }
+      return null;
+    }
+
+    function restoreAnswer() {
+      const q = QUESTIONS[currentQ];
+      const saved = answers[currentQ];
+      if (saved === null) return;
+      if (q.type === 'tita') {
+        const el = document.getElementById('tita-input');
+        if (el) el.value = saved;
+      } else {
+        const radio = document.querySelector(`input[name="qcurrent"][value="${saved}"]`);
+        if (radio) radio.checked = true;
+      }
+    }
+
+    function clearAnswer() {
+      document.querySelectorAll('input[name="qcurrent"]').forEach(r => r.checked = false);
+      const tita = document.getElementById('tita-input');
+      if (tita) tita.value = '';
+      answers[currentQ] = null;
+    }
+
+    /* ── Question rendering ── */
+    function renderQuestion() {
+      const q = QUESTIONS[currentQ];
+      const modeSingle = document.getElementById('mode-single');
+      const modeGroup  = document.getElementById('mode-group');
+
+      if (q.type === 'group') {
+        modeSingle.style.display = 'none';
+        modeGroup.style.display  = 'flex';
+        /* Only update passage if it changed */
+        const prevPassage = modeGroup.dataset.passage;
+        if (prevPassage !== q.passage) {
+          const p = PASSAGES[q.passage];
+          document.getElementById('group-passage-label').textContent = p.label;
+          document.getElementById('group-passage-text').innerHTML    = p.html;
+          modeGroup.dataset.passage = q.passage;
+        }
+        /* Always update the right-panel question */
+        document.getElementById('group-q-panel').innerHTML = buildMCQHtml(q, currentQ);
+      } else {
+        modeSingle.style.display = 'block';
+        modeGroup.style.display  = 'none';
+        if (q.type === 'mcq')        modeSingle.innerHTML = buildMCQHtml(q, currentQ);
+        else if (q.type === 'parajumble') modeSingle.innerHTML = buildParaJumbleHtml(q, currentQ);
+        else if (q.type === 'tita')  modeSingle.innerHTML = buildTitaHtml(q, currentQ);
+      }
+      restoreAnswer();
+    }
+
+    const REPORT_BTN = ''; /* moved to top nav */
+
+    function buildMCQHtml(q, idx) {
+      const optionsHtml = q.opts.map((o, i) => `
+        <label class="option-item">
+          <input type="radio" name="qcurrent" value="${i}"> ${String.fromCharCode(65+i)}. ${o}
+        </label>`).join('');
+      return `
+        <p class="question-no">Question No. ${idx + 1}</p>
+        <p class="question-stem">${q.stem}</p>
+        <div class="options-list">${optionsHtml}</div>
+        ${REPORT_BTN}`;
+    }
+
+    function buildParaJumbleHtml(q, idx) {
+      const sentsHtml = q.sentences.map(s => `
+        <div class="sentence-item">
+          <span class="sentence-item__id">${s.id}.</span>
+          <span>${s.text}</span>
+        </div>`).join('');
+      const optionsHtml = q.opts.map((o, i) => `
+        <label class="option-item">
+          <input type="radio" name="qcurrent" value="${i}"> ${o}
+        </label>`).join('');
+      return `
+        <p class="question-no">Question No. ${idx + 1}</p>
+        <p class="question-stem">${q.stem}</p>
+        <div class="sentences-list">${sentsHtml}</div>
+        <div class="options-list" style="margin-top:8px">${optionsHtml}</div>
+        ${REPORT_BTN}`;
+    }
+
+    function buildTitaHtml(q, idx) {
+      const sentsHtml = q.sentences
+        ? `<div class="sentences-list">${q.sentences.map(s => `<div class="sentence-item"><span>${s}</span></div>`).join('')}</div>` : '';
+      return `
+        <p class="question-no">Question No. ${idx + 1}</p>
+        <p class="question-stem">${q.stem}</p>
+        ${sentsHtml}
+        <div class="tita-wrap">
+          <p class="tita-label">Your answer</p>
+          <input class="tita-input" id="tita-input" type="text" placeholder="${q.placeholder || 'Type your answer'}">
+        </div>
+        ${REPORT_BTN}`;
+    }
+
+    /* ── Marks bar update ── */
+    function updateMarksBar() {
+      const q = QUESTIONS[currentQ];
+      const wrong = q.marks.w < 0 ? q.marks.w : 0;
+      const wrongLabel = q.marks.w === 0
+        ? '<span>No negative marking</span>'
+        : `Negative marks : <span class="neg">&nbsp;${wrong}&nbsp;</span>`;
+      document.querySelector('.marks-bar').innerHTML =
+        `Marks for correct answer : <strong>&nbsp;${q.marks.c}&nbsp;</strong> | ${wrongLabel}`;
+    }
+
+    /* ── Grid update ── */
+    function renderGrid() {
+      grid.querySelectorAll('.q-num').forEach((btn, i) => {
+        const s = i === currentQ ? 'current' : states[i];
+        btn.className = 'q-num state-' + (s === 'unvisited' ? 'unvisited' : s);
+        btn.textContent = i + 1;
+      });
+      /* Legend counters are static reference indicators — always show 0 */
+    }
+
+    function renderAll() {
+      renderQuestion();
+      renderGrid();
+      updateMarksBar();
+    }
+
+    /* ── Navigation ── */
+    function goToQuestion(index) {
+      if (states[currentQ] === 'current') {
+        states[currentQ] = getAnswer() !== null ? 'answered' : 'not-answered';
+      }
+      currentQ = index;
+      if (states[currentQ] === 'unvisited' || states[currentQ] === 'not-answered') {
+        states[currentQ] = 'current';
+      }
+      renderAll();
+    }
+
+    /* Save & Next */
+    document.getElementById('btn-save-next').addEventListener('click', () => {
+      const ans = getAnswer();
+      answers[currentQ] = ans;
+      const prev = states[currentQ];
+      states[currentQ] = ans !== null
+        ? (prev === 'review' || prev === 'answered-review' ? 'answered-review' : 'answered')
+        : 'not-answered';
+      const next = currentQ < TOTAL - 1 ? currentQ + 1 : currentQ;
+      currentQ = next;
+      if (states[currentQ] === 'unvisited' || states[currentQ] === 'not-answered') states[currentQ] = 'current';
+      renderAll();
+    });
+
+    /* Mark for Review & Next */
+    document.getElementById('btn-mark-review').addEventListener('click', () => {
+      const ans = getAnswer();
+      answers[currentQ] = ans;
+      states[currentQ] = ans !== null ? 'answered-review' : 'review';
+      const next = currentQ < TOTAL - 1 ? currentQ + 1 : currentQ;
+      currentQ = next;
+      if (states[currentQ] === 'unvisited' || states[currentQ] === 'not-answered') states[currentQ] = 'current';
+      renderAll();
+    });
+
+    /* Clear response */
+    document.getElementById('btn-clear').addEventListener('click', () => {
+      clearAnswer();
+      states[currentQ] = 'current';
+      renderGrid();
+    });
+
+    /* Initialise */
+    states[0] = 'current';
+    renderAll();
+
+    /* ── Countdown timer (shared across both quiz screens) ── */
+    let timerSecs = 67 * 60 + 45;
+    const timerEls = [document.getElementById('quiz-timer'), document.getElementById('quiz-timer-g')];
+
+    function populateSummary(isAuto) {
+      const currentAns = getAnswer();
+      const counts = { answered: 0, 'not-answered': 0, unvisited: 0, review: 0, 'answered-review': 0 };
+      states.forEach((s, i) => {
+        const eff = i === currentQ ? (currentAns !== null ? 'answered' : 'not-answered') : s;
+        if (counts[eff] !== undefined) counts[eff]++;
+      });
+      document.getElementById('sum-varc-total').textContent    = TOTAL;
+      document.getElementById('sum-answered').textContent      = counts.answered;
+      document.getElementById('sum-not-answered').textContent  = counts['not-answered'];
+      document.getElementById('sum-review').textContent        = counts.review;
+      document.getElementById('sum-ans-rev').textContent       = counts['answered-review'];
+      document.getElementById('sum-not-visited').textContent   = counts.unvisited;
+      const autoMsg = document.getElementById('sum-auto-msg');
+      autoMsg.classList.toggle('visible', !!isAuto);
+    }
+
+    setInterval(() => {
+      if (timerSecs <= 0) {
+        timerEls.forEach(el => el && (el.textContent = '00:00'));
+        /* Auto-submit: only if still on a quiz screen */
+        const onQuiz = ['screen-3','screen-4'].some(id => {
+          const el = document.getElementById(id);
+          return el && el.classList.contains('active');
+        });
+        if (onQuiz) { populateSummary(true); showScreen('summary'); }
+        return;
+      }
+      timerSecs--;
+      const m = Math.floor(timerSecs / 60);
+      const s = timerSecs % 60;
+      const display = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+      timerEls.forEach(el => {
+        if (!el) return;
+        el.textContent = display;
+        if (timerSecs <= 60) el.style.color = '#DE1135';
+      });
+    }, 1000);
+
+    /* ── Screen 4: group question navigator grid ── */
+    const gridG = document.querySelector('.q-grid-g');
+    for (let i = 0; i < 23; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'q-num ' + (i === 0 ? 'state-current' : 'state-unvisited');
+      btn.textContent = i + 1;
+      gridG.appendChild(btn);
+    }
+
+    /* ══════════════════════════════════════════
+       Draggable Calculator
+    ══════════════════════════════════════════ */
+    const calcWidget = document.getElementById('calc-widget');
+    const calcDragHandle = document.getElementById('calc-drag-handle');
+
+    /* Open from either screen */
+    document.getElementById('open-calc-s3').addEventListener('click', () => calcWidget.classList.toggle('open'));
+    document.getElementById('open-calc-s4').addEventListener('click', () => calcWidget.classList.toggle('open'));
+    document.getElementById('calc-close').addEventListener('click', () => calcWidget.classList.remove('open'));
+
+    /* Drag logic */
+    let isDragging = false, dragOffX = 0, dragOffY = 0;
+    calcDragHandle.addEventListener('mousedown', e => {
+      isDragging = true;
+      const r = calcWidget.getBoundingClientRect();
+      dragOffX = e.clientX - r.left;
+      dragOffY = e.clientY - r.top;
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      calcWidget.style.left   = (e.clientX - dragOffX) + 'px';
+      calcWidget.style.top    = (e.clientY - dragOffY) + 'px';
+      calcWidget.style.right  = 'auto';
+      calcWidget.style.bottom = 'auto';
+    });
+    document.addEventListener('mouseup', () => { isDragging = false; });
+
+    /* Calculator logic */
+    let calcVal = '0', calcPrev = '', calcOp = '', calcFresh = true;
+
+    function calcRefresh() {
+      document.getElementById('calc-display').textContent = calcVal;
+    }
+    function calcInput(v) {
+      if (calcFresh) { calcVal = (v === '.') ? '0.' : v; calcFresh = false; }
+      else {
+        if (v === '.' && calcVal.includes('.')) return;
+        calcVal = calcVal === '0' ? v : calcVal + v;
+      }
+      calcRefresh();
+    }
+    function calcOper(op) {
+      if (calcOp && !calcFresh) calcEqual();
+      calcPrev = calcVal; calcOp = op; calcFresh = true;
+      document.getElementById('calc-expr').textContent = calcPrev + ' ' + op;
+    }
+    function calcEqual() {
+      if (!calcOp || calcFresh) return;
+      const a = parseFloat(calcPrev), b = parseFloat(calcVal);
+      let r;
+      if (calcOp === '+') r = a + b;
+      else if (calcOp === '-') r = a - b;
+      else if (calcOp === '*') r = a * b;
+      else if (calcOp === '/') r = b !== 0 ? a / b : 'Error';
+      else if (calcOp === '%') r = a % b;
+      calcVal = typeof r === 'number' ? String(parseFloat(r.toFixed(10))) : r;
+      document.getElementById('calc-expr').textContent = calcPrev + ' ' + calcOp + ' ' + parseFloat(calcVal) + ' =';
+      calcOp = ''; calcFresh = true; calcRefresh();
+    }
+    function calcClear()     { calcVal = '0'; calcPrev = ''; calcOp = ''; calcFresh = true; document.getElementById('calc-expr').textContent = ''; calcRefresh(); }
+    function calcBackspace() { if (calcFresh) return; calcVal = calcVal.length > 1 ? calcVal.slice(0, -1) : '0'; calcRefresh(); }
+
+    /* Extended functions */
+    let calcMem = 0;
+    function calcToggleSign()  { calcVal = calcVal.startsWith('-') ? calcVal.slice(1) : (calcVal === '0' ? '0' : '-' + calcVal); calcRefresh(); }
+    function calcSqrt()        { const v = parseFloat(calcVal); calcVal = v < 0 ? 'Error' : String(parseFloat(Math.sqrt(v).toFixed(10))); calcFresh = true; calcRefresh(); }
+    function calcReciprocal()  { const v = parseFloat(calcVal); calcVal = v === 0 ? 'Error' : String(parseFloat((1/v).toFixed(10))); calcFresh = true; calcRefresh(); }
+    function calcMemClear()    { calcMem = 0; }
+    function calcMemRecall()   { calcVal = String(calcMem); calcFresh = true; calcRefresh(); }
+    function calcMemStore()    { calcMem = parseFloat(calcVal) || 0; }
+    function calcMemAdd()      { calcMem += parseFloat(calcVal) || 0; }
+    function calcMemSub()      { calcMem -= parseFloat(calcVal) || 0; }
+
+    /* ══════════════════════════════════════════
+       Submit Quiz Modal
+    ══════════════════════════════════════════ */
+    const modalBackdrop = document.getElementById('submit-modal-backdrop');
+
+    function openSubmitModal() {
+      /* Snapshot current question's answer before computing counts */
+      const currentAns = getAnswer();
+      const counts = { answered: 0, 'not-answered': 0, unvisited: 0, review: 0, 'answered-review': 0 };
+      states.forEach((s, i) => {
+        const effectiveState = i === currentQ
+          ? (currentAns !== null ? 'answered' : 'not-answered')
+          : s;
+        if (counts[effectiveState] !== undefined) counts[effectiveState]++;
+      });
+      document.getElementById('modal-cnt-answered').textContent     = counts.answered;
+      document.getElementById('modal-cnt-not-answered').textContent  = counts['not-answered'];
+      document.getElementById('modal-cnt-not-visited').textContent   = counts.unvisited;
+      document.getElementById('modal-cnt-review').textContent        = counts.review;
+      document.getElementById('modal-cnt-ans-rev').textContent       = counts['answered-review'];
+
+      /* Format remaining time as HH:MM:SS */
+      const h = Math.floor(timerSecs / 3600);
+      const m = Math.floor((timerSecs % 3600) / 60);
+      const s = timerSecs % 60;
+      document.getElementById('modal-remaining-time').textContent =
+        String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+
+      /* Early-submit lock: section minimum is 40 min (2400 s elapsed = timerSecs < totalSecs - 2400) */
+      const totalSecs = 67 * 60 + 45;
+      const elapsed = totalSecs - timerSecs;
+      const locked = elapsed < 40 * 60;
+      document.getElementById('modal-early-msg').style.display = locked ? 'block' : 'none';
+      const submitBtn = document.getElementById('modal-submit');
+      submitBtn.classList.toggle('btn--disabled', locked);
+
+      modalBackdrop.classList.add('open');
+    }
+
+    document.getElementById('btn-submit-s3').addEventListener('click', openSubmitModal);
+    document.getElementById('btn-submit-s4').addEventListener('click', openSubmitModal);
+    document.getElementById('modal-cancel').addEventListener('click', () => modalBackdrop.classList.remove('open'));
+    /* Close on backdrop click */
+    modalBackdrop.addEventListener('click', e => { if (e.target === modalBackdrop) modalBackdrop.classList.remove('open'); });
+
+    /* Submit → go to Exam Summary */
+    document.getElementById('modal-submit').addEventListener('click', () => {
+      if (document.getElementById('modal-submit').classList.contains('btn--disabled')) return;
+      populateSummary(false);
+      modalBackdrop.classList.remove('open');
+      showScreen('summary');
+    });
+
+    /* ══════════════════════════════════════════
+       Tab-Switch Disqualification Warning
+    ══════════════════════════════════════════ */
+    const tabswitchBackdrop = document.getElementById('tabswitch-backdrop');
+    let tabSwitchIgnore = false;
+
+    document.addEventListener('visibilitychange', () => {
+      if (tabSwitchIgnore) return;
+      const summaryEl = document.getElementById('summary');
+      if (summaryEl && summaryEl.classList.contains('active')) return;
+      const s3 = document.getElementById('screen-3');
+      if (document.visibilityState === 'hidden' && s3 && s3.classList.contains('active')) {
+        tabswitchBackdrop.classList.add('open');
+      }
+    });
+
+    document.getElementById('tabswitch-close').addEventListener('click', () => {
+      tabswitchBackdrop.classList.remove('open');
+    });
+
+    /* ══════════════════════════════════════════
+       Report an Error modal
+    ══════════════════════════════════════════ */
+    const reportBackdrop = document.getElementById('report-error-backdrop');
+
+    function openReportModal() {
+      /* Reset to form state */
+      document.getElementById('report-modal-form').style.display = 'block';
+      document.getElementById('report-modal-success').style.display = 'none';
+      document.getElementById('report-modal-foot').style.display = 'flex';
+      document.getElementById('report-description').value = '';
+      document.getElementById('report-q-number').textContent = currentQ + 1;
+      reportBackdrop.classList.add('open');
+    }
+
+    document.getElementById('report-cancel').addEventListener('click', () => reportBackdrop.classList.remove('open'));
+    reportBackdrop.addEventListener('click', e => { if (e.target === reportBackdrop) reportBackdrop.classList.remove('open'); });
+
+    /* ══════════════════════════════════════════
+       Question Paper modal
+    ══════════════════════════════════════════ */
+    const qpaperBackdrop = document.getElementById('qpaper-backdrop');
+    const qpaperList = document.getElementById('qpaper-list');
+
+    function openQPaperModal() {
+      qpaperList.innerHTML = '';
+      QUESTIONS.forEach((q, i) => {
+        const row = document.createElement('div');
+        row.className = 'qpaper-q-row';
+
+        // Strip HTML tags for plain-text preview, truncate at 120 chars
+        const tmp = document.createElement('div');
+        tmp.innerHTML = q.stem || (q.items ? q.items[0] : '');
+        const stemText = (tmp.textContent || '').trim().replace(/\s+/g, ' ');
+        const preview = stemText.length > 120 ? stemText.slice(0, 120) + '…' : stemText;
+
+        const marksC = q.marks ? q.marks.c : 1;
+        const marksW = q.marks ? q.marks.w : 0;
+        const negStr = marksW < 0
+          ? `<span class="neg">${marksW}</span>`
+          : `<span style="color:var(--g-neutral-500)">0</span>`;
+
+        row.innerHTML = `
+          <div class="qpaper-q-num">Q${i + 1}</div>
+          <div class="qpaper-q-stem">${preview}</div>
+          <div class="qpaper-q-marks"><strong>+${marksC}</strong> / ${negStr}</div>
+        `;
+        qpaperList.appendChild(row);
+      });
+      qpaperBackdrop.classList.add('open');
+    }
+
+    document.getElementById('qpaper-close').addEventListener('click', () => qpaperBackdrop.classList.remove('open'));
+    document.getElementById('qpaper-close-foot').addEventListener('click', () => qpaperBackdrop.classList.remove('open'));
+    qpaperBackdrop.addEventListener('click', e => { if (e.target === qpaperBackdrop) qpaperBackdrop.classList.remove('open'); });
+
+    document.getElementById('report-submit-btn').addEventListener('click', () => {
+      const desc = document.getElementById('report-description').value.trim();
+      if (!desc) { document.getElementById('report-description').focus(); return; }
+      document.getElementById('report-modal-form').style.display = 'none';
+      document.getElementById('report-modal-foot').style.display = 'none';
+      document.getElementById('report-modal-success').style.display = 'block';
+      setTimeout(() => reportBackdrop.classList.remove('open'), 2000);
+    });
+
+    /* ══════════════════════════════════════════
+       Instructions modal
+    ══════════════════════════════════════════ */
+    const instructionsBackdrop = document.getElementById('instructions-backdrop');
+
+    function openInstructionsModal() {
+      instructionsBackdrop.classList.add('open');
+    }
+
+    document.getElementById('instructions-close').addEventListener('click', () => instructionsBackdrop.classList.remove('open'));
+    document.getElementById('instructions-close-foot').addEventListener('click', () => instructionsBackdrop.classList.remove('open'));
+    instructionsBackdrop.addEventListener('click', e => { if (e.target === instructionsBackdrop) instructionsBackdrop.classList.remove('open'); });
+
+    // Wire up all Instruction buttons
+    document.querySelectorAll('.qnav__btn').forEach(btn => {
+      if (btn.textContent.includes('Instruction')) {
+        btn.addEventListener('click', openInstructionsModal);
+      }
+    });
+
+  </script>
+
 </body>
 </html>

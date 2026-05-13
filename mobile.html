@@ -253,7 +253,11 @@
       white-space: nowrap;
       transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
       line-height: 1;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
     }
+    .btn:active { opacity: 0.88; }
+    .btn--secondary:active { background: var(--g-neutral-200); border-color: var(--g-neutral-400); }
 
     .btn--primary {
       background: var(--g-brand-300);
@@ -261,6 +265,13 @@
       border-color: var(--g-brand-300);
     }
     .btn--primary:hover { background: var(--g-brand-300-hover); border-color: var(--g-brand-300-hover); }
+
+    .btn--save-next {
+      background: var(--g-brand-300);
+      color: #fff;
+      border-color: var(--g-brand-300);
+    }
+    .btn--save-next:hover { background: var(--g-brand-300-hover); border-color: var(--g-brand-300-hover); }
 
     .btn--secondary {
       background: var(--g-neutral-100);
@@ -393,6 +404,7 @@
       border-bottom: 1px solid var(--g-neutral-300);
       flex-shrink: 0;
       padding: 0 10px 0 12px;
+      background: #EEEEEE;
     }
     .section-nav-bar__left {
       display: flex;
@@ -684,17 +696,17 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 20px;
-      height: 44px;
-      background: var(--g-neutral-500);
-      border: 1px solid var(--g-neutral-650);
-      border-radius: 0 4px 4px 0;
+      width: 32px;
+      height: 64px;
+      background: #BDBDBD;
+      border: none;
+      border-radius: 10px 0 0 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 10px;
-      color: var(--g-neutral-100);
+      font-size: 14px;
+      color: #2D3136;
       z-index: 2;
     }
 
@@ -828,11 +840,11 @@
       font-weight: 700 !important;
       border-radius: 0 !important;
       clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%) !important;
-      filter: drop-shadow(0 0 2px #761700)
-              drop-shadow(4px 0 1px #761700) drop-shadow(-4px 0 1px #761700)
-              drop-shadow(0 4px 1px #761700) drop-shadow(0 -4px 1px #761700)
-              drop-shadow(3px 3px 1px #761700) drop-shadow(-3px 3px 1px #761700)
-              drop-shadow(3px -3px 1px #761700) drop-shadow(-3px -3px 1px #761700) !important;
+      filter: drop-shadow(0 0 0 #761700)
+              drop-shadow(3px 0 0 #761700) drop-shadow(-3px 0 0 #761700)
+              drop-shadow(0 3px 0 #761700) drop-shadow(0 -3px 0 #761700)
+              drop-shadow(2px 2px 0 #761700) drop-shadow(-2px 2px 0 #761700)
+              drop-shadow(2px -2px 0 #761700) drop-shadow(-2px -2px 0 #761700) !important;
     }
 
     /* Answered — green house/pentagon */
@@ -843,11 +855,11 @@
       font-weight: 700 !important;
       clip-path: polygon(50% 0%, 100% 32%, 100% 100%, 0% 100%, 0% 32%) !important;
       border-radius: 0 !important;
-      filter: drop-shadow(0 0 2px #358200)
-              drop-shadow(4px 0 1px #358200) drop-shadow(-4px 0 1px #358200)
-              drop-shadow(0 4px 1px #358200) drop-shadow(0 -4px 1px #358200)
-              drop-shadow(3px 3px 1px #358200) drop-shadow(-3px 3px 1px #358200)
-              drop-shadow(3px -3px 1px #358200) drop-shadow(-3px -3px 1px #358200) !important;
+      filter: drop-shadow(0 0 0 #358200)
+              drop-shadow(3px 0 0 #358200) drop-shadow(-3px 0 0 #358200)
+              drop-shadow(0 3px 0 #358200) drop-shadow(0 -3px 0 #358200)
+              drop-shadow(2px 2px 0 #358200) drop-shadow(-2px 2px 0 #358200)
+              drop-shadow(2px -2px 0 #358200) drop-shadow(-2px -2px 0 #358200) !important;
     }
 
     /* Not answered — red inverted shield */
@@ -858,11 +870,11 @@
       font-weight: 700 !important;
       clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%) !important;
       border-radius: 0 !important;
-      filter: drop-shadow(0 0 2px #761700)
-              drop-shadow(4px 0 1px #761700) drop-shadow(-4px 0 1px #761700)
-              drop-shadow(0 4px 1px #761700) drop-shadow(0 -4px 1px #761700)
-              drop-shadow(3px 3px 1px #761700) drop-shadow(-3px 3px 1px #761700)
-              drop-shadow(3px -3px 1px #761700) drop-shadow(-3px -3px 1px #761700) !important;
+      filter: drop-shadow(0 0 0 #761700)
+              drop-shadow(3px 0 0 #761700) drop-shadow(-3px 0 0 #761700)
+              drop-shadow(0 3px 0 #761700) drop-shadow(0 -3px 0 #761700)
+              drop-shadow(2px 2px 0 #761700) drop-shadow(-2px 2px 0 #761700)
+              drop-shadow(2px -2px 0 #761700) drop-shadow(-2px -2px 0 #761700) !important;
     }
 
     /* Marked for review — purple circle */
@@ -946,9 +958,10 @@
       font-family: var(--g-font-sans);
       font-size: 15px;
       font-weight: 700;
-      border-radius: 8px;
+      border-radius: 8px !important;
       border: 1.65px solid #B7B7B7;
       background: linear-gradient(180deg, #F7F7F7 0%, #C5C5C5 100%);
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.9);
       color: #303030;
       cursor: pointer;
       transition: filter 0.12s;
@@ -1269,6 +1282,7 @@
 
     .quiz-group__passage {
       flex: 1;
+      min-height: 0;
       overflow-y: auto;
       padding: 20px 24px;
       border-right: 1px solid var(--g-neutral-300);
@@ -1295,6 +1309,7 @@
     .quiz-group__questions {
       width: 48%;
       flex-shrink: 0;
+      min-height: 0;
       overflow-y: auto;
       padding: 28px 24px 24px 28px;
       display: flex;
@@ -1958,21 +1973,27 @@
       z-index: 601;
     }
 
-    /* ── Group questions: vertical stack on mobile ── */
-    .quiz-group { flex-direction: column !important; overflow: visible !important; }
+    /* ── Group questions: stacked, each panel independently scrollable ── */
+    .quiz-group {
+      flex-direction: column !important;
+      overflow: hidden !important;
+      height: 100%;
+    }
     .quiz-group__passage {
-      flex: none !important;
-      overflow-y: visible !important;
+      flex: 0 0 45% !important;
+      min-height: 0 !important;
+      overflow-y: auto !important;
       border-right: none !important;
       border-bottom: 1px solid var(--g-neutral-300);
       max-height: none !important;
     }
     .quiz-group__questions {
+      flex: 1 1 0 !important;
       width: 100% !important;
-      overflow-y: visible !important;
+      min-height: 0 !important;
+      overflow-y: auto !important;
     }
-    /* Make the whole quiz-main scrollable on mobile for group mode */
-    .quiz-main { overflow-y: auto !important; overflow-x: hidden; }
+    .quiz-main { overflow-y: hidden !important; overflow-x: hidden; }
 
     /* ── Quiz footer: 2-row layout ── */
     .quiz-footer-mobile {
@@ -2253,7 +2274,6 @@
             <button class="btn btn--secondary" id="btn-clear">Clear response</button>
           </div>
           <div class="quiz-footer-mobile__row">
-            <button class="btn btn--secondary" id="btn-prev-s3">Previous</button>
             <button class="btn btn--save-next" id="btn-save-next">Save &amp; Next</button>
           </div>
         </div>
@@ -2473,7 +2493,6 @@
               <button class="btn btn--secondary">Clear response</button>
             </div>
             <div class="quiz-footer-mobile__row">
-              <button class="btn btn--secondary">Previous</button>
               <button class="btn btn--save-next">Save &amp; Next</button>
             </div>
           </div>
@@ -3500,7 +3519,8 @@
 
     document.addEventListener('visibilitychange', () => {
       if (tabSwitchIgnore) return;
-      /* Only trigger when on the quiz screen */
+      const summaryEl = document.getElementById('summary');
+      if (summaryEl && summaryEl.classList.contains('active')) return;
       const s3 = document.getElementById('screen-3');
       if (document.visibilityState === 'hidden' && s3 && s3.classList.contains('active')) {
         tabswitchBackdrop.classList.add('open');
