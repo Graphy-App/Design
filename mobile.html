@@ -1097,7 +1097,7 @@
     /* ── Draggable calculator widget ── */
     .calc-widget {
       position: fixed;
-      top: 80px;
+      top: 100px;
       right: 8px;
       width: 260px;
       background: #DEDEDE;
@@ -1119,6 +1119,7 @@
       padding: 10px 14px;
       background: var(--g-brand-300);
       color: #fff;
+      cursor: grab;
       font-size: 16px;
       font-weight: 600;
       cursor: move;
@@ -3502,28 +3503,47 @@
     document.getElementById('open-calc-s4').addEventListener('click', () => calcWidget.classList.toggle('open'));
     document.getElementById('calc-close').addEventListener('click', () => calcWidget.classList.remove('open'));
 
-    /* Drag logic */
+    /* Drag logic — shared by mouse and touch */
     let isDragging = false, dragOffX = 0, dragOffY = 0;
-    calcDragHandle.addEventListener('mousedown', e => {
+
+    function startDrag(clientX, clientY) {
       isDragging = true;
       const r = calcWidget.getBoundingClientRect();
-      dragOffX = e.clientX - r.left;
-      dragOffY = e.clientY - r.top;
-      e.preventDefault();
-    });
-    document.addEventListener('mousemove', e => {
+      dragOffX = clientX - r.left;
+      dragOffY = clientY - r.top;
+      calcDragHandle.style.cursor = 'grabbing';
+    }
+    function moveDrag(clientX, clientY) {
       if (!isDragging) return;
       const fr = document.getElementById('phone-screen').getBoundingClientRect();
       const cw = calcWidget.offsetWidth;
       const ch = calcWidget.offsetHeight;
-      const newLeft = Math.max(0, Math.min(e.clientX - dragOffX - fr.left, fr.width - cw));
-      const newTop  = Math.max(0, Math.min(e.clientY - dragOffY - fr.top,  fr.height - ch));
+      const newLeft = Math.max(0, Math.min(clientX - dragOffX - fr.left, fr.width - cw));
+      const newTop  = Math.max(0, Math.min(clientY - dragOffY - fr.top,  fr.height - ch));
       calcWidget.style.left   = newLeft + 'px';
       calcWidget.style.top    = newTop  + 'px';
       calcWidget.style.right  = 'auto';
       calcWidget.style.bottom = 'auto';
-    });
-    document.addEventListener('mouseup', () => { isDragging = false; });
+    }
+    function endDrag() {
+      isDragging = false;
+      calcDragHandle.style.cursor = '';
+    }
+
+    calcDragHandle.addEventListener('mousedown', e => { startDrag(e.clientX, e.clientY); e.preventDefault(); });
+    document.addEventListener('mousemove', e => moveDrag(e.clientX, e.clientY));
+    document.addEventListener('mouseup', endDrag);
+
+    calcDragHandle.addEventListener('touchstart', e => {
+      startDrag(e.touches[0].clientX, e.touches[0].clientY);
+      e.preventDefault();
+    }, { passive: false });
+    document.addEventListener('touchmove', e => {
+      if (!isDragging) return;
+      moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+      e.preventDefault();
+    }, { passive: false });
+    document.addEventListener('touchend', endDrag);
 
     /* Calculator logic */
     let calcVal = '0', calcPrev = '', calcOp = '', calcFresh = true;
