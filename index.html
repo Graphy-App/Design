@@ -687,16 +687,23 @@
     /* Quiz footer */
     .quiz-footer {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
+      align-items: stretch;
       border-top: 1px solid var(--g-neutral-300);
       flex-shrink: 0;
       background: #F7F9FA;
     }
 
-    .quiz-footer__left { display: flex; gap: 8px; }
-    .quiz-footer__right { display: flex; gap: 8px; }
+    .quiz-footer__left { display: flex; gap: 8px; align-items: center; padding: 12px 16px; flex: 1; }
+    .quiz-footer__right { display: flex; gap: 8px; align-items: center; padding: 12px 16px; }
+    .quiz-footer__submit {
+      width: 260px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 12px 14px;
+      border-left: 1px solid var(--g-neutral-300);
+    }
+    .quiz-footer__submit .btn { width: 100%; }
 
     /* Sidebar collapse toggle — sits on the right edge, inside the main panel */
     .sidebar-toggle {
@@ -2389,6 +2396,8 @@
       </div>
       <div class="quiz-footer__right">
         <button class="btn btn--save-next" id="btn-save-next">Save &amp; Next</button>
+      </div>
+      <div class="quiz-footer__submit">
         <button class="btn btn--submit" id="btn-submit-s3">Submit</button>
       </div>
     </div>
@@ -2606,6 +2615,8 @@
         </div>
         <div class="quiz-footer__right">
           <button class="btn btn--save-next">Save &amp; Next</button>
+        </div>
+        <div class="quiz-footer__submit">
           <button class="btn btn--submit" id="btn-submit-s4">Submit</button>
         </div>
       </div>
