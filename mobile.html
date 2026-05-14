@@ -3814,15 +3814,27 @@
       }
     }
 
-    const mobToggleS3 = document.getElementById('mob-sidebar-toggle-s3');
-    const mobBackdropS3 = document.getElementById('mob-backdrop-s3');
-    if (mobToggleS3) mobToggleS3.addEventListener('click', () => toggleMobDrawer('mob-sidebar-s3', 'mob-backdrop-s3', mobToggleS3));
-    if (mobBackdropS3) mobBackdropS3.addEventListener('click', () => { closeMobDrawer('mob-sidebar-s3', 'mob-backdrop-s3'); mobToggleS3.innerHTML = '&#9654;'; });
-
-    const mobToggleS4 = document.getElementById('mob-sidebar-toggle-s4');
-    const mobBackdropS4 = document.getElementById('mob-backdrop-s4');
-    if (mobToggleS4) mobToggleS4.addEventListener('click', () => toggleMobDrawer('mob-sidebar-s4', 'mob-backdrop-s4', mobToggleS4));
-    if (mobBackdropS4) mobBackdropS4.addEventListener('click', () => { closeMobDrawer('mob-sidebar-s4', 'mob-backdrop-s4'); mobToggleS4.innerHTML = '&#9654;'; });
+    function bindDrawerToggle(toggleId, sidebarId, backdropId) {
+      const tog = document.getElementById(toggleId);
+      const bkd = document.getElementById(backdropId);
+      if (!tog) return;
+      let lastTouch = 0;
+      function doToggle(e) {
+        e.preventDefault();
+        const now = Date.now();
+        if (now - lastTouch < 300) return;
+        lastTouch = now;
+        toggleMobDrawer(sidebarId, backdropId, tog);
+      }
+      tog.addEventListener('click', doToggle);
+      tog.addEventListener('touchend', doToggle, { passive: false });
+      if (bkd) {
+        bkd.addEventListener('click', () => { closeMobDrawer(sidebarId, backdropId); tog.innerHTML = '&#9654;'; });
+        bkd.addEventListener('touchend', () => { closeMobDrawer(sidebarId, backdropId); tog.innerHTML = '&#9654;'; });
+      }
+    }
+    bindDrawerToggle('mob-sidebar-toggle-s3', 'mob-sidebar-s3', 'mob-backdrop-s3');
+    bindDrawerToggle('mob-sidebar-toggle-s4', 'mob-sidebar-s4', 'mob-backdrop-s4');
   </script>
 
 </div><!-- /.phone-frame__screen -->
