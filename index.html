@@ -711,7 +711,7 @@
       z-index: 2;
       box-shadow: -2px 0 8px rgba(0,0,0,0.18);
     }
-    .quiz-sidebar.sidebar--collapsed > *:not(.quiz-sidebar__footer):not(.sidebar-toggle),
+    .quiz-sidebar.sidebar--collapsed > *:not(.sidebar-toggle),
     .ns-sidebar.sidebar--collapsed > *:not(.sidebar-toggle) {
       display: none;
     }
@@ -1005,18 +1005,6 @@
     .q-num.answered { background: #22C55E; border-color: #22C55E; color: #fff; }
     .q-num.review   { background: #7C3AED; border-color: #7C3AED; color: #fff; }
 
-    /* Sidebar submit footer */
-    .quiz-sidebar__footer {
-      padding: 12px 14px;
-      border-top: 1px solid var(--g-neutral-300);
-      flex-shrink: 0;
-      margin-top: auto;
-      background: var(--g-neutral-100);
-    }
-
-    .quiz-sidebar__footer .btn {
-      width: 100%;
-    }
 
 
     /* ── Question type badges & TITA ── */
@@ -2322,17 +2310,6 @@
         </div>
 
         <!-- Footer actions -->
-        <div class="quiz-footer">
-          <div class="quiz-footer__left">
-            <button class="btn btn--secondary" id="btn-mark-review">Mark for Review &amp; Next</button>
-            <button class="btn btn--secondary" id="btn-clear">Clear response</button>
-          </div>
-          <div class="quiz-footer__right">
-            <button class="btn btn--save-next" id="btn-save-next">Save &amp; Next</button>
-            <button class="btn btn--primary" id="btn-submit-s3">Submit</button>
-          </div>
-        </div>
-
       </div>
 
 
@@ -2394,7 +2371,21 @@
         </div>
 
       </div>
+
     </div>
+
+    <!-- Sticky bottom nav -->
+    <div class="quiz-footer">
+      <div class="quiz-footer__left">
+        <button class="btn btn--secondary" id="btn-mark-review">Mark for Review &amp; Next</button>
+        <button class="btn btn--secondary" id="btn-clear">Clear response</button>
+      </div>
+      <div class="quiz-footer__right">
+        <button class="btn btn--save-next" id="btn-save-next">Save &amp; Next</button>
+        <button class="btn btn--primary" id="btn-submit-s3">Submit</button>
+      </div>
+    </div>
+
   </section>
 
 
@@ -2538,18 +2529,6 @@
             </div>
           </div>
 
-          <!-- Footer actions -->
-          <div class="quiz-footer">
-            <div class="quiz-footer__left">
-              <button class="btn btn--secondary">Mark for Review &amp; Next</button>
-              <button class="btn btn--secondary">Clear response</button>
-            </div>
-            <div class="quiz-footer__right">
-              <button class="btn btn--save-next">Save &amp; Next</button>
-              <button class="btn btn--primary" id="btn-submit-s4">Submit</button>
-            </div>
-          </div>
-
         </div>
 
 
@@ -2611,6 +2590,19 @@
 
         </div>
       </div>
+
+      <!-- Sticky bottom nav -->
+      <div class="quiz-footer">
+        <div class="quiz-footer__left">
+          <button class="btn btn--secondary">Mark for Review &amp; Next</button>
+          <button class="btn btn--secondary">Clear response</button>
+        </div>
+        <div class="quiz-footer__right">
+          <button class="btn btn--save-next">Save &amp; Next</button>
+          <button class="btn btn--primary" id="btn-submit-s4">Submit</button>
+        </div>
+      </div>
+
     </div>
   </section>
 
