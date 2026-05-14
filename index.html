@@ -689,6 +689,7 @@
     }
 
     .quiz-footer__left { display: flex; gap: 8px; }
+    .quiz-footer__right { display: flex; gap: 8px; }
 
     /* Sidebar collapse toggle — sits on the right edge, inside the main panel */
     .sidebar-toggle {
@@ -1017,14 +1018,6 @@
       width: 100%;
     }
 
-    .quiz-sidebar.sidebar--collapsed .quiz-sidebar__footer {
-      position: fixed;
-      bottom: 0;
-      right: 0;
-      width: 260px;
-      z-index: 10;
-      border-left: 1px solid var(--g-neutral-300);
-    }
 
     /* ── Question type badges & TITA ── */
     .q-type-badge {
@@ -2334,7 +2327,10 @@
             <button class="btn btn--secondary" id="btn-mark-review">Mark for Review &amp; Next</button>
             <button class="btn btn--secondary" id="btn-clear">Clear response</button>
           </div>
-          <button class="btn btn--save-next" id="btn-save-next">Save &amp; Next</button>
+          <div class="quiz-footer__right">
+            <button class="btn btn--save-next" id="btn-save-next">Save &amp; Next</button>
+            <button class="btn btn--primary" id="btn-submit-s3">Submit</button>
+          </div>
         </div>
 
       </div>
@@ -2395,11 +2391,6 @@
           <div class="qnav-section__header">VARC</div>
           <div class="qnav-section__label">Choose a Question</div>
           <div class="q-grid" id="q-grid"></div>
-        </div>
-
-        <!-- Submit -->
-        <div class="quiz-sidebar__footer">
-          <button class="btn btn--primary" id="btn-submit-s3">Submit</button>
         </div>
 
       </div>
@@ -2553,7 +2544,10 @@
               <button class="btn btn--secondary">Mark for Review &amp; Next</button>
               <button class="btn btn--secondary">Clear response</button>
             </div>
-            <button class="btn btn--save-next">Save &amp; Next</button>
+            <div class="quiz-footer__right">
+              <button class="btn btn--save-next">Save &amp; Next</button>
+              <button class="btn btn--primary" id="btn-submit-s4">Submit</button>
+            </div>
           </div>
 
         </div>
@@ -2615,10 +2609,6 @@
             <div class="q-grid q-grid-g"></div>
           </div>
 
-          <!-- Submit -->
-          <div class="quiz-sidebar__footer">
-            <button class="btn btn--primary" id="btn-submit-s4">Submit</button>
-          </div>
 
         </div>
       </div>
