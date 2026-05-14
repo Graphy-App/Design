@@ -1010,10 +1010,20 @@
       border-top: 1px solid var(--g-neutral-300);
       flex-shrink: 0;
       margin-top: auto;
+      background: var(--g-neutral-100);
     }
 
     .quiz-sidebar__footer .btn {
       width: 100%;
+    }
+
+    .quiz-sidebar.sidebar--collapsed .quiz-sidebar__footer {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 260px;
+      z-index: 10;
+      border-left: 1px solid var(--g-neutral-300);
     }
 
     /* ── Question type badges & TITA ── */
