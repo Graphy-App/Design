@@ -720,16 +720,6 @@
       width: 0;
       min-width: 0;
     }
-    .quiz-sidebar.sidebar--collapsed .quiz-sidebar__footer {
-      position: fixed;
-      bottom: 0;
-      right: 0;
-      width: 260px;
-      background: var(--g-neutral-100);
-      border-top: 1px solid var(--g-neutral-300);
-      padding: 12px 14px;
-      z-index: 10;
-    }
 
     /* Right sidebar */
     .quiz-sidebar {
@@ -2339,6 +2329,7 @@
           </div>
           <div class="quiz-footer__right">
             <button class="btn btn--save-next" id="btn-save-next">Save &amp; Next</button>
+            <button class="btn btn--primary" id="btn-submit-s3">Submit</button>
           </div>
         </div>
 
@@ -2400,10 +2391,6 @@
           <div class="qnav-section__header">VARC</div>
           <div class="qnav-section__label">Choose a Question</div>
           <div class="q-grid" id="q-grid"></div>
-        </div>
-
-        <div class="quiz-sidebar__footer">
-          <button class="btn btn--primary" id="btn-submit-s3">Submit</button>
         </div>
 
       </div>
@@ -2620,10 +2607,6 @@
             <div class="qnav-section__header">VARC</div>
             <div class="qnav-section__label">Choose a Question</div>
             <div class="q-grid q-grid-g"></div>
-          </div>
-
-          <div class="quiz-sidebar__footer">
-            <button class="btn btn--primary" onclick="openSubmitModal()">Submit</button>
           </div>
 
         </div>
