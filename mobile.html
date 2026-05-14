@@ -58,7 +58,7 @@
 
     /* ── Phone mockup ── */
     .phone-frame {
-      width: 380px;
+      width: 400px;
       height: 900px;
       flex-shrink: 0;
       border-radius: 48px;
@@ -1018,8 +1018,8 @@
     }
 
     .q-num:hover { filter: brightness(0.95); }
-    .q-num.current  { background: #E84820; border-color: #E84820; color: #fff; font-weight: 700; border-radius: 8px; }
-    .q-num.answered { background: #22C55E; border-color: #22C55E; color: #fff; }
+    .q-num.current  { background: #E84820; border-color: #761700; color: #fff; font-weight: 700; border-radius: 8px; }
+    .q-num.answered { background: #22C55E; border-color: #358200; color: #fff; }
     .q-num.review   { background: #7C3AED; border-color: #7C3AED; color: #fff; }
 
     /* Mobile sidebar: compact q-num grid */
@@ -1230,18 +1230,18 @@
       overflow: hidden;
     }
     .submit-modal__head {
-      padding: 24px 28px 20px;
+      padding: 12px;
       border-bottom: 1px solid var(--g-neutral-300);
     }
     .submit-modal__title {
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--g-neutral-900);
       letter-spacing: -0.3px;
       margin: 0;
     }
     .submit-modal__body {
-      padding: 24px 28px 16px;
+      padding: 12px;
     }
     .submit-modal__stats {
       display: grid;
@@ -1327,7 +1327,7 @@
       align-items: center;
       justify-content: flex-end;
       gap: 10px;
-      padding: 16px 28px 20px;
+      padding: 12px;
       border-top: 1px solid var(--g-neutral-300);
     }
     .btn--disabled {
@@ -1443,16 +1443,16 @@
       background: #fff;
       border-radius: 14px;
       width: 520px;
-      max-width: 96vw;
+      max-width: 90%;
       box-shadow: 0 20px 60px rgba(0,0,0,0.28);
       overflow: hidden;
     }
     .tabswitch-modal__head {
-      padding: 28px 32px 24px;
+      padding: 12px;
       border-bottom: 1px solid var(--g-neutral-300);
     }
     .tabswitch-modal__title {
-      font-size: 20px;
+      font-size: 14px;
       font-weight: 700;
       font-family: var(--g-font-sans);
       color: var(--g-neutral-900);
@@ -1461,10 +1461,10 @@
       margin: 0;
     }
     .tabswitch-modal__body {
-      padding: 24px 32px 28px;
+      padding: 12px;
     }
     .tabswitch-modal__desc {
-      font-size: 15px;
+      font-size: 13px;
       color: var(--g-neutral-700);
       line-height: 1.65;
       margin: 0;
@@ -1474,7 +1474,7 @@
       align-items: center;
       justify-content: flex-end;
       gap: 10px;
-      padding: 16px 32px 20px;
+      padding: 12px;
       border-top: 1px solid var(--g-neutral-300);
     }
 
@@ -1765,26 +1765,26 @@
       background: #fff;
       border-radius: 14px;
       width: 560px;
-      max-width: 96vw;
+      max-width: 90%;
       display: flex;
       flex-direction: column;
       box-shadow: 0 20px 60px rgba(0,0,0,0.2);
       overflow: hidden;
     }
     .report-modal__head {
-      padding: 24px 28px 20px;
+      padding: 12px;
       border-bottom: 1px solid var(--g-neutral-300);
       flex-shrink: 0;
     }
     .report-modal__head h2 {
-      font-size: 22px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--g-neutral-900);
       letter-spacing: -0.3px;
       margin: 0;
     }
     .report-modal__body {
-      padding: 22px 28px;
+      padding: 12px;
       flex: 1;
     }
     .report-modal__q-label {
@@ -1825,7 +1825,7 @@
       align-items: center;
       justify-content: flex-end;
       gap: 10px;
-      padding: 16px 28px;
+      padding: 12px;
       border-top: 1px solid var(--g-neutral-300);
       flex-shrink: 0;
     }
@@ -2097,6 +2097,10 @@
       z-index: 601;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
+      transition: right 0.28s ease;
+    }
+    .sidebar-toggle.is-open {
+      right: 88% !important;
     }
 
     /* ── Group questions: stacked, each panel independently scrollable ── */
@@ -2167,13 +2171,13 @@
     .ns-btn { padding: 0 12px; height: 36px; font-size: 12px; }
 
     /* ── Submit modal ── */
-    .submit-modal { width: calc(100% - 32px) !important; max-width: 400px; }
+    .submit-modal { width: 90% !important; max-width: 380px !important; }
 
     /* ── Disqualification modal ── */
-    .tabswitch-modal { border-radius: 8px; }
+    .tabswitch-modal { border-radius: 8px; width: 90% !important; }
 
     /* ── Report modal ── */
-    .report-modal { width: calc(100% - 24px) !important; }
+    .report-modal { width: 90% !important; }
 
     /* ── Question paper modal ── */
     .qpaper-modal { width: calc(100% - 16px) !important; max-height: 88%; }
@@ -3796,35 +3800,35 @@
     });
 
     // Mobile drawer behavior
-    function openMobDrawer(sidebarId, backdropId) {
+    function openMobDrawer(sidebarId, backdropId, toggleEl) {
       document.getElementById(sidebarId).classList.add('drawer-open');
       document.getElementById(backdropId).classList.add('open');
+      if (toggleEl) { toggleEl.classList.add('is-open'); toggleEl.innerHTML = '&#9664;'; }
     }
-    function closeMobDrawer(sidebarId, backdropId) {
+    function closeMobDrawer(sidebarId, backdropId, toggleEl) {
       document.getElementById(sidebarId).classList.remove('drawer-open');
       document.getElementById(backdropId).classList.remove('open');
+      if (toggleEl) { toggleEl.classList.remove('is-open'); toggleEl.innerHTML = '&#9654;'; }
     }
 
     function toggleMobDrawer(sidebarId, backdropId, toggleEl) {
       const sidebar = document.getElementById(sidebarId);
       if (sidebar.classList.contains('drawer-open')) {
-        closeMobDrawer(sidebarId, backdropId);
-        if (toggleEl) toggleEl.innerHTML = '&#9654;';
+        closeMobDrawer(sidebarId, backdropId, toggleEl);
       } else {
-        openMobDrawer(sidebarId, backdropId);
-        if (toggleEl) toggleEl.innerHTML = '&#9664;';
+        openMobDrawer(sidebarId, backdropId, toggleEl);
       }
     }
 
     const mobToggleS3 = document.getElementById('mob-sidebar-toggle-s3');
     const mobBackdropS3 = document.getElementById('mob-backdrop-s3');
     if (mobToggleS3) mobToggleS3.addEventListener('click', () => toggleMobDrawer('mob-sidebar-s3', 'mob-backdrop-s3', mobToggleS3));
-    if (mobBackdropS3) mobBackdropS3.addEventListener('click', () => { closeMobDrawer('mob-sidebar-s3', 'mob-backdrop-s3'); mobToggleS3.innerHTML = '&#9654;'; });
+    if (mobBackdropS3) mobBackdropS3.addEventListener('click', () => closeMobDrawer('mob-sidebar-s3', 'mob-backdrop-s3', mobToggleS3));
 
     const mobToggleS4 = document.getElementById('mob-sidebar-toggle-s4');
     const mobBackdropS4 = document.getElementById('mob-backdrop-s4');
     if (mobToggleS4) mobToggleS4.addEventListener('click', () => toggleMobDrawer('mob-sidebar-s4', 'mob-backdrop-s4', mobToggleS4));
-    if (mobBackdropS4) mobBackdropS4.addEventListener('click', () => { closeMobDrawer('mob-sidebar-s4', 'mob-backdrop-s4'); mobToggleS4.innerHTML = '&#9654;'; });
+    if (mobBackdropS4) mobBackdropS4.addEventListener('click', () => closeMobDrawer('mob-sidebar-s4', 'mob-backdrop-s4', mobToggleS4));
   </script>
 
 </div><!-- /.phone-frame__screen -->
