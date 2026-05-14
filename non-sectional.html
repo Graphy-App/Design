@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name of non sectional exam</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 14px;
+      background: #fff;
+      color: #1a1a1a;
+    }
+
+    /* ── Overall layout ── */
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Top header ── */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .top-header__title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .top-header__links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .top-header__link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #0E2666;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .top-header__link svg {
+      width: 16px;
+      height: 16px;
+      stroke: #0E2666;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    /* ── Content + sidebar row ── */
+    .body-row {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── Main content area ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #e0e0e0;
+      overflow: hidden;
+    }
+
+    /* Instruction bar */
+    .instruction-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .instruction-bar__text {
+      font-size: 13px;
+      color: #333;
+    }
+
+    /* Section tabs */
+    .section-tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .section-tab {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 6px;
+      border: none;
+      background: #e8e8e8;
+      color: #1a1a1a;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .section-tab--active {
+      background: #0E2666;
+      color: #fff;
+    }
+
+    .section-tab svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      flex-shrink: 0;
+    }
+
+    .calc-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #0E2666;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .calc-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: #0E2666;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    /* Timer bar */
+    .timer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 8px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      gap: 10px;
+    }
+
+    /* Section info bar (below timer) */
+    .section-info-bar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 6px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      min-height: 38px;
+    }
+
+    .section-info-bar__pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: #0E2666;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+    }
+
+    .section-info-bar__pill svg {
+      width: 15px;
+      height: 15px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 1.8;
+      flex-shrink: 0;
+    }
+
+    .timer-bar__label {
+      font-size: 13px;
+      color: #333;
+    }
+
+    .timer-value {
+      background: #dcfce7;
+      color: #4b7a5a;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 4px 16px;
+      border-radius: 999px;
+    }
+
+    /* Marks bar */
+    .marks-bar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 8px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 13px;
+      color: #333;
+      gap: 4px;
+    }
+
+    .marks-bar strong {
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .marks-bar .separator {
+      margin: 0 8px;
+      color: #999;
+    }
+
+    /* Question scrollable area */
+    .question-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+    }
+
+    .question-no {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      margin-left: -20px;
+      margin-right: -20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .question-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+
+    .question-text strong {
+      font-weight: 700;
+    }
+
+    .question-body {
+      font-size: 13px;
+      line-height: 1.75;
+      color: #333;
+    }
+
+    /* ── Bottom footer row (spans full width) ── */
+    .footer-row {
+      display: flex;
+      flex-shrink: 0;
+      border-top: 1px solid #e0e0e0;
+      background: #fff;
+    }
+
+    .footer-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-right: 1px solid #e0e0e0;
+    }
+
+    .footer-sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 14px;
+    }
+
+    .footer__left {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer__right {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 9px 18px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #1a1a1a;
+    }
+
+    .btn--teal {
+      background: #0d9488;
+      color: #fff;
+      border-color: #0d9488;
+    }
+
+    .btn--navy {
+      background: #0E2666;
+      color: #fff;
+      border-color: #0E2666;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar-wrapper {
+      position: relative;
+      display: flex;
+    }
+
+    .sidebar-toggle {
+      position: absolute;
+      left: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 50px;
+      background: #4b5563;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      border-radius: 4px 0 0 4px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      border-left: 1px solid #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .sidebar__scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 20px 14px 14px;
+    }
+
+    .sidebar__footer {
+      flex-shrink: 0;
+      padding: 12px 14px;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Legend */
+    .legend {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 4px;
+      margin-bottom: 14px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #333;
+    }
+
+    .legend-item--full {
+      grid-column: 1 / -1;
+      align-items: flex-start;
+    }
+
+    /* Shield badge wrapper (for green & orange) */
+    .badge-shield-wrap {
+      position: relative;
+      width: 36px;
+      height: 44px; /* 34px rect + 10px triangle */
+      flex-shrink: 0;
+    }
+
+    .badge-shield-wrap .badge-rect {
+      width: 36px;
+      height: 34px;
+      border-radius: 5px 5px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .badge-shield-wrap .badge-rect--green  { background: #51BA00; }
+    .badge-shield-wrap .badge-rect--orange { background: #FF384F; }
+
+    .badge-shield-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+    }
+    .badge-shield-wrap.green::after  { border-top: 10px solid #51BA00; }
+    .badge-shield-wrap.orange::after { border-top: 10px solid #FF384F; }
+
+    /* Square badges */
+    .badge-sq {
+      width: 36px;
+      height: 34px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .badge-sq--gray   { background: #f0f0f0; color: #555; border: 1.5px solid #bbb; }
+    .badge-sq--purple { background: #7B509B; color: #fff; }
+
+    /* Purple circle with small green icon */
+    .badge-circle-wrap {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+    .badge-circle-wrap .badge-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #7B509B;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .badge-circle-wrap .badge-icon {
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 14px;
+      height: 14px;
+      background: #4caf50;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .badge-circle-wrap .badge-icon svg {
+      width: 9px;
+      height: 9px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .legend-divider {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 2px -20px 14px -14px;
+    }
+
+    /* Question palette */
+    .palette-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .palette-btn-wrap { display: contents; }
+
+    .palette-btn {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #d4d4d4;
+      border-radius: 4px;
+      border: none;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Top header -->
+  <header class="top-header">
+    <span class="top-header__title">Name of non sectional exam</span>
+    <div class="top-header__links">
+      <a class="top-header__link" href="#">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="1.2" fill="currentColor" stroke="none"/></svg>
+        View Instructions
+      </a>
+      <a class="top-header__link" href="#">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><circle cx="10" cy="15" r="3" fill="none"/><line x1="12.5" y1="17.5" x2="15" y2="20"/></svg>
+        Question Paper
+      </a>
+    </div>
+  </header>
+
+  <!-- Body row -->
+  <div class="body-row">
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Instruction + Calculator -->
+      <div class="instruction-bar">
+        <span id="instruction-text" class="instruction-bar__text">Read each question carefully before answering</span>
+        <div id="section-tabs" class="section-tabs" style="display:none">
+          <button class="section-tab">VARC <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="1.2" fill="currentColor" stroke="none"/></svg></button>
+          <button class="section-tab section-tab--active">DILR <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="1.2" fill="currentColor" stroke="none"/></svg></button>
+          <button class="section-tab">QA <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="1.2" fill="currentColor" stroke="none"/></svg></button>
+        </div>
+        <button class="calc-btn">
+          <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg>
+          Calculator
+        </button>
+      </div>
+
+      <!-- Timer -->
+      <div class="timer-bar">
+        <span class="timer-bar__label">Remaining Time:</span>
+        <span class="timer-value">01:52:50</span>
+      </div>
+
+      <!-- Section info bar -->
+      <div class="section-info-bar">
+        <span id="active-section-label"></span>
+      </div>
+
+      <!-- Marks info -->
+      <div class="marks-bar">
+        Marks for correct response: <strong style="color:#4caf50;">3.00</strong>
+        <span class="separator">|</span>
+        Negative marking: <strong style="color:#e53935;">0.00</strong>
+      </div>
+
+      <!-- Question -->
+      <div class="question-area">
+        <div class="question-no">Question No. 1</div>
+        <p class="question-text">
+          <strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</strong>
+        </p>
+        <p class="question-body">
+          It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+      </div>
+
+    </div><!-- /main -->
+
+    <!-- Sidebar wrapper -->
+    <div class="sidebar-wrapper">
+      <div class="sidebar-toggle">&gt;</div>
+      <aside class="sidebar">
+      <div class="sidebar__scroll">
+
+        <!-- Legend -->
+        <div class="legend">
+          <!-- Answered: green shield -->
+          <div class="legend-item">
+            <div class="badge-shield-wrap green">
+              <div class="badge-rect badge-rect--green">0</div>
+            </div>
+            <span>Answered</span>
+          </div>
+          <!-- Not Answered: red shield -->
+          <div class="legend-item">
+            <div class="badge-shield-wrap orange">
+              <div class="badge-rect badge-rect--orange">20</div>
+            </div>
+            <span>Not Answered</span>
+          </div>
+          <!-- Not Visited: gray square -->
+          <div class="legend-item">
+            <div class="badge-sq badge-sq--gray">0</div>
+            <span>Not Visited</span>
+          </div>
+          <!-- Marked for Review: purple square -->
+          <div class="legend-item">
+            <div class="badge-sq badge-sq--purple">0</div>
+            <span>Marked for Review</span>
+          </div>
+          <!-- Answered & Marked: purple circle + green icon -->
+          <div class="legend-item legend-item--full">
+            <div class="badge-circle-wrap">
+              <div class="badge-circle">0</div>
+              <div class="badge-icon">
+                <svg viewBox="0 0 9 9"><rect x="1" y="1" width="7" height="7" rx="1"/><line x1="3" y1="1" x2="3" y2="8"/></svg>
+              </div>
+            </div>
+            <span>Answered &amp; Marked for Review (will be considered for evaluation)</span>
+          </div>
+        </div>
+
+        <hr class="legend-divider">
+
+        <!-- Palette -->
+        <div class="palette-title">Choose a Question</div>
+        <div class="palette-grid">
+          <div class="palette-btn-wrap"><button class="palette-btn">1</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">2</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">3</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">4</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">5</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">6</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">7</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">8</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">9</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">10</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">11</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">12</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">13</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">14</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">15</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">16</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">17</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">18</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">19</button></div>
+          <div class="palette-btn-wrap"><button class="palette-btn">20</button></div>
+        </div>
+
+      </div><!-- /sidebar__scroll -->
+      </aside>
+    </div><!-- /sidebar-wrapper -->
+
+  </div><!-- /body-row -->
+
+  <!-- Shared footer row — one line across both columns -->
+  <div class="footer-row">
+    <div class="footer-main">
+      <div class="footer__left">
+        <button class="btn">Mark for Review &amp; Next</button>
+        <button class="btn">Clear Response</button>
+      </div>
+      <div class="footer__right">
+        <button class="btn btn--teal">Save &amp; Next</button>
+      </div>
+    </div>
+    <div class="footer-sidebar">
+      <button class="btn btn--navy" style="padding: 10px 32px; font-size: 14px;">Submit</button>
+    </div>
+  </div>
+
+</div>
+<script>
+  function applyHash() {
+    const sectional = window.location.hash === '#sectional';
+    document.getElementById('instruction-text').style.display = sectional ? 'none' : '';
+    document.getElementById('section-tabs').style.display = sectional ? 'flex' : 'none';
+    const infoIcon = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="1.2" fill="currentColor" stroke="none"/></svg>`;
+    document.getElementById('active-section-label').innerHTML = sectional
+      ? `<span class="section-info-bar__pill">DILR ${infoIcon}</span>`
+      : '';
+  }
+  window.addEventListener('hashchange', applyHash);
+  applyHash();
+</script>
+</body>
+</html>
