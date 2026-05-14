@@ -2322,7 +2322,7 @@
 
       <!-- Right sidebar (drawer on mobile) -->
       <div class="quiz-sidebar">
-        <div class="sidebar-toggle">&#9664;</div>
+        <div class="sidebar-toggle"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
 
         <!-- User block -->
         <div class="sidebar__user">
@@ -2541,7 +2541,7 @@
 
         <!-- Right sidebar (drawer on mobile) -->
         <div class="quiz-sidebar quiz-sidebar-g">
-          <div class="sidebar-toggle sidebar-toggle-g">&#9664;</div>
+          <div class="sidebar-toggle sidebar-toggle-g"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
 
           <div class="sidebar__user">
             <div class="sidebar__avatar">
@@ -2742,7 +2742,7 @@
 
       <!-- Right sidebar -->
       <div class="ns-sidebar">
-        <div class="sidebar-toggle">&#9664;</div>
+        <div class="sidebar-toggle"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
 
         <!-- Status legend -->
         <div class="ns-status-grid">
@@ -3033,7 +3033,7 @@
       toggle.addEventListener('click', function () {
         const sidebar = this.closest('.quiz-sidebar, .ns-sidebar');
         const isCollapsed = sidebar.classList.toggle('sidebar--collapsed');
-        this.innerHTML = isCollapsed ? '&#9654;' : '&#9664;';
+        this.innerHTML = isCollapsed ? '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,2 8,8 3,14"/></svg>' : '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg>';
       });
     });
 
