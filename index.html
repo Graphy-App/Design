@@ -712,14 +712,18 @@
     }
     .submit-float {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      right: 0;
+      bottom: 0;
+      width: 260px;
       z-index: 50;
       display: none;
-      min-width: 110px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      padding: 12px 14px;
+      background: #F7F9FA;
+      border-top: 1px solid var(--g-neutral-300);
+      border-left: 1px solid var(--g-neutral-300);
     }
     .submit-float.visible { display: block; }
+    .submit-float .btn { width: 100%; }
 
     /* Right sidebar */
     .quiz-sidebar {
