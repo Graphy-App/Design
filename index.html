@@ -2188,12 +2188,12 @@
 
         <footer class="g-footer g-footer--stacked">
           <label class="g-terms">
-            <input type="checkbox">
+            <input type="checkbox" id="agree-terms">
             I agree to the above Terms &amp; Conditions for this examination.
           </label>
           <div class="g-footer__actions">
             <a href="#screen-1" class="btn btn--secondary" data-nav="screen-1">Previous</a>
-            <a href="#screen-3" class="btn btn--primary" data-nav="screen-3">I am ready to begin</a>
+            <a href="#screen-3" class="btn btn--primary btn--disabled" id="ready-btn" data-nav="screen-3">I am ready to begin</a>
           </div>
         </footer>
       </div>
@@ -2971,7 +2971,13 @@
             <li>You will be allowed to leave the test hall only after a minimum of 120 minutes.</li>
             <li>The <strong>Countdown Timer</strong> at the top right corner will display remaining time. <strong>When the timer reaches zero, the test for that section will automatically end.</strong></li>
             <li>The question paper will have a mix of <strong>Multiple Choice Question (MCQ) type</strong> with options and <strong>Non-MCQ type.</strong></li>
+            <li>A writing pad will be provided for rough work and must be returned after the test. <strong>Please note that only one writing pad will be provided to you.</strong></li>
             <li>An on-screen calculator will be provided. You will <strong>not be allowed</strong> to use any other calculator, computing machine, or device.</li>
+            <li>The question palette on the right shows each question's status: <strong>not visited</strong> (grey), <strong>not answered</strong> (red/pentagon), <strong>answered</strong> (green/house), <strong>marked for review</strong> (purple circle), <strong>answered &amp; marked</strong> (purple circle + green badge — will be evaluated).</li>
+            <li>You can click the " &lt; " arrow to collapse the question palette and maximise the window; click " &gt; " on the right side to restore it.</li>
+            <li><strong>To answer a question:</strong> (a) Click a question number in the palette to navigate directly. (b) Select an MCQ answer by clicking the radio button before the choice. For Non-MCQ, enter only a whole number using the on-screen keyboard. (c) Click <strong>'Save &amp; Next'</strong> to save and move on, or <strong>'Mark for Review &amp; Next'</strong> to flag it. <strong>Caution: navigating away without clicking these buttons will not save your answer.</strong> (d) Use the <strong>'Question Paper'</strong> button to view all questions in a section.</li>
+            <li><strong>To change your response:</strong> Click the question number in the palette, then click <strong>'Clear Response'</strong> to deselect, or click a different radio button to change. Always click <strong>'Save &amp; Next'</strong> or <strong>'Mark for Review &amp; Next'</strong> to save the change.</li>
+            <li><strong>Navigating sections:</strong> Sections are administered in order — VARC → DILR → QA. You can move to the next section only after 40 minutes have elapsed. The active section is highlighted in the top bar.</li>
           </ol>
         </div>
         <div>
@@ -2993,6 +2999,13 @@
   </div>
 
   <script>
+    /* ── Terms checkbox → enable ready button ── */
+    const agreeCheckbox = document.getElementById('agree-terms');
+    const readyBtn = document.getElementById('ready-btn');
+    agreeCheckbox.addEventListener('change', () => {
+      readyBtn.classList.toggle('btn--disabled', !agreeCheckbox.checked);
+    });
+
     /* ── Screen navigation ── */
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
