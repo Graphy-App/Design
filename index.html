@@ -710,20 +710,9 @@
       z-index: 2;
       box-shadow: -2px 0 8px rgba(0,0,0,0.18);
     }
-    .submit-float {
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      width: 260px;
-      z-index: 50;
+    .quiz-sidebar.sidebar--collapsed > *:not(.quiz-sidebar__footer) {
       display: none;
-      padding: 12px 14px;
-      background: #F7F9FA;
-      border-top: 1px solid var(--g-neutral-300);
-      border-left: 1px solid var(--g-neutral-300);
     }
-    .submit-float.visible { display: block; }
-    .submit-float .btn { width: 100%; }
 
     /* Right sidebar */
     .quiz-sidebar {
@@ -3043,10 +3032,8 @@
       toggle.addEventListener('click', function () {
         const wrap = this.closest('.quiz-main');
         const sidebar = wrap.parentElement.querySelector('.quiz-sidebar');
-        const isHidden = sidebar.style.display === 'none';
-        sidebar.style.display = isHidden ? 'flex' : 'none';
-        this.innerHTML = isHidden ? '&#9654;' : '&#9664;';
-        document.getElementById('btn-submit-float').classList.toggle('visible', !isHidden);
+        const isCollapsed = sidebar.classList.toggle('sidebar--collapsed');
+        this.innerHTML = isCollapsed ? '&#9654;' : '&#9664;';
       });
     });
 
@@ -3727,7 +3714,6 @@
 
     document.getElementById('btn-submit-s3').addEventListener('click', openSubmitModal);
     document.getElementById('btn-submit-s4').addEventListener('click', openSubmitModal);
-    document.getElementById('btn-submit-float').addEventListener('click', openSubmitModal);
     document.getElementById('modal-cancel').addEventListener('click', () => modalBackdrop.classList.remove('open'));
     /* Close on backdrop click */
     modalBackdrop.addEventListener('click', e => { if (e.target === modalBackdrop) modalBackdrop.classList.remove('open'); });
@@ -3885,6 +3871,5 @@
 
   </script>
 
-  <button class="btn btn--primary submit-float" id="btn-submit-float">Submit</button>
 </body>
 </html>
