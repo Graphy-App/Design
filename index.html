@@ -1855,6 +1855,41 @@
       flex-shrink: 0;
     }
     .qpaper-modal__warning-icon { font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+    .qpaper-modal__warning--brand {
+      background: var(--g-brand-400);
+      border-bottom-color: var(--g-brand-500);
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      justify-content: center;
+    }
+    .qpaper-section-hdr {
+      padding: 12px 24px 4px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--g-brand-300);
+    }
+    .qpaper-q-opts {
+      grid-column: 2;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .qpaper-q-opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--g-neutral-700);
+      line-height: 1.4;
+    }
+    .qpaper-q-opt-num {
+      font-weight: 700;
+      color: var(--g-neutral-800);
+      min-width: 14px;
+      flex-shrink: 0;
+    }
     .qpaper-modal__body {
       overflow-y: auto;
       flex: 1;
@@ -2906,9 +2941,8 @@
         <h2 class="qpaper-modal__title">Question Paper</h2>
         <button class="qpaper-modal__close" id="qpaper-close" aria-label="Close">&#x2715;</button>
       </div>
-      <div class="qpaper-modal__warning">
-        <span class="qpaper-modal__warning-icon">&#9888;</span>
-        The timer continues to run while you are viewing this screen. Please return to the test to save time.
+      <div class="qpaper-modal__warning qpaper-modal__warning--brand">
+        Note that the timer is ticking. Kindly close this window to attend to the questions.
       </div>
       <div class="qpaper-modal__body" id="qpaper-list"></div>
       <div class="qpaper-modal__foot">
@@ -2923,6 +2957,9 @@
       <div class="qpaper-modal__head">
         <h2 class="qpaper-modal__title">Instructions</h2>
         <button class="qpaper-modal__close" id="instructions-close" aria-label="Close">&#x2715;</button>
+      </div>
+      <div class="qpaper-modal__warning qpaper-modal__warning--brand">
+        Note that the timer is ticking. Kindly close this window to attend to the questions.
       </div>
       <div class="qpaper-modal__body" style="padding:24px 28px;display:flex;flex-direction:column;gap:20px">
         <div>
@@ -3719,6 +3756,15 @@
       qpaperList.innerHTML = '';
       let lastPassage = null;
 
+      /* Section header */
+      const sectionName = document.querySelector('.qnav-section__header')?.textContent?.trim() || '';
+      if (sectionName) {
+        const hdr = document.createElement('div');
+        hdr.className = 'qpaper-section-hdr';
+        hdr.textContent = sectionName;
+        qpaperList.appendChild(hdr);
+      }
+
       QUESTIONS.forEach((q, i) => {
         /* Insert passage block once before first question of each group */
         if (q.type === 'group' && q.passage && q.passage !== lastPassage) {
@@ -3745,6 +3791,16 @@
             q.sentences.map(s => `<li style="margin-bottom:4px">${s}</li>`).join('') + '</ol>';
         }
 
+        /* Options for MCQ/group */
+        let optsHTML = '';
+        if (q.opts && q.opts.length) {
+          optsHTML = `<div class="qpaper-q-opts">` +
+            q.opts.map((o, idx) =>
+              `<div class="qpaper-q-opt"><span class="qpaper-q-opt-num">${idx + 1}</span><span>${o}</span></div>`
+            ).join('') +
+            `</div>`;
+        }
+
         const marksC = q.marks ? q.marks.c : 1;
         const marksW = q.marks ? q.marks.w : 0;
         const negStr = marksW < 0
@@ -3753,7 +3809,7 @@
 
         row.innerHTML = `
           <div class="qpaper-q-num">Q${i + 1}</div>
-          <div class="qpaper-q-stem">${stemHTML}</div>
+          <div class="qpaper-q-stem">${stemHTML}${optsHTML}</div>
           <div class="qpaper-q-marks"><strong>+${marksC}</strong> / ${negStr}</div>
         `;
         qpaperList.appendChild(row);
