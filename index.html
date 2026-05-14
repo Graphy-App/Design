@@ -693,9 +693,9 @@
     /* Sidebar collapse toggle — sits on the right edge, inside the main panel */
     .sidebar-toggle {
       position: absolute;
-      right: 0;
+      left: 0;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translate(-100%, -50%);
       width: 22px;
       height: 56px;
       background: #1A1A2E;
@@ -710,7 +710,8 @@
       z-index: 2;
       box-shadow: -2px 0 8px rgba(0,0,0,0.18);
     }
-    .quiz-sidebar.sidebar--collapsed > *:not(.quiz-sidebar__footer) {
+    .quiz-sidebar.sidebar--collapsed > *:not(.quiz-sidebar__footer):not(.sidebar-toggle),
+    .ns-sidebar.sidebar--collapsed > *:not(.sidebar-toggle) {
       display: none;
     }
 
@@ -720,8 +721,9 @@
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      overflow: visible;
       background: var(--g-neutral-100);
+      position: relative;
     }
 
     /* Status legend */
@@ -1002,6 +1004,7 @@
       padding: 12px 14px;
       border-top: 1px solid var(--g-neutral-300);
       flex-shrink: 0;
+      margin-top: auto;
     }
 
     .quiz-sidebar__footer .btn {
@@ -1654,8 +1657,9 @@
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      overflow: visible;
       background: var(--g-neutral-100);
+      position: relative;
     }
     .ns-status-grid {
       padding: 14px 12px;
@@ -2309,9 +2313,6 @@
           </div>
         </div>
 
-        <!-- Sidebar collapse toggle -->
-        <div class="sidebar-toggle">&#9654;</div>
-
         <!-- Footer actions -->
         <div class="quiz-footer">
           <div class="quiz-footer__left">
@@ -2326,6 +2327,7 @@
 
       <!-- Right sidebar (drawer on mobile) -->
       <div class="quiz-sidebar">
+        <div class="sidebar-toggle">&#9664;</div>
 
         <!-- User block -->
         <div class="sidebar__user">
@@ -2530,9 +2532,6 @@
             </div>
           </div>
 
-          <!-- Sidebar collapse toggle -->
-          <div class="sidebar-toggle sidebar-toggle-g">&#9654;</div>
-
           <!-- Footer actions -->
           <div class="quiz-footer">
             <div class="quiz-footer__left">
@@ -2547,6 +2546,7 @@
 
         <!-- Right sidebar (drawer on mobile) -->
         <div class="quiz-sidebar quiz-sidebar-g">
+          <div class="sidebar-toggle sidebar-toggle-g">&#9664;</div>
 
           <div class="sidebar__user">
             <div class="sidebar__avatar">
@@ -2735,13 +2735,11 @@
           <p class="ns-q-para">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
         </div>
 
-        <!-- Sidebar toggle -->
-        <div class="sidebar-toggle">&#9654;</div>
-
       </div>
 
       <!-- Right sidebar -->
       <div class="ns-sidebar">
+        <div class="sidebar-toggle">&#9664;</div>
 
         <!-- Status legend -->
         <div class="ns-status-grid">
@@ -3027,11 +3025,10 @@
     const hash = location.hash.replace('#', '');
     showScreen(hash && document.getElementById(hash) ? hash : 'screen-1');
 
-    /* ── Sidebar toggles (screen 3 + screen 4) ── */
+    /* ── Sidebar toggles (screen 3 + screen 4 + screen 5) ── */
     document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
       toggle.addEventListener('click', function () {
-        const wrap = this.closest('.quiz-main');
-        const sidebar = wrap.parentElement.querySelector('.quiz-sidebar');
+        const sidebar = this.closest('.quiz-sidebar, .ns-sidebar');
         const isCollapsed = sidebar.classList.toggle('sidebar--collapsed');
         this.innerHTML = isCollapsed ? '&#9654;' : '&#9664;';
       });
