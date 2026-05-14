@@ -3801,14 +3801,24 @@
 
     // Mobile drawer behavior
     function openMobDrawer(sidebarId, backdropId, toggleEl) {
-      document.getElementById(sidebarId).classList.add('drawer-open');
+      const sidebar = document.getElementById(sidebarId);
       document.getElementById(backdropId).classList.add('open');
-      if (toggleEl) { toggleEl.classList.add('is-open'); toggleEl.innerHTML = '&#9664;'; }
+      sidebar.classList.add('drawer-open');
+      if (toggleEl) {
+        toggleEl.classList.add('is-open');
+        toggleEl.innerHTML = '&#9664;';
+        const sidebarWidth = sidebar.offsetWidth;
+        toggleEl.style.right = sidebarWidth + 'px';
+      }
     }
     function closeMobDrawer(sidebarId, backdropId, toggleEl) {
       document.getElementById(sidebarId).classList.remove('drawer-open');
       document.getElementById(backdropId).classList.remove('open');
-      if (toggleEl) { toggleEl.classList.remove('is-open'); toggleEl.innerHTML = '&#9654;'; }
+      if (toggleEl) {
+        toggleEl.classList.remove('is-open');
+        toggleEl.innerHTML = '&#9654;';
+        toggleEl.style.right = '0px';
+      }
     }
 
     function toggleMobDrawer(sidebarId, backdropId, toggleEl) {
