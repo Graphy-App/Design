@@ -696,19 +696,30 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 32px;
-      height: 64px;
-      background: #BDBDBD;
+      width: 28px;
+      height: 88px;
+      background: #1A1A2E;
       border: none;
       border-radius: 10px 0 0 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 14px;
-      color: #2D3136;
+      font-size: 15px;
+      color: #fff;
       z-index: 2;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.18);
     }
+    .submit-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 50;
+      display: none;
+      min-width: 110px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    }
+    .submit-float.visible { display: block; }
 
     /* Right sidebar */
     .quiz-sidebar {
@@ -3031,6 +3042,7 @@
         const isHidden = sidebar.style.display === 'none';
         sidebar.style.display = isHidden ? 'flex' : 'none';
         this.innerHTML = isHidden ? '&#9654;' : '&#9664;';
+        document.getElementById('btn-submit-float').classList.toggle('visible', !isHidden);
       });
     });
 
@@ -3711,6 +3723,7 @@
 
     document.getElementById('btn-submit-s3').addEventListener('click', openSubmitModal);
     document.getElementById('btn-submit-s4').addEventListener('click', openSubmitModal);
+    document.getElementById('btn-submit-float').addEventListener('click', openSubmitModal);
     document.getElementById('modal-cancel').addEventListener('click', () => modalBackdrop.classList.remove('open'));
     /* Close on backdrop click */
     modalBackdrop.addEventListener('click', e => { if (e.target === modalBackdrop) modalBackdrop.classList.remove('open'); });
@@ -3868,5 +3881,6 @@
 
   </script>
 
+  <button class="btn btn--primary submit-float" id="btn-submit-float">Submit</button>
 </body>
 </html>
