@@ -2979,34 +2979,92 @@
       <div class="qpaper-modal__warning qpaper-modal__warning--brand">
         Note that the timer is ticking. Kindly close this window to attend to the questions.
       </div>
-      <div class="qpaper-modal__body" style="padding:24px 28px;display:flex;flex-direction:column;gap:20px">
+      <div class="qpaper-modal__body" style="padding:24px 28px;display:flex;flex-direction:column;gap:24px;font-size:13px;line-height:1.7;color:var(--g-neutral-700)">
+        <!-- General Instructions -->
         <div>
           <h3 style="font-size:14px;font-weight:700;color:var(--g-neutral-900);margin:0 0 12px;text-decoration:underline">General Instructions:</h3>
-          <ol style="font-size:13px;line-height:1.7;color:var(--g-neutral-700);padding-left:20px;display:flex;flex-direction:column;gap:8px">
+          <ol style="padding-left:20px;display:flex;flex-direction:column;gap:10px">
             <li><strong>The number, type and pattern of questions, as well as sequence and timing of sections in the Mock Exam are only indicative and these are subject to variations from year to year as decided by the CAT authorities.</strong></li>
             <li>The test has 3 (three) sections. The total duration of the test is 120 minutes. PwD candidates will have 13 minutes and 20 seconds extra time for each section.</li>
-            <li>The time allotted to each section is 40 minutes (53 minutes and 20 seconds for PwD candidates). As soon as you start answering a section, the clock will start. On completion of 40 minutes, the clock will stop, the section will be locked, and responses will be auto-submitted. The same process will be repeated for the other two sections.</li>
+            <li>The time allotted to each section is 40 minutes (53 minutes and 20 seconds for PwD candidates). As soon as you start answering a section, the clock (displayed on the top right corner of the screen) will start. On completion of 40 minutes, the clock will stop, the particular section will be locked, and the responses to questions in that section will be auto-submitted. You will then need to move to the next section and start answering the next set of questions. The same process will be repeated for the other two sections. On submission of all three sections, a summary of your answers will be displayed on your screen.
+              <p style="margin-top:8px">For PwD candidates the process will be the same as above. The only exception is that, for each section, the PwD candidate will have 53 minutes and 20 seconds, with an option for submitting the answers of a section at any point of time after the completion of 40 minutes. Thus, PwD candidates will have the option to complete the entire test with all three sections within a maximum of 160 minutes.</p>
+            </li>
             <li>You will be allowed to leave the test hall only after a minimum of 120 minutes.</li>
-            <li>The <strong>Countdown Timer</strong> at the top right corner will display remaining time. <strong>When the timer reaches zero, the test for that section will automatically end.</strong></li>
+            <li>Your time will be set and synchronized to the server clock. The <strong>Countdown Timer</strong> at the top right corner of your screen will display the remaining time available to you to complete the currently active section. <strong>When the timer reaches zero, the test for that section will automatically end.</strong>
+              <p style="margin-top:8px">PwD candidates will be allowed to complete a section at any point of time between duration of 40 minutes and 53 minutes and 20 seconds by clicking on the <strong>'Submit'</strong> button. After 53 minutes and 20 seconds, however, the test for the section will automatically end.</p>
+            </li>
             <li>The question paper will have a mix of <strong>Multiple Choice Question (MCQ) type</strong> with options and <strong>Non-MCQ type.</strong></li>
-            <li>A writing pad will be provided for rough work and must be returned after the test. <strong>Please note that only one writing pad will be provided to you.</strong></li>
-            <li>An on-screen calculator will be provided. You will <strong>not be allowed</strong> to use any other calculator, computing machine, or device.</li>
-            <li>The question palette on the right shows each question's status: <strong>not visited</strong> (grey), <strong>not answered</strong> (red/pentagon), <strong>answered</strong> (green/house), <strong>marked for review</strong> (purple circle), <strong>answered &amp; marked</strong> (purple circle + green badge — will be evaluated).</li>
-            <li>You can click the " &lt; " arrow to collapse the question palette and maximise the window; click " &gt; " on the right side to restore it.</li>
-            <li><strong>To answer a question:</strong> (a) Click a question number in the palette to navigate directly. (b) Select an MCQ answer by clicking the radio button before the choice. For Non-MCQ, enter only a whole number using the on-screen keyboard. (c) Click <strong>'Save &amp; Next'</strong> to save and move on, or <strong>'Mark for Review &amp; Next'</strong> to flag it. <strong>Caution: navigating away without clicking these buttons will not save your answer.</strong> (d) Use the <strong>'Question Paper'</strong> button to view all questions in a section.</li>
-            <li><strong>To change your response:</strong> Click the question number in the palette, then click <strong>'Clear Response'</strong> to deselect, or click a different radio button to change. Always click <strong>'Save &amp; Next'</strong> or <strong>'Mark for Review &amp; Next'</strong> to save the change.</li>
-            <li><strong>Navigating sections:</strong> Sections are administered in order — VARC → DILR → QA. You can move to the next section only after 40 minutes have elapsed. The active section is highlighted in the top bar.</li>
+            <li>A writing pad will be provided to the candidates for rough work, which will have to be returned after the test. <strong>Please note that only one writing pad will be provided to you.</strong> Candidates should clearly write their name and registration number on the writing pad.</li>
+            <li>An on-screen calculator will be provided, which can be used for computing. You will <strong>not be allowed</strong> to use any other calculator, computing machine, or device.</li>
+            <li>The question palette displayed on the right side of the screen will show the status of each question using one of the following symbols:
+              <table class="g-table" style="margin-top:10px">
+                <thead><tr><th>S. No.</th><th>Question Number with Status</th><th>Meaning</th></tr></thead>
+                <tbody>
+                  <tr><td>A</td><td><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:linear-gradient(180deg,#F7F7F7,#C5C5C5);border:1.5px solid #B7B7B7;border-radius:6px;font-size:12px;font-weight:700;color:#303030">1</span></td><td>You have not visited the question yet.</td></tr>
+                  <tr><td>B</td><td><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:#E84820;border-radius:4px;font-size:12px;font-weight:700;color:#fff">3</span></td><td>You have visited the question but have not answered it.</td></tr>
+                  <tr><td>C</td><td><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:#3CB345;border-radius:4px;font-size:12px;font-weight:700;color:#fff">5</span></td><td>You have answered the question but have not flagged it as Marked for Review.</td></tr>
+                  <tr><td>D</td><td><span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:#7752C6;border-radius:50%;font-size:12px;font-weight:700;color:#fff">7</span></td><td>You have not answered the question but have flagged it as Marked for Review.</td></tr>
+                  <tr><td>E*</td><td><span style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:#7752C6;border-radius:50%;font-size:12px;font-weight:700;color:#fff">0<span style="position:absolute;bottom:-3px;right:-4px;width:13px;height:13px;background:#3CB345;border-radius:50%;font-size:8px;display:flex;align-items:center;justify-content:center">&#9776;</span></span></td><td>You have answered the question as well as flagged it as Marked for Review.</td></tr>
+                </tbody>
+              </table>
+              <p style="margin-top:8px">*Answers to all questions flagged as <strong>'Marked for Review'</strong> (Serial No. E) will be automatically considered as submitted for evaluation at the end of the time allotted for that section.</p>
+            </li>
+            <li>You can click on the " &lt; " arrow which appears to the left of the question palette to collapse the question palette and maximize the window. To view the question palette again, you can click on the " &gt; " which appears on the right side of the computer console.</li>
+            <li><strong>To answer a question, you will need to do the following:</strong>
+              <ol type="a" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+                <li>Click on the question number in the question palette to go to that question directly.</li>
+                <li>Select an answer for an <strong>MCQ</strong> by clicking on the radio button placed just before the choice. <strong>For a Non-MCQ, enter only a whole number</strong> as the answer using the on-screen keyboard.</li>
+                <li>Click on <strong>'Save &amp; Next'</strong> to save your answer and go to the next question. Alternatively, click <strong>'Mark for Review &amp; Next'</strong> to save and flag it for review. <strong>Caution: Your answer will not be saved if you navigate directly to another question without clicking these buttons.</strong></li>
+                <li>You will be able to view all the questions of a section by clicking on the <strong>'Question Paper'</strong> button.</li>
+              </ol>
+            </li>
+            <li><strong>Procedure for changing your response to a question:</strong>
+              <ol type="a" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+                <li>To deselect your chosen answer, click on the question number in the question palette and click on the <strong>'Clear Response'</strong> button.</li>
+                <li>To change your chosen answer, click on the radio button corresponding to another option.</li>
+                <li>To save your changed answer, you <strong>must</strong> click on <strong>'Save &amp; Next'</strong> or <strong>'Mark for Review &amp; Next'</strong>.</li>
+              </ol>
+            </li>
+            <li><strong>Navigating through Sections:</strong>
+              <ol type="a" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+                <li>The test has three sections in order: I. VARC, II. DILR, and III. QA. The section you are currently viewing is highlighted in the top bar.</li>
+                <li>From any section, you will be able to move to the next section only after completing a minimum of 40 minutes.</li>
+              </ol>
+            </li>
           </ol>
         </div>
+
+        <!-- Subject Specific Instructions -->
         <div>
           <h3 style="font-size:14px;font-weight:700;color:var(--g-neutral-900);margin:0 0 12px;text-decoration:underline">Subject Specific Instructions:</h3>
-          <ol style="font-size:13px;line-height:1.7;color:var(--g-neutral-700);padding-left:20px;display:flex;flex-direction:column;gap:8px">
-            <li>The question paper consists of 3 sections: I. Verbal Ability and Reading Comprehension (VARC), II. Data Interpretation and Logical Reasoning (DILR), and III. Quantitative Ability (QA).</li>
-            <li>The DILR section is based on situations or scenarios and can have any number of sub questions. For Reading Comprehension, each passage consists of a group of four questions.</li>
-            <li>For an <strong>MCQ</strong>: <strong>+3 for correct, −1 for wrong, 0 for un-attempted.</strong></li>
-            <li>For a <strong>Non-MCQ</strong>: <strong>+3 for correct, 0 for wrong or un-attempted. No negative marking.</strong></li>
-            <li>Your answers will be saved on a server periodically. The test ends automatically at <strong>120 minutes</strong> (or <strong>160 minutes</strong> for PwD candidates).</li>
-            <li><strong>Caution:</strong> Your answer will not be saved if you navigate to another question without clicking <strong>'Save &amp; Next'</strong> or <strong>'Mark for Review &amp; Next'</strong>.</li>
+          <ol style="padding-left:20px;display:flex;flex-direction:column;gap:10px">
+            <li>To login, enter your registration number and password following instructions provided to you by the invigilator.</li>
+            <li>Go through the various symbols used in the test and understand their meaning before you start the test.</li>
+            <li>The question paper consists of 3 (three) sections:
+              <table class="g-table" style="margin-top:10px">
+                <thead><tr><th>Section</th><th>Test</th></tr></thead>
+                <tbody>
+                  <tr><td style="text-align:center">I</td><td style="text-align:center">Verbal Ability and Reading Comprehension (VARC)</td></tr>
+                  <tr><td style="text-align:center">II</td><td style="text-align:center">Data Interpretation and Logical Reasoning (DILR)</td></tr>
+                  <tr><td style="text-align:center">III</td><td style="text-align:center">Quantitative Ability (QA)</td></tr>
+                </tbody>
+              </table>
+            </li>
+            <li>The DILR section each problem is based on situations or scenarios and can have any number of sub questions. For Reading Comprehension, each passage consists of a group of four questions.</li>
+            <li>For an <strong>MCQ</strong>, a candidate will be given <strong>3 (three) marks for a correct answer, -1 (minus one) mark for a wrong answer and a 0 (zero) mark for an un-attempted question</strong>.</li>
+            <li>For a <strong>Non-MCQ</strong>, a candidate will be given <strong>3 (three) marks for a correct answer, and a 0 (zero) mark for a wrong answer as well as for an un-attempted question</strong>. There will be <strong>no negative mark for a wrong answer in a Non-MCQ</strong>.</li>
+            <li>An MCQ will have choices out of which only one will be the correct answer. You will have to choose the correct answer by clicking on the radio button placed just before the option. For a Non-MCQ, enter only a whole number as the answer using the on-screen keyboard.</li>
+            <li>Your answers will be updated and saved on a server periodically. The test will end automatically at the end of <strong>120 minutes</strong> (or <strong>160 minutes</strong> for PwD candidates). The time allotted for each section will be 40 minutes (or 53 minutes and 20 seconds for PwD candidates), after which you will not be allowed to go back to the earlier section(s).</li>
+          </ol>
+        </div>
+
+        <!-- Declaration -->
+        <div>
+          <h3 style="font-size:14px;font-weight:700;color:var(--g-neutral-900);margin:0 0 12px;text-decoration:underline">Declaration by a Candidate:</h3>
+          <ol type="i" style="padding-left:20px;display:flex;flex-direction:column;gap:12px">
+            <li>I have read and understood all the above instructions. I have also read and understood clearly the instructions given on the admit card and CAT website and shall follow the same. I declare that I am not wearing/carrying/in possession of any electronic communication gadgets or any prohibited material with me into the examination hall. I also understand that in case I violate any of these instructions, my candidature is liable to be cancelled and/or disciplinary action taken which may include debarring me from future tests and examinations.</li>
+            <li>I confirm that at the start of the test, all computer hardware and software allotted to me are in working condition.</li>
+            <li>I will not disclose, publish, reproduce, transmit, store, or facilitate transmission and storage of the contents of the CAT or any information therein in whole or part thereof in any form or by any means, verbal or written, electronically or mechanically for any purpose. <em>I am aware that this shall be in violation of the Indian Contract Act, 1872 and/or the Copyright Act, 1957 and/or the Information Technology Act, 2000.</em></li>
           </ol>
         </div>
       </div>
