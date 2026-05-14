@@ -3674,11 +3674,8 @@
           ? `<span class="neg">${marksW}</span>`
           : `<span style="color:var(--g-neutral-500)">0</span>`;
 
-        const qState = i === currentQ ? 'current' : states[i];
-        const qNumClass = 'qpaper-q-num' + ((qState && qState !== 'unvisited') ? ' state-' + qState : '');
-        const qNumLabel = (qState && qState !== 'unvisited') ? String(i + 1) : `Q${i + 1}`;
         row.innerHTML = `
-          <div class="${qNumClass}">${qNumLabel}</div>
+          <div class="qpaper-q-num">Q${i + 1}</div>
           <div class="qpaper-q-stem">${stemHTML}</div>
           <div class="qpaper-q-marks"><strong>+${marksC}</strong> / ${negStr}</div>
         `;
