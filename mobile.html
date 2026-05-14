@@ -1022,6 +1022,19 @@
     .q-num.answered { background: #22C55E; border-color: #22C55E; color: #fff; }
     .q-num.review   { background: #7C3AED; border-color: #7C3AED; color: #fff; }
 
+    /* Mobile sidebar: compact q-num grid */
+    .quiz-sidebar .q-grid,
+    .quiz-sidebar-g .q-grid {
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      padding: 4px 12px 12px;
+    }
+
+    .quiz-sidebar .q-num,
+    .quiz-sidebar-g .q-num {
+      font-size: 12px;
+    }
+
     /* Sidebar submit footer */
     .quiz-sidebar__footer {
       padding: 12px 14px;
