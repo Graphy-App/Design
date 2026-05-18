@@ -1018,9 +1018,42 @@
     }
 
     .q-num:hover { filter: brightness(0.95); }
-    .q-num.current  { background: #E84820; border: 1.65px solid #761700 !important; color: #fff; font-weight: 700; border-radius: 8px !important; }
-    .q-num.answered { background: #22C55E; border: 1.65px solid #358200 !important; color: #fff; border-radius: 8px !important; }
-    .q-num.review   { background: #7C3AED; border: 1.65px solid #7C3AED !important; color: #fff; border-radius: 8px !important; }
+
+    /* Mobile sidebar: force plain rectangles with solid visible borders */
+    .quiz-sidebar .q-num.state-current,
+    .quiz-sidebar-g .q-num.state-current,
+    .quiz-sidebar .q-num.state-not-answered,
+    .quiz-sidebar-g .q-num.state-not-answered {
+      background: #E84820 !important;
+      border: 2px solid #761700 !important;
+      clip-path: none !important;
+      filter: none !important;
+      border-radius: 6px !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+    }
+    .quiz-sidebar .q-num.state-answered,
+    .quiz-sidebar-g .q-num.state-answered {
+      background: #22C55E !important;
+      border: 2px solid #358200 !important;
+      clip-path: none !important;
+      filter: none !important;
+      border-radius: 6px !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+    }
+    .quiz-sidebar .q-num.state-review,
+    .quiz-sidebar-g .q-num.state-review,
+    .quiz-sidebar .q-num.state-answered-review,
+    .quiz-sidebar-g .q-num.state-answered-review {
+      background: #7752C6 !important;
+      border: 2px solid #5C3E72 !important;
+      clip-path: none !important;
+      filter: none !important;
+      border-radius: 6px !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+    }
 
     /* Mobile sidebar: compact q-num grid */
     .quiz-sidebar .q-grid,
