@@ -663,22 +663,22 @@
     .quiz-question {
       flex: 1;
       overflow-y: auto;
-      padding: 28px 32px 24px 32px;
+      padding: 16px 16px 16px 16px;
     }
 
     .question-no {
       font-size: 13px;
       font-weight: 700;
       color: var(--g-neutral-900);
-      margin: -28px -32px 20px -32px;
-      padding: 11px 32px 11px 16px;
+      margin: -16px -16px 16px -16px;
+      padding: 11px 16px 11px 12px;
       border-bottom: 1px solid var(--g-neutral-300);
       border-left: 4px solid var(--g-neutral-800);
       line-height: 1.4;
     }
     .quiz-group__questions .question-no {
-      margin: -28px -24px 20px -28px;
-      padding: 11px 24px 11px 16px;
+      margin: -16px -16px 16px -16px;
+      padding: 11px 16px 11px 12px;
     }
 
     .question-stem {
@@ -708,7 +708,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 10px 14px;
+      padding: 8px 12px;
       border: 1px solid var(--g-neutral-300);
       border-radius: 8px;
       font-size: 13px;
@@ -1019,26 +1019,28 @@
 
     .q-num:hover { filter: brightness(0.95); }
 
-    /* Mobile sidebar: force plain rectangles with solid visible borders */
+    /* Mobile sidebar: pentagon/shield shapes matching the spec */
     .quiz-sidebar .q-num.state-current,
     .quiz-sidebar-g .q-num.state-current,
     .quiz-sidebar .q-num.state-not-answered,
     .quiz-sidebar-g .q-num.state-not-answered {
-      background: #E84820 !important;
-      border: 2px solid #761700 !important;
-      clip-path: none !important;
-      filter: none !important;
-      border-radius: 6px !important;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 45%), #E84820 !important;
+      border: none !important;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%) !important;
+      filter: drop-shadow(2px 0 0 #761700) drop-shadow(-2px 0 0 #761700)
+              drop-shadow(0 2px 0 #761700) drop-shadow(0 -2px 0 #761700) !important;
+      border-radius: 0 !important;
       color: #fff !important;
       font-weight: 700 !important;
     }
     .quiz-sidebar .q-num.state-answered,
     .quiz-sidebar-g .q-num.state-answered {
-      background: #22C55E !important;
-      border: 2px solid #358200 !important;
-      clip-path: none !important;
-      filter: none !important;
-      border-radius: 6px !important;
+      background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 45%), #3CB345 !important;
+      border: none !important;
+      clip-path: polygon(50% 0%, 100% 32%, 100% 100%, 0% 100%, 0% 32%) !important;
+      filter: drop-shadow(1.5px 0 0 #358200) drop-shadow(-1.5px 0 0 #358200)
+              drop-shadow(0 1.5px 0 #358200) drop-shadow(0 -1.5px 0 #358200) !important;
+      border-radius: 0 !important;
       color: #fff !important;
       font-weight: 700 !important;
     }
@@ -1046,11 +1048,12 @@
     .quiz-sidebar-g .q-num.state-review,
     .quiz-sidebar .q-num.state-answered-review,
     .quiz-sidebar-g .q-num.state-answered-review {
-      background: #7752C6 !important;
-      border: 2px solid #5C3E72 !important;
+      background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 45%), #7752C6 !important;
+      border: none !important;
       clip-path: none !important;
       filter: none !important;
-      border-radius: 6px !important;
+      border-radius: 50% !important;
+      box-shadow: 0 0 0 2.5px #5C3E72 !important;
       color: #fff !important;
       font-weight: 700 !important;
     }
@@ -1570,8 +1573,7 @@
     .exam-summary__table th { font-weight: 700; background: #F8F9FA; }
     .exam-summary__table td:first-child { font-weight: 500; }
     .exam-summary__foot {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
+      flex-shrink: 0;
       background: #fff;
       border-top: 1px solid #D8D8D8;
       padding: 14px 24px 16px;
@@ -1579,7 +1581,6 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      z-index: 100;
     }
     .exam-summary__auto-msg {
       font-size: 13px;
@@ -2229,7 +2230,7 @@
     .quiz-footer-mobile__row .btn--save-next:hover { background: var(--g-brand-300-hover); }
 
     /* ── Exam Summary: 2-column table ── */
-    .exam-summary__scroll { padding: 20px 12px 120px; }
+    .exam-summary__scroll { padding: 20px 12px 24px; }
     .exam-summary__title  { font-size: 17px; }
     .exam-summary__table-wrap { display: block; overflow-x: visible; }
     .exam-summary__table { min-width: 0; }
@@ -3111,6 +3112,9 @@
       </div>
       <div class="tabswitch-modal__body">
         <p class="tabswitch-modal__desc">You have been automatically disqualified from the test for switching tabs or leaving this window.</p>
+      </div>
+      <div class="tabswitch-modal__foot">
+        <button class="btn btn--secondary" onclick="document.getElementById('tabswitch-backdrop').classList.remove('open')">Close</button>
       </div>
     </div>
   </div>
