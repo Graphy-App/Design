@@ -743,21 +743,22 @@
     /* Sidebar collapse toggle — sits on the right edge, inside the main panel */
     .sidebar-toggle {
       position: absolute;
-      right: 0;
+      left: 0;
       top: 50%;
-      transform: translateY(-50%);
-      width: 28px;
-      height: 64px;
-      background: #232228;
+      transform: translate(-100%, -50%);
+      width: 22px;
+      height: 56px;
+      background: #1A1A2E;
       border: none;
-      border-radius: 0 12px 12px 0;
+      border-radius: 10px 0 0 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 15px;
       color: #fff;
       z-index: 2;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.18);
     }
 
     /* Right sidebar */
@@ -2476,7 +2477,7 @@
             <button class="section-pill active">VARC <span class="section-pill__badge">1</span></button>
             <button class="section-pill" onclick="openSubmitModal()">DILR <span class="section-pill__info">i</span></button>
             <button class="section-pill" onclick="openSubmitModal()">QA <span class="section-pill__info">i</span></button>
-            <button class="arrow-btn">&#9654;</button>
+            <button class="arrow-btn"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></button>
           </div>
           <button class="calc-icon-btn" id="open-calc-s3" title="Calculator">
             <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2504,7 +2505,7 @@
         <div class="subsection-bar">
           <button class="arrow-btn">&#9664;</button>
           <button class="section-pill active">VARC <span class="section-pill__badge">1</span></button>
-          <button class="arrow-btn">&#9654;</button>
+          <button class="arrow-btn"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></button>
         </div>
 
         <!-- Marks bar -->
@@ -2532,7 +2533,7 @@
         </div>
 
         <!-- Sidebar collapse toggle -->
-        <div class="sidebar-toggle" id="mob-sidebar-toggle-s3">&#9654;</div>
+        <div class="sidebar-toggle" id="mob-sidebar-toggle-s3"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
 
         <!-- Footer actions — 2-row mobile layout -->
         <div class="quiz-footer-mobile">
@@ -2645,7 +2646,7 @@
               <button class="section-pill active">VARC <span class="section-pill__badge">1</span></button>
               <button class="section-pill">DILR <span class="section-pill__info">i</span></button>
               <button class="section-pill">QA <span class="section-pill__info">i</span></button>
-              <button class="arrow-btn">&#9654;</button>
+              <button class="arrow-btn"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></button>
             </div>
             <button class="calc-icon-btn" id="open-calc-s4" title="Calculator">
               <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2673,7 +2674,7 @@
           <div class="subsection-bar">
             <button class="arrow-btn">&#9664;</button>
             <button class="section-pill active">VARC <span class="section-pill__badge">1</span></button>
-            <button class="arrow-btn">&#9654;</button>
+            <button class="arrow-btn"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></button>
           </div>
 
           <!-- Marks bar -->
@@ -2752,7 +2753,7 @@
           </div>
 
           <!-- Sidebar collapse toggle -->
-          <div class="sidebar-toggle sidebar-toggle-g" id="mob-sidebar-toggle-s4">&#9654;</div>
+          <div class="sidebar-toggle sidebar-toggle-g" id="mob-sidebar-toggle-s4"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
 
           <!-- Footer actions — 2-row mobile layout -->
           <div class="quiz-footer-mobile">
@@ -2888,7 +2889,7 @@
           View Instructions
         </button>
         <button class="ns-nav-link">
-          <span class="ns-nav-link__icon ns-nav-link__icon--paper">&#9654;</span>
+          <span class="ns-nav-link__icon ns-nav-link__icon--paper"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></span>
           Question Paper
         </button>
       </div>
@@ -2937,7 +2938,7 @@
         </div>
 
         <!-- Sidebar toggle -->
-        <div class="sidebar-toggle">&#9654;</div>
+        <div class="sidebar-toggle"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
 
       </div>
 
@@ -4003,7 +4004,7 @@
       document.getElementById(backdropId).classList.remove('open');
       if (toggleEl) {
         toggleEl.classList.remove('is-open');
-        toggleEl.innerHTML = '&#9654;';
+        toggleEl.innerHTML = '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg>';
         toggleEl.style.right = '0px';
       }
     }
