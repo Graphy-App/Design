@@ -632,12 +632,13 @@
     /* ── Mobile (≤480px) — placed after general rules so overrides apply ── */
     @media (max-width: 480px) {
       .top-header {
-        padding: 10px 14px;
+        flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        padding: 10px 14px;
+        gap: 6px;
       }
-      .top-header__title { font-size: 15px; flex: 1; }
-      .top-header__links { flex-direction: row; gap: 14px; flex-shrink: 0; }
+      .top-header__title { font-size: 15px; }
+      .top-header__links { flex-direction: row; gap: 20px; }
       .top-header__link {
         flex-direction: column;
         align-items: center;
