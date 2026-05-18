@@ -2008,19 +2008,20 @@
     .qnav__title { font-size: 15px; font-weight: 700; }
     .qnav__actions { width: 100%; justify-content: flex-start; gap: 4px; }
     .qnav__btn {
-      flex: 1;
-      justify-content: center;
-      padding: 6px 4px;
+      flex: 0 0 auto;
+      justify-content: flex-start;
+      padding: 5px 10px 5px 6px;
       height: auto;
       font-size: 11px;
       font-weight: 600;
-      gap: 5px;
+      gap: 6px;
       color: #fff;
     }
-    .qnav__icon { width: 28px; height: 28px; font-size: 12px; flex-shrink: 0; }
-    .qnav__icon--info   { background: rgba(87,102,242,0.15); color: var(--g-brand-300); }
+    .qnav__icon { width: 26px; height: 26px; font-size: 12px; flex-shrink: 0; }
+    .qnav__icon svg { width: 14px; height: 14px; display: block; }
+    .qnav__icon--info   { background: #5766F2; color: #fff; }
     .qnav__icon--paper  { background: #22C55E; color: #fff; }
-    .qnav__icon--report { background: rgba(87,102,242,0.15); color: var(--g-brand-300); }
+    .qnav__icon--report { background: #F59E0B; color: #fff; }
 
     /* Screen-4 quiz-header matches same two-row style */
     .quiz-header {
@@ -2033,14 +2034,14 @@
     .quiz-header__left { width: 100%; }
     .quiz-header__right { width: 100%; justify-content: flex-start; gap: 4px; }
     .quiz-header__right .qnav__btn {
-      flex: 1;
-      justify-content: center;
-      padding: 6px 4px;
+      flex: 0 0 auto;
+      justify-content: flex-start;
+      padding: 5px 10px 5px 6px;
       height: auto;
       font-size: 11px;
       font-weight: 600;
     }
-    .quiz-header__right .qnav__icon { width: 22px; height: 22px; font-size: 11px; }
+    .quiz-header__right .qnav__icon { width: 26px; height: 26px; font-size: 11px; }
 
     /* ── Section nav pills ── */
     .section-nav-bar { padding: 0 6px 0 8px; }
@@ -2325,15 +2326,15 @@
       <span class="qnav__title">CAT 2024 Mock Exam</span>
       <div class="qnav__actions">
         <button class="qnav__btn">
-          <span class="qnav__icon qnav__icon--info">i</span>
+          <span class="qnav__icon qnav__icon--info"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd"/></svg></span>
           Instruction
         </button>
         <button class="qnav__btn" onclick="openQPaperModal()">
-          <span class="qnav__icon qnav__icon--paper">&#9783;</span>
+          <span class="qnav__icon qnav__icon--paper"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg></span>
           Question Paper
         </button>
         <button class="qnav__btn" onclick="openReportModal()">
-          <span class="qnav__icon qnav__icon--report">!</span>
+          <span class="qnav__icon qnav__icon--report"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg></span>
           Report an Error
         </button>
       </div>
@@ -2502,9 +2503,9 @@
           <span class="quiz-title">CAT 2024 Mock Exam</span>
         </div>
         <div class="quiz-header__right">
-          <button class="qnav__btn"><span class="qnav__icon qnav__icon--info">i</span>Instruction</button>
-          <button class="qnav__btn" onclick="openQPaperModal()"><span class="qnav__icon qnav__icon--paper">&#9654;</span>Question Paper</button>
-          <button class="qnav__btn" onclick="openReportModal()"><span class="qnav__icon qnav__icon--report">!</span>Report an Error</button>
+          <button class="qnav__btn"><span class="qnav__icon qnav__icon--info"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd"/></svg></span>Instruction</button>
+          <button class="qnav__btn" onclick="openQPaperModal()"><span class="qnav__icon qnav__icon--paper"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg></span>Question Paper</button>
+          <button class="qnav__btn" onclick="openReportModal()"><span class="qnav__icon qnav__icon--report"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg></span>Report an Error</button>
         </div>
       </header>
 
