@@ -1901,15 +1901,29 @@
       flex-shrink: 0;
     }
     .qpaper-modal__warning-icon { font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+    .qpaper-modal__warning--brand {
+      background: var(--g-brand-400);
+      border-bottom-color: var(--g-brand-500);
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      justify-content: center;
+      align-items: center;
+    }
     .qpaper-modal__body {
       overflow-y: auto;
       flex: 1;
       padding: 0;
     }
+    .qpaper-q-row__body {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
     .qpaper-q-row {
-      display: grid;
-      grid-template-columns: 44px 1fr auto;
-      gap: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
       align-items: flex-start;
       padding: 14px 24px;
       border-bottom: 1px solid var(--g-neutral-200);
@@ -2158,40 +2172,13 @@
     }
     .quiz-footer-mobile__row .btn--save-next:hover { background: var(--g-brand-300-hover); }
 
-    /* ── Exam Summary: stat card grid ── */
+    /* ── Exam Summary: 2-column table ── */
     .exam-summary__scroll { padding: 20px 12px 120px; }
     .exam-summary__title  { font-size: 17px; }
-    .exam-summary__table-wrap { display: none; }
-    .exam-summary__stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .exam-summary__stat-card {
-      background: #fff;
-      border: 1px solid #C8CCDC;
-      border-radius: 8px;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .exam-summary__stat-label {
-      font-size: 11px;
-      color: #6B7280;
-      font-weight: 500;
-      line-height: 1.35;
-    }
-    .exam-summary__stat-val {
-      font-size: 24px;
-      font-weight: 700;
-      color: #3A3D5C;
-      line-height: 1.1;
-    }
-    .exam-summary__stat-val--green  { color: #22C55E; }
-    .exam-summary__stat-val--red    { color: #E84820; }
-    .exam-summary__stat-val--purple { color: #7C3AED; }
-    .exam-summary__stat-val--teal   { color: #0EA5E9; }
+    .exam-summary__table-wrap { display: block; overflow-x: visible; }
+    .exam-summary__table { min-width: 0; }
+    .exam-summary__table th,
+    .exam-summary__table td { width: 50%; }
     .exam-summary__foot { padding: 12px 16px 14px; }
 
     /* ── NS screen (screen 6) ── */
@@ -2800,94 +2787,28 @@
       <!-- QA group -->
       <div class="exam-summary__group">
         <div class="exam-summary__group-label">QA (current group)</div>
-        <div class="exam-summary__stats-grid">
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">No. of Questions</span>
-            <span class="exam-summary__stat-val">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Answered</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--green">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Not Answered</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--red">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Marked for Review</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--purple">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Ans. &amp; Marked</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--teal">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Not Visited</span>
-            <span class="exam-summary__stat-val">0</span>
-          </div>
-        </div>
+        <div class="exam-summary__table-wrap"><table class="exam-summary__table">
+          <thead><tr><th>Section name</th><th>No. of questions</th></tr></thead>
+          <tbody><tr><td>QA</td><td>0</td></tr></tbody>
+        </table></div>
       </div>
 
       <!-- VARC group -->
       <div class="exam-summary__group">
         <div class="exam-summary__group-label">VARC (attempted group; view not allowed; edit not allowed)</div>
-        <div class="exam-summary__stats-grid">
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">No. of Questions</span>
-            <span class="exam-summary__stat-val" id="sum-varc-total">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Answered</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--green" id="sum-answered">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Not Answered</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--red" id="sum-not-answered">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Marked for Review</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--purple" id="sum-review">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Ans. &amp; Marked</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--teal" id="sum-ans-rev">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Not Visited</span>
-            <span class="exam-summary__stat-val" id="sum-not-visited">0</span>
-          </div>
-        </div>
+        <div class="exam-summary__table-wrap"><table class="exam-summary__table">
+          <thead><tr><th>Section name</th><th>No. of questions</th></tr></thead>
+          <tbody><tr><td>VARC</td><td id="sum-varc-total">0</td></tr></tbody>
+        </table></div>
       </div>
 
       <!-- DILR group -->
       <div class="exam-summary__group">
         <div class="exam-summary__group-label">DILR (attempted group; view not allowed; edit not allowed)</div>
-        <div class="exam-summary__stats-grid">
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">No. of Questions</span>
-            <span class="exam-summary__stat-val">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Answered</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--green">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Not Answered</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--red">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Marked for Review</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--purple">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Ans. &amp; Marked</span>
-            <span class="exam-summary__stat-val exam-summary__stat-val--teal">0</span>
-          </div>
-          <div class="exam-summary__stat-card">
-            <span class="exam-summary__stat-label">Not Visited</span>
-            <span class="exam-summary__stat-val">0</span>
-          </div>
-        </div>
+        <div class="exam-summary__table-wrap"><table class="exam-summary__table">
+          <thead><tr><th>Section name</th><th>No. of questions</th></tr></thead>
+          <tbody><tr><td>DILR</td><td>0</td></tr></tbody>
+        </table></div>
       </div>
     </div>
 
@@ -3962,8 +3883,10 @@
 
         row.innerHTML = `
           <div class="qpaper-q-num">Q${i + 1}</div>
-          <div class="qpaper-q-stem">${stemHTML}</div>
-          <div class="qpaper-q-marks"><strong>+${marksC}</strong> / ${negStr}</div>
+          <div class="qpaper-q-row__body">
+            <div class="qpaper-q-stem">${stemHTML}</div>
+            <div class="qpaper-q-marks"><strong>+${marksC}</strong> / ${negStr}</div>
+          </div>
         `;
         qpaperList.appendChild(row);
       });
