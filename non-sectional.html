@@ -261,6 +261,119 @@
       color: #333;
     }
 
+    /* ── Mobile: 400px ── */
+    @media (max-width: 400px) {
+      /* Header: title + links in one row, each wrapping its own text */
+      .top-header {
+        padding: 10px 14px;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .top-header__title {
+        font-size: 15px;
+        flex: 1;
+      }
+
+      .top-header__links {
+        flex-direction: row;
+        gap: 14px;
+        flex-shrink: 0;
+      }
+
+      .top-header__link {
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        text-align: center;
+        font-size: 11px;
+      }
+
+      .top-header__link svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* Sidebar: fixed panel, closed by default */
+      .body-row {
+        overflow: visible;
+      }
+
+      .sidebar-wrapper {
+        position: fixed;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        z-index: 300;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+      }
+
+      .sidebar-toggle {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+        width: 16px;
+        height: 100%;
+        border-radius: 4px 0 0 4px;
+        order: -1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .sidebar {
+        width: 0;
+        overflow: hidden;
+        transition: width 0.25s ease;
+        border-left: none;
+        flex-shrink: 0;
+      }
+
+      .sidebar-wrapper.open .sidebar {
+        width: 240px;
+        border-left: 1px solid #e0e0e0;
+        overflow-y: auto;
+      }
+
+      /* Footer: 2×2 grid on mobile */
+      .footer-row {
+        flex-direction: column;
+      }
+
+      .footer-main {
+        width: 100%;
+        border-right: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 8px;
+        padding: 10px 14px;
+      }
+
+      .footer__left,
+      .footer__right {
+        display: contents;
+      }
+
+      .footer-sidebar {
+        display: none;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      /* Section tabs scroll on small screens */
+      .section-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+      }
+    }
+
     /* ── Bottom footer row (spans full width) ── */
     .footer-row {
       display: flex;
@@ -669,6 +782,7 @@
         <button class="btn">Clear Response</button>
       </div>
       <div class="footer__right">
+        <button class="btn btn--previous">Previous</button>
         <button class="btn btn--teal">Save &amp; Next</button>
       </div>
     </div>
@@ -690,6 +804,14 @@
   }
   window.addEventListener('hashchange', applyHash);
   applyHash();
+
+  // Mobile sidebar drawer toggle
+  const toggle = document.querySelector('.sidebar-toggle');
+  const sidebarWrapper = document.querySelector('.sidebar-wrapper');
+  toggle.addEventListener('click', function () {
+    const isOpen = sidebarWrapper.classList.toggle('open');
+    toggle.textContent = isOpen ? '<' : '>';
+  });
 </script>
 </body>
 </html>
