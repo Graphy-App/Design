@@ -755,10 +755,24 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 15px;
+      font-size: 0;
       color: #fff;
       z-index: 2;
       box-shadow: 2px 0 8px rgba(0,0,0,0.18);
+    }
+    .sidebar-toggle::after {
+      content: '›';
+      font-size: 20px;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1;
+    }
+    .sidebar-toggle.is-open {
+      border-radius: 10px 0 0 10px;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.18);
+    }
+    .sidebar-toggle.is-open::after {
+      content: '‹';
     }
 
     /* Right sidebar */
@@ -2177,6 +2191,8 @@
     }
     .sidebar-toggle.is-open {
       right: 88% !important;
+      border-radius: 10px 0 0 10px !important;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.18) !important;
     }
 
     /* ── Group questions: stacked, each panel independently scrollable ── */
