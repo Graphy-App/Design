@@ -746,16 +746,17 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 22px;
-      height: 56px;
+      width: 36px;
+      height: 80px;
       background: #1A1A2E;
       border: none;
-      border-radius: 10px 0 0 10px;
+      border-radius: 14px 0 0 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 15px;
+      font-size: 22px;
+      font-weight: 300;
       color: #fff;
       z-index: 2;
       box-shadow: -2px 0 8px rgba(0,0,0,0.18);
@@ -2171,8 +2172,8 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 22px !important;
-      height: 56px !important;
+      width: 36px !important;
+      height: 80px !important;
       z-index: 601;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
@@ -2180,6 +2181,7 @@
     }
     .sidebar-toggle.is-open {
       right: 88% !important;
+      border-radius: 0 14px 14px 0 !important;
     }
 
     .quiz-group {
@@ -2549,7 +2551,7 @@
       </div>
 
         <!-- Sidebar toggle -->
-        <div class="sidebar-toggle" id="mob-sidebar-toggle-s3"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
+        <div class="sidebar-toggle" id="mob-sidebar-toggle-s3">›</div>
 
       <!-- Backdrop -->
       <div class="mob-drawer-backdrop" id="mob-backdrop-s3"></div>
@@ -2768,7 +2770,7 @@
         </div>
 
         <!-- Sidebar toggle -->
-        <div class="sidebar-toggle sidebar-toggle-g" id="mob-sidebar-toggle-s4"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
+        <div class="sidebar-toggle sidebar-toggle-g" id="mob-sidebar-toggle-s4">›</div>
 
         <!-- Backdrop -->
         <div class="mob-drawer-backdrop" id="mob-backdrop-s4"></div>
@@ -2943,7 +2945,7 @@
       </div>
 
       <!-- Right sidebar -->
-      <div class="sidebar-toggle"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
+      <div class="sidebar-toggle">›</div>
       <div class="ns-sidebar">
 
         <!-- Status legend -->
@@ -3995,7 +3997,7 @@
       sidebar.classList.add('drawer-open');
       if (toggleEl) {
         toggleEl.classList.add('is-open');
-        toggleEl.innerHTML = '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,2 8,8 3,14"/></svg>';
+        toggleEl.innerHTML = '‹';
         const sidebarWidth = sidebar.offsetWidth;
         toggleEl.style.right = sidebarWidth + 'px';
       }
@@ -4005,7 +4007,7 @@
       document.getElementById(backdropId).classList.remove('open');
       if (toggleEl) {
         toggleEl.classList.remove('is-open');
-        toggleEl.innerHTML = '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg>';
+        toggleEl.innerHTML = '›';
         toggleEl.style.right = '0px';
       }
     }
