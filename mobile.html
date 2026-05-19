@@ -740,12 +740,12 @@
 
     .quiz-footer__left { display: flex; gap: 8px; }
 
-    /* Sidebar collapse toggle — sits on the right edge of the main panel */
+    /* Sidebar collapse toggle — copied from web.html */
     .sidebar-toggle {
       position: absolute;
-      right: 0;
+      left: 0;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translate(-100%, -50%);
       width: 22px;
       height: 56px;
       background: #1A1A2E;
@@ -755,24 +755,21 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 0;
+      font-size: 15px;
       color: #fff;
       z-index: 2;
       box-shadow: -2px 0 8px rgba(0,0,0,0.18);
     }
-    .sidebar-toggle::after {
-      content: '‹';
-      font-size: 20px;
-      font-weight: 400;
-      color: #fff;
-      line-height: 1;
+    .quiz-sidebar.sidebar--collapsed > *:not(.sidebar-toggle),
+    .quiz-sidebar-g.sidebar--collapsed > *:not(.sidebar-toggle),
+    .ns-sidebar.sidebar--collapsed > *:not(.sidebar-toggle) {
+      display: none;
     }
-    .sidebar-toggle.is-open {
-      border-radius: 0 10px 10px 0;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.18);
-    }
-    .sidebar-toggle.is-open::after {
-      content: '›';
+    .quiz-sidebar.sidebar--collapsed,
+    .quiz-sidebar-g.sidebar--collapsed,
+    .ns-sidebar.sidebar--collapsed {
+      width: 0;
+      min-width: 0;
     }
 
     /* Right sidebar */
@@ -783,6 +780,7 @@
       flex-direction: column;
       overflow: hidden;
       background: var(--g-neutral-100);
+      position: relative;
     }
 
     /* Status legend */
@@ -2152,48 +2150,6 @@
     .quiz-body { position: relative; }
 
     /* ── Sidebar: full-height right drawer ── */
-    .quiz-sidebar,
-    .quiz-sidebar-g {
-      position: fixed !important;
-      top: 0; right: -100%; bottom: 0;
-      width: 88% !important;
-      max-width: 360px;
-      z-index: 600;
-      box-shadow: -4px 0 24px rgba(0,0,0,0.18);
-      transition: right 0.28s ease;
-      overflow-y: auto;
-    }
-    .quiz-sidebar.drawer-open,
-    .quiz-sidebar-g.drawer-open { right: 0 !important; }
-
-    /* Backdrop */
-    .mob-drawer-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 599;
-    }
-    .mob-drawer-backdrop.open { display: block; }
-
-    /* ── Sidebar toggle button: open / close ── */
-    .sidebar-toggle {
-      position: fixed !important;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 22px !important;
-      height: 48px !important;
-      z-index: 601;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      transition: right 0.28s ease;
-    }
-    .sidebar-toggle.is-open {
-      right: 88% !important;
-      border-radius: 0 10px 10px 0 !important;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.18) !important;
-    }
 
     /* ── Group questions: stacked, each panel independently scrollable ── */
     .quiz-group {
@@ -2548,9 +2504,6 @@
           </div>
         </div>
 
-        <!-- Sidebar collapse toggle -->
-        <div class="sidebar-toggle" id="mob-sidebar-toggle-s3">›</div>
-
         <!-- Footer actions — 2-row mobile layout -->
         <div class="quiz-footer-mobile">
           <div class="quiz-footer-mobile__row">
@@ -2565,11 +2518,11 @@
 
       </div>
 
-      <!-- Drawer backdrop -->
-      <div class="mob-drawer-backdrop" id="mob-backdrop-s3"></div>
+        <!-- Right sidebar -->
+        <div class="quiz-sidebar" id="mob-sidebar-s3">
 
-      <!-- Right sidebar (drawer on mobile) -->
-      <div class="quiz-sidebar" id="mob-sidebar-s3">
+        <!-- Sidebar collapse toggle -->
+        <div class="sidebar-toggle"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
 
         <!-- User block -->
         <div class="sidebar__user">
@@ -2768,9 +2721,6 @@
             </div>
           </div>
 
-          <!-- Sidebar collapse toggle -->
-          <div class="sidebar-toggle sidebar-toggle-g" id="mob-sidebar-toggle-s4">›</div>
-
           <!-- Footer actions — 2-row mobile layout -->
           <div class="quiz-footer-mobile">
             <div class="quiz-footer-mobile__row">
@@ -2784,11 +2734,11 @@
 
         </div>
 
-        <!-- Drawer backdrop -->
-        <div class="mob-drawer-backdrop" id="mob-backdrop-s4"></div>
-
-        <!-- Right sidebar (drawer on mobile) -->
+        <!-- Right sidebar -->
         <div class="quiz-sidebar quiz-sidebar-g" id="mob-sidebar-s4">
+
+          <!-- Sidebar collapse toggle -->
+          <div class="sidebar-toggle"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
 
           <div class="sidebar__user">
             <div class="sidebar__avatar">
@@ -2953,13 +2903,12 @@
           <p class="ns-q-para">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
         </div>
 
-        <!-- Sidebar toggle -->
-        <div class="sidebar-toggle">›</div>
 
       </div>
 
       <!-- Right sidebar -->
       <div class="ns-sidebar">
+        <div class="sidebar-toggle"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg></div>
 
         <!-- Status legend -->
         <div class="ns-status-grid">
@@ -4003,46 +3952,16 @@
       }
     });
 
-    // Mobile drawer behavior
-    function openMobDrawer(sidebarId, backdropId, toggleEl) {
-      const sidebar = document.getElementById(sidebarId);
-      document.getElementById(backdropId).classList.add('open');
-      sidebar.classList.add('drawer-open');
-      if (toggleEl) {
-        toggleEl.classList.add('is-open');
-        toggleEl.innerHTML = '&#9664;';
-        const sidebarWidth = sidebar.offsetWidth;
-        toggleEl.style.right = sidebarWidth + 'px';
-      }
-    }
-    function closeMobDrawer(sidebarId, backdropId, toggleEl) {
-      document.getElementById(sidebarId).classList.remove('drawer-open');
-      document.getElementById(backdropId).classList.remove('open');
-      if (toggleEl) {
-        toggleEl.classList.remove('is-open');
-        toggleEl.innerHTML = '›';
-        toggleEl.style.right = '0px';
-      }
-    }
-
-    function toggleMobDrawer(sidebarId, backdropId, toggleEl) {
-      const sidebar = document.getElementById(sidebarId);
-      if (sidebar.classList.contains('drawer-open')) {
-        closeMobDrawer(sidebarId, backdropId, toggleEl);
-      } else {
-        openMobDrawer(sidebarId, backdropId, toggleEl);
-      }
-    }
-
-    const mobToggleS3 = document.getElementById('mob-sidebar-toggle-s3');
-    const mobBackdropS3 = document.getElementById('mob-backdrop-s3');
-    if (mobToggleS3) mobToggleS3.addEventListener('click', () => toggleMobDrawer('mob-sidebar-s3', 'mob-backdrop-s3', mobToggleS3));
-    if (mobBackdropS3) mobBackdropS3.addEventListener('click', () => closeMobDrawer('mob-sidebar-s3', 'mob-backdrop-s3', mobToggleS3));
-
-    const mobToggleS4 = document.getElementById('mob-sidebar-toggle-s4');
-    const mobBackdropS4 = document.getElementById('mob-backdrop-s4');
-    if (mobToggleS4) mobToggleS4.addEventListener('click', () => toggleMobDrawer('mob-sidebar-s4', 'mob-backdrop-s4', mobToggleS4));
-    if (mobBackdropS4) mobBackdropS4.addEventListener('click', () => closeMobDrawer('mob-sidebar-s4', 'mob-backdrop-s4', mobToggleS4));
+    /* ── Sidebar toggles — copied from web.html ── */
+    document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
+      toggle.addEventListener('click', function () {
+        const sidebar = this.closest('.quiz-sidebar, .quiz-sidebar-g, .ns-sidebar');
+        const isCollapsed = sidebar.classList.toggle('sidebar--collapsed');
+        this.innerHTML = isCollapsed
+          ? '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,2 8,8 3,14"/></svg>'
+          : '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,2 2,8 7,14"/></svg>';
+      });
+    });
   </script>
 
 </div><!-- /.phone-frame__screen -->
