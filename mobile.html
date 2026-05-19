@@ -753,20 +753,19 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 36px;
-      height: 80px;
+      width: 32px;
+      height: 72px;
       background: #1A1A2E;
       border: none;
-      border-radius: 14px 0 0 14px;
+      border-radius: 4px 0 0 4px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 22px;
-      font-weight: 300;
+      font-size: 20px;
+      font-weight: 400;
       color: #fff;
       z-index: 2;
-      box-shadow: -2px 0 8px rgba(0,0,0,0.18);
     }
 
     /* Right sidebar */
@@ -2179,8 +2178,8 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 36px !important;
-      height: 80px !important;
+      width: 32px !important;
+      height: 72px !important;
       z-index: 601;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
@@ -2188,7 +2187,6 @@
     }
     .sidebar-toggle.is-open {
       right: 88% !important;
-      border-radius: 0 14px 14px 0 !important;
     }
 
     .quiz-group {
@@ -4004,7 +4002,7 @@
       if (toggleEl) {
         toggleEl.classList.add('is-open');
         toggleEl.innerHTML = '‹';
-        toggleEl.style.borderRadius = '14px 0 0 14px';
+        toggleEl.style.borderRadius = '4px 0 0 4px';
         const sidebarWidth = sidebar.offsetWidth;
         toggleEl.style.right = sidebarWidth + 'px';
       }
@@ -4015,7 +4013,7 @@
       if (toggleEl) {
         toggleEl.classList.remove('is-open');
         toggleEl.innerHTML = '›';
-        toggleEl.style.borderRadius = '14px 0 0 14px';
+        toggleEl.style.borderRadius = '4px 0 0 4px';
         toggleEl.style.right = '0px';
       }
     }
