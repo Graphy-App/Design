@@ -51,9 +51,9 @@
       font-size: 14px;
       line-height: 1.5;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      padding: 32px 16px;
+      padding: 20px 16px;
     }
 
     /* ── Phone mockup ── */
@@ -68,7 +68,7 @@
         0 0 0 3.5px #0B0C10,
         0 48px 96px rgba(0,0,0,0.65),
         inset 0 0 0 1px rgba(255,255,255,0.05);
-      padding: 16px;
+      padding: 20px 16px;
       position: relative;
     }
 
@@ -893,47 +893,68 @@
 
     /* Current — inverted-shield, same as not-answered */
     .q-num.state-current {
-      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 45%), #E84820 !important;
+      background: #761700 !important;
       border: none !important;
       color: #fff !important;
       font-weight: 700 !important;
       border-radius: 0 !important;
       clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%) !important;
-      transform: translateZ(0) !important;
-      filter: drop-shadow(2px 0 0 #761700) drop-shadow(-2px 0 0 #761700)
-              drop-shadow(0 2px 0 #761700) drop-shadow(0 -2px 0 #761700)
-              drop-shadow(1.5px 1.5px 0 #761700) drop-shadow(-1.5px 1.5px 0 #761700)
-              drop-shadow(1.5px -1.5px 0 #761700) drop-shadow(-1.5px -1.5px 0 #761700) !important;
+      position: relative !important;
+      isolation: isolate !important;
+      filter: none !important;
+      transform: none !important;
+    }
+    .q-num.state-current::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 45%), #E84820;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%);
+      z-index: -1;
     }
 
     /* Answered — green house/pentagon */
     .q-num.state-answered {
-      background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 45%), #3CB345 !important;
+      background: #358200 !important;
       border: none !important;
       color: #fff !important;
       font-weight: 700 !important;
       clip-path: polygon(50% 0%, 100% 32%, 100% 100%, 0% 100%, 0% 32%) !important;
       border-radius: 0 !important;
-      transform: translateZ(0) !important;
-      filter: drop-shadow(1.5px 0 0 #358200) drop-shadow(-1.5px 0 0 #358200)
-              drop-shadow(0 1.5px 0 #358200) drop-shadow(0 -1.5px 0 #358200)
-              drop-shadow(1px 1px 0 #358200) drop-shadow(-1px 1px 0 #358200)
-              drop-shadow(1px -1px 0 #358200) drop-shadow(-1px -1px 0 #358200) !important;
+      position: relative !important;
+      isolation: isolate !important;
+      filter: none !important;
+      transform: none !important;
+    }
+    .q-num.state-answered::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 45%), #3CB345;
+      clip-path: polygon(50% 0%, 100% 32%, 100% 100%, 0% 100%, 0% 32%);
+      z-index: -1;
     }
 
     /* Not answered — red inverted shield */
     .q-num.state-not-answered {
-      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 45%), #E84820 !important;
+      background: #761700 !important;
       border: none !important;
       color: #fff !important;
       font-weight: 700 !important;
       clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%) !important;
       border-radius: 0 !important;
-      transform: translateZ(0) !important;
-      filter: drop-shadow(2px 0 0 #761700) drop-shadow(-2px 0 0 #761700)
-              drop-shadow(0 2px 0 #761700) drop-shadow(0 -2px 0 #761700)
-              drop-shadow(1.5px 1.5px 0 #761700) drop-shadow(-1.5px 1.5px 0 #761700)
-              drop-shadow(1.5px -1.5px 0 #761700) drop-shadow(-1.5px -1.5px 0 #761700) !important;
+      position: relative !important;
+      isolation: isolate !important;
+      filter: none !important;
+      transform: none !important;
+    }
+    .q-num.state-not-answered::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 45%), #E84820;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%);
+      z-index: -1;
     }
 
     /* Marked for review — purple circle */
@@ -1033,25 +1054,47 @@
     .quiz-sidebar-g .q-num.state-current,
     .quiz-sidebar .q-num.state-not-answered,
     .quiz-sidebar-g .q-num.state-not-answered {
-      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 45%), #E84820 !important;
+      background: #761700 !important;
       border: none !important;
       clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%) !important;
-      filter: drop-shadow(2px 0 0 #761700) drop-shadow(-2px 0 0 #761700)
-              drop-shadow(0 2px 0 #761700) drop-shadow(0 -2px 0 #761700) !important;
+      filter: none !important;
       border-radius: 0 !important;
       color: #fff !important;
       font-weight: 700 !important;
+      position: relative !important;
+      isolation: isolate !important;
+    }
+    .quiz-sidebar .q-num.state-current::before,
+    .quiz-sidebar-g .q-num.state-current::before,
+    .quiz-sidebar .q-num.state-not-answered::before,
+    .quiz-sidebar-g .q-num.state-not-answered::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 45%), #E84820;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 66%, 50% 100%, 0% 66%);
+      z-index: -1;
     }
     .quiz-sidebar .q-num.state-answered,
     .quiz-sidebar-g .q-num.state-answered {
-      background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 45%), #3CB345 !important;
+      background: #358200 !important;
       border: none !important;
       clip-path: polygon(50% 0%, 100% 32%, 100% 100%, 0% 100%, 0% 32%) !important;
-      filter: drop-shadow(1.5px 0 0 #358200) drop-shadow(-1.5px 0 0 #358200)
-              drop-shadow(0 1.5px 0 #358200) drop-shadow(0 -1.5px 0 #358200) !important;
+      filter: none !important;
       border-radius: 0 !important;
       color: #fff !important;
       font-weight: 700 !important;
+      position: relative !important;
+      isolation: isolate !important;
+    }
+    .quiz-sidebar .q-num.state-answered::before,
+    .quiz-sidebar-g .q-num.state-answered::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 45%), #3CB345;
+      clip-path: polygon(50% 0%, 100% 32%, 100% 100%, 0% 100%, 0% 32%);
+      z-index: -1;
     }
     .quiz-sidebar .q-num.state-review,
     .quiz-sidebar-g .q-num.state-review,
@@ -2092,16 +2135,21 @@
     .qnav__actions { width: 100%; justify-content: flex-start; gap: 4px; }
     .qnav__btn {
       flex: 1;
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
       justify-content: flex-start;
       padding: 5px 4px 5px 0;
       height: auto;
       font-size: 11px;
       font-weight: 600;
-      gap: 6px;
+      gap: 8px;
       color: #fff;
       min-width: 0;
+      white-space: normal;
+      text-align: left;
     }
-    .qnav__icon { width: 26px; height: 26px; font-size: 12px; flex-shrink: 0; }
+    .qnav__icon { width: 28px; height: 28px; font-size: 12px; flex-shrink: 0; }
     .qnav__icon svg { width: 14px; height: 14px; display: block; }
     .qnav__icon--info   { background: #5766F2; color: #fff; }
     .qnav__icon--paper  { background: #22C55E; color: #fff; }
