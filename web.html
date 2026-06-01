@@ -1123,7 +1123,7 @@
       position: fixed;
       top: 80px;
       right: 260px;
-      width: 272px;
+      width: 340px;
       background: #DEDEDE;
       border: 1px solid #B0B0B0;
       border-radius: 10px;
@@ -1190,13 +1190,13 @@
     .calc-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 5px;
+      gap: 4px;
       padding: 8px;
       background: #DEDEDE;
     }
     .calc-btn {
-      padding: 9px 4px;
-      font-size: 13px;
+      padding: 8px 4px;
+      font-size: 12.5px;
       font-weight: 500;
       font-family: var(--g-font-sans);
       background: #fff;
@@ -1218,6 +1218,9 @@
     .calc-btn.eq { background: var(--g-brand-300); color: #fff; font-weight: 700; border-color: #4255D4; grid-row: span 2; }
     .calc-btn.eq:hover { background: #4A58D8; }
     .calc-btn.zero { grid-column: span 2; }
+    .calc-btn.sci { font-size: 11.5px; background: #E8EAF6; border-color: #9FA8DA; color: #303F9F; }
+    .calc-btn.sci:hover { background: #D9DCF5; }
+    .calc-deg { font-size: 10px; color: rgba(255,255,255,0.7); padding-left: 14px; }
 
     /* ── Submit quiz modal ── */
     .modal-backdrop {
@@ -2870,7 +2873,7 @@
   <!-- ── Draggable calculator widget (shared across quiz screens) ── -->
   <div class="calc-widget" id="calc-widget">
     <div class="calc-header" id="calc-drag-handle">
-      <span>Calculator</span>
+      <span>Calculator <span class="calc-deg">DEG</span></span>
       <div class="calc-header-btns">
         <button class="calc-min-btn" title="Minimise">&#8212;</button>
         <button class="calc-close-btn" id="calc-close">&#10005;</button>
@@ -2881,6 +2884,27 @@
       <div class="calc-display" id="calc-display">0</div>
     </div>
     <div class="calc-grid">
+      <!-- Scientific row 1: trig -->
+      <button class="calc-btn sci" onclick="calcSin()">sin</button>
+      <button class="calc-btn sci" onclick="calcCos()">cos</button>
+      <button class="calc-btn sci" onclick="calcTan()">tan</button>
+      <button class="calc-btn sci" onclick="calcLog()">log</button>
+      <button class="calc-btn sci" onclick="calcInputConst(Math.PI)">π</button>
+
+      <!-- Scientific row 2: inverse trig + more -->
+      <button class="calc-btn sci" onclick="calcAsin()">sin⁻¹</button>
+      <button class="calc-btn sci" onclick="calcAcos()">cos⁻¹</button>
+      <button class="calc-btn sci" onclick="calcAtan()">tan⁻¹</button>
+      <button class="calc-btn sci" onclick="calcLn()">ln</button>
+      <button class="calc-btn sci" onclick="calcInputConst(Math.E)">e</button>
+
+      <!-- Scientific row 3: powers & special -->
+      <button class="calc-btn sci" onclick="calcSquare()">x²</button>
+      <button class="calc-btn sci" onclick="calcOper('^')">xʸ</button>
+      <button class="calc-btn sci" onclick="calcFactorial()">n!</button>
+      <button class="calc-btn sci" onclick="calcCbrt()">³√</button>
+      <button class="calc-btn sci" onclick="calcPow10()">10ˣ</button>
+
       <!-- Memory row -->
       <button class="calc-btn mem" onclick="calcMemClear()">MC</button>
       <button class="calc-btn mem" onclick="calcMemRecall()">MR</button>
@@ -2888,38 +2912,37 @@
       <button class="calc-btn mem" onclick="calcMemAdd()">M+</button>
       <button class="calc-btn mem" onclick="calcMemSub()">M-</button>
 
-      <!-- Special row -->
+      <!-- Utility row -->
       <button class="calc-btn red-wide" onclick="calcBackspace()">&#8592;</button>
       <button class="calc-btn red" onclick="calcClear()">C</button>
-      <button class="calc-btn red" onclick="calcToggleSign()">+/-</button>
+      <button class="calc-btn" onclick="calcToggleSign()">+/-</button>
       <button class="calc-btn" onclick="calcSqrt()">&#8730;</button>
 
-      <!-- Row 7 8 9 -->
+      <!-- 7 8 9 -->
       <button class="calc-btn" onclick="calcInput('7')">7</button>
       <button class="calc-btn" onclick="calcInput('8')">8</button>
       <button class="calc-btn" onclick="calcInput('9')">9</button>
-      <button class="calc-btn" onclick="calcOper('/')">/</button>
-      <button class="calc-btn" onclick="calcOper('%')">%</button>
+      <button class="calc-btn" onclick="calcOper('/')">÷</button>
+      <button class="calc-btn" onclick="calcOper('%')">mod</button>
 
-      <!-- Row 4 5 6 -->
+      <!-- 4 5 6 -->
       <button class="calc-btn" onclick="calcInput('4')">4</button>
       <button class="calc-btn" onclick="calcInput('5')">5</button>
       <button class="calc-btn" onclick="calcInput('6')">6</button>
-      <button class="calc-btn" onclick="calcOper('*')">*</button>
+      <button class="calc-btn" onclick="calcOper('*')">×</button>
       <button class="calc-btn" onclick="calcReciprocal()">1/x</button>
 
-      <!-- Row 1 2 3 — = spans rows 1 2 3 → rows 5–6 in grid -->
+      <!-- 1 2 3 -->
       <button class="calc-btn" onclick="calcInput('1')">1</button>
       <button class="calc-btn" onclick="calcInput('2')">2</button>
       <button class="calc-btn" onclick="calcInput('3')">3</button>
-      <button class="calc-btn" onclick="calcOper('-')">-</button>
+      <button class="calc-btn" onclick="calcOper('-')">−</button>
       <button class="calc-btn eq" onclick="calcEqual()">=</button>
 
-      <!-- Row 0 . + -->
+      <!-- 0 . + -->
       <button class="calc-btn zero" onclick="calcInput('0')">0</button>
       <button class="calc-btn" onclick="calcInput('.')">.</button>
       <button class="calc-btn" onclick="calcOper('+')">+</button>
-      <!-- = occupies col 5 via grid-row: span 2 -->
     </div>
   </div>
 
@@ -3769,11 +3792,12 @@
       if (!calcOp || calcFresh) return;
       const a = parseFloat(calcPrev), b = parseFloat(calcVal);
       let r;
-      if (calcOp === '+') r = a + b;
+      if      (calcOp === '+') r = a + b;
       else if (calcOp === '-') r = a - b;
       else if (calcOp === '*') r = a * b;
       else if (calcOp === '/') r = b !== 0 ? a / b : 'Error';
       else if (calcOp === '%') r = a % b;
+      else if (calcOp === '^') r = Math.pow(a, b);
       calcVal = typeof r === 'number' ? String(parseFloat(r.toFixed(10))) : r;
       document.getElementById('calc-expr').textContent = calcPrev + ' ' + calcOp + ' ' + parseFloat(calcVal) + ' =';
       calcOp = ''; calcFresh = true; calcRefresh();
@@ -3781,7 +3805,7 @@
     function calcClear()     { calcVal = '0'; calcPrev = ''; calcOp = ''; calcFresh = true; document.getElementById('calc-expr').textContent = ''; calcRefresh(); }
     function calcBackspace() { if (calcFresh) return; calcVal = calcVal.length > 1 ? calcVal.slice(0, -1) : '0'; calcRefresh(); }
 
-    /* Extended functions */
+    /* Memory */
     let calcMem = 0;
     function calcToggleSign()  { calcVal = calcVal.startsWith('-') ? calcVal.slice(1) : (calcVal === '0' ? '0' : '-' + calcVal); calcRefresh(); }
     function calcSqrt()        { const v = parseFloat(calcVal); calcVal = v < 0 ? 'Error' : String(parseFloat(Math.sqrt(v).toFixed(10))); calcFresh = true; calcRefresh(); }
@@ -3791,6 +3815,30 @@
     function calcMemStore()    { calcMem = parseFloat(calcVal) || 0; }
     function calcMemAdd()      { calcMem += parseFloat(calcVal) || 0; }
     function calcMemSub()      { calcMem -= parseFloat(calcVal) || 0; }
+
+    /* Scientific functions (trig in degrees) */
+    const _d2r = Math.PI / 180, _r2d = 180 / Math.PI;
+    function _fmt(v) { return typeof v === 'number' && isFinite(v) ? String(parseFloat(v.toFixed(10))) : 'Error'; }
+    function calcInputConst(v) { calcVal = String(parseFloat(v.toFixed(10))); calcFresh = true; calcRefresh(); }
+    function calcSin()    { calcVal = _fmt(Math.sin(parseFloat(calcVal) * _d2r)); calcFresh = true; calcRefresh(); }
+    function calcCos()    { calcVal = _fmt(Math.cos(parseFloat(calcVal) * _d2r)); calcFresh = true; calcRefresh(); }
+    function calcTan()    { const v = parseFloat(calcVal); calcVal = _fmt(Math.tan(v * _d2r)); calcFresh = true; calcRefresh(); }
+    function calcAsin()   { const v = parseFloat(calcVal); calcVal = Math.abs(v)>1 ? 'Error' : _fmt(Math.asin(v)*_r2d); calcFresh = true; calcRefresh(); }
+    function calcAcos()   { const v = parseFloat(calcVal); calcVal = Math.abs(v)>1 ? 'Error' : _fmt(Math.acos(v)*_r2d); calcFresh = true; calcRefresh(); }
+    function calcAtan()   { calcVal = _fmt(Math.atan(parseFloat(calcVal))*_r2d); calcFresh = true; calcRefresh(); }
+    function calcLog()    { const v = parseFloat(calcVal); calcVal = v <= 0 ? 'Error' : _fmt(Math.log10(v)); calcFresh = true; calcRefresh(); }
+    function calcLn()     { const v = parseFloat(calcVal); calcVal = v <= 0 ? 'Error' : _fmt(Math.log(v)); calcFresh = true; calcRefresh(); }
+    function calcSquare() { const v = parseFloat(calcVal); calcVal = _fmt(v * v); calcFresh = true; calcRefresh(); }
+    function calcCbrt()   { calcVal = _fmt(Math.cbrt(parseFloat(calcVal))); calcFresh = true; calcRefresh(); }
+    function calcPow10()  { calcVal = _fmt(Math.pow(10, parseFloat(calcVal))); calcFresh = true; calcRefresh(); }
+    function calcFactorial() {
+      const n = Math.round(parseFloat(calcVal));
+      if (n < 0 || n > 170) { calcVal = 'Error'; } else {
+        let f = 1; for (let i = 2; i <= n; i++) f *= i;
+        calcVal = String(f);
+      }
+      calcFresh = true; calcRefresh();
+    }
 
     /* ══════════════════════════════════════════
        Submit Quiz Modal
