@@ -62,6 +62,34 @@
       stroke-width: 1.8;
     }
 
+    /* Language selector */
+    .lang-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 24px;
+      border-left: 1px solid #e0e0e0;
+    }
+    .lang-selector__label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1a1a;
+      white-space: nowrap;
+    }
+    .lang-select {
+      font-size: 13px;
+      font-weight: 500;
+      color: #1a1a1a;
+      border: 1px solid #c0c0c0;
+      border-radius: 4px;
+      padding: 4px 8px;
+      background: #fff;
+      cursor: pointer;
+      outline: none;
+      font-family: inherit;
+    }
+    .lang-select:focus { border-color: #0E2666; }
+
     /* ── Content + sidebar row ── */
     .body-row {
       display: flex;
@@ -734,6 +762,14 @@
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><circle cx="10" cy="15" r="3" fill="none"/><line x1="12.5" y1="17.5" x2="15" y2="20"/></svg>
         Question Paper
       </a>
+      <div class="lang-selector">
+        <span class="lang-selector__label">Choose Language</span>
+        <select class="lang-select">
+          <option value="default">Default</option>
+          <option value="en">English</option>
+          <option value="hi">हिंदी</option>
+        </select>
+      </div>
     </div>
   </header>
 
