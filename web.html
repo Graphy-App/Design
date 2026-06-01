@@ -382,6 +382,42 @@
     .qnav__icon--paper  { background: #22C55E; color: #fff; }
     .qnav__icon--report { background: #F59E0B; color: #fff; }
 
+    /* Language selector */
+    .lang-selector {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-left: 12px;
+      margin-left: 4px;
+      border-left: 1px solid rgba(255,255,255,0.15);
+      height: 20px;
+    }
+    .lang-selector__icon {
+      font-size: 13px;
+      line-height: 1;
+      color: rgba(255,255,255,0.7);
+    }
+    .lang-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: var(--g-font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      padding-right: 16px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.6)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0 center;
+      outline: none;
+    }
+    .lang-select option {
+      background: #232228;
+      color: #fff;
+    }
+
     /* Quiz body: left panel + right sidebar */
     .quiz-body {
       flex: 1;
@@ -2253,6 +2289,13 @@
           <span class="qnav__icon qnav__icon--report">!</span>
           Report an Error
         </button>
+        <div class="lang-selector">
+          <span class="lang-selector__icon">🌐</span>
+          <select class="lang-select" id="lang-select-s3">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -2418,6 +2461,13 @@
           <button class="qnav__btn"><span class="qnav__icon qnav__icon--info">i</span>Instruction</button>
           <button class="qnav__btn" onclick="openQPaperModal()"><span class="qnav__icon qnav__icon--paper">&#9654;</span>Question Paper</button>
           <button class="qnav__btn" onclick="openReportModal()"><span class="qnav__icon qnav__icon--report">!</span>Report an Error</button>
+          <div class="lang-selector">
+            <span class="lang-selector__icon">🌐</span>
+            <select class="lang-select" id="lang-select-s4">
+              <option value="en">English</option>
+              <option value="hi">हिंदी</option>
+            </select>
+          </div>
         </div>
       </header>
 
