@@ -1,0 +1,2482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Graphy — My Coaching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+/* ============ GRAPHY TOKENS ============ */
+:root {
+  --g-brand-100:#E0E9FF; --g-brand-200:#A4BAFD; --g-brand-300:#5766F2; --g-brand-400:#2F31A4; --g-brand-500:#1A1B4C;
+  --g-brand-primary:var(--g-brand-300); --g-brand-primary-hover:var(--g-brand-400);
+  --g-brand-secondary:#D8FD49;
+  --g-magenta-100:#FEDFF3; --g-magenta-200:#FFACE5; --g-magenta-300:#CA26A5;
+  --g-blue-100:#CDEEF3; --g-blue-300:#007F8C;
+  --g-orange-100:#FEE2D4; --g-orange-300:#C54600;
+  --g-neutral-100:#FFFFFF; --g-neutral-200:#F7F9FA; --g-neutral-300:#E5E5E5;
+  --g-neutral-400:#D2D6D8; --g-neutral-500:#AAB1B7; --g-neutral-600:#878C90;
+  --g-neutral-700:#393F41; --g-neutral-800:#232228;
+  --g-error-100:#FFEDED; --g-error-300:#DE1135;
+  --g-warning-100:#FFE8B8; --g-warning-300:#9F6402;
+  --g-success-100:#DDFFC4; --g-success-300:#45A124;
+  --g-font-sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --g-radius-pill:41px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:var(--g-neutral-200);
+  --bd:var(--g-neutral-300); --bd2:var(--g-neutral-400);
+  --t1:var(--g-neutral-800); --t2:var(--g-neutral-700); --t3:var(--g-neutral-600); --t4:var(--g-neutral-500);
+}
+html,body{height:100%;}
+body{font-family:var(--g-font-sans);background:var(--bg);color:var(--t1);font-size:14px;-webkit-font-smoothing:antialiased;}
+button{font-family:inherit;cursor:pointer;}
+input,select,textarea{font-family:inherit;}
+a{color:inherit;}
+
+/* ============ APP SHELL ============ */
+.app{display:grid;grid-template-columns:248px 1fr;min-height:100vh;transition:grid-template-columns .22s ease;}
+.skel{background:linear-gradient(90deg,var(--g-neutral-200) 0%,var(--g-neutral-300) 50%,var(--g-neutral-200) 100%);background-size:200% 100%;animation:skelpulse 1.4s ease-in-out infinite;border-radius:6px;}
+@keyframes skelpulse{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.app.side-collapsed{grid-template-columns:72px 1fr;}
+.side{transition:width .22s ease;}
+.side.collapsed{width:72px;padding:16px 8px;align-items:center;}
+.side.collapsed .brand-name,.side.collapsed .nav-label,.side.collapsed .nav-chev,.side.collapsed .sf-info,.side.collapsed .nav-sub,.side.collapsed .nav-beta,.side.collapsed .side-cta{display:none;}
+.side.collapsed .nav-item{justify-content:center;padding:10px;gap:0;}
+.side.collapsed .nav-item > i:first-child{width:auto;margin:0;}
+.side.collapsed .sf{justify-content:center;}
+.side-toggle-wrap{position:fixed;left:248px;top:50%;transform:translate(-50%,-50%);width:24px;height:60px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:50;transition:left .22s ease;}
+.app.side-collapsed .side-toggle-wrap{left:72px;}
+.side-toggle-dash{width:2px;height:28px;border-radius:99px;background:var(--g-neutral-400);transition:opacity .15s;}
+.side-toggle{position:absolute;width:24px;height:24px;border-radius:50%;background:#fff;border:1px solid var(--bd);color:var(--t3);display:flex;align-items:center;justify-content:center;font-size:10px;box-shadow:0 1px 2px rgba(0,0,0,.06);opacity:0;transition:opacity .15s;}
+.side-toggle-wrap:hover .side-toggle-dash{opacity:0;}
+.side-toggle-wrap:hover .side-toggle{opacity:1;}
+.side-toggle:hover{background:var(--g-neutral-200);color:var(--t1);border-color:var(--g-neutral-400);}
+.app.side-collapsed .side-toggle i{transform:rotate(180deg);}
+
+/* ============ SIDEBAR ============ */
+.side{background:#fff;border-right:1px solid var(--bd);display:flex;flex-direction:column;padding:16px 12px;gap:2px;position:sticky;top:0;height:100vh;overflow:hidden;}
+.brand{display:flex;align-items:center;gap:10px;padding:0 4px 16px;}
+.brand-logo{width:40px;height:40px;border-radius:10px;flex-shrink:0;background:#111;display:flex;align-items:center;justify-content:center;position:relative;color:#fff;font-size:15px;}
+.sun{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,0.35);box-shadow:0 0 0 3px rgba(255,255,255,0.18);}
+.brand-name{font-size:15px;font-weight:700;color:var(--t1);letter-spacing:-.2px;}
+
+.nav{display:flex;flex-direction:column;gap:4px;flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.nav-item{display:flex;align-items:center;gap:14px;padding:11px 12px;border-radius:10px;color:var(--t1);text-decoration:none;font-size:14px;font-weight:400;cursor:pointer;}
+.nav-item:hover{background:var(--g-neutral-200);}
+.nav-item > i:first-child{width:20px;text-align:center;font-size:16px;color:var(--t3);flex-shrink:0;}
+.nav-item > i.ph:first-child{font-size:18px;line-height:1;}
+.nav-item.nav-active{background:var(--g-brand-100);color:var(--g-brand-primary);font-weight:500;}
+.nav-item.nav-active > i:first-child{color:var(--g-brand-primary);font-weight:900;}
+.nav-item.nav-active > i:first-child.fa-regular{font-family:"Font Awesome 6 Free";font-weight:900;}
+.nav-chev{margin-left:auto;font-size:11px;color:var(--t4);flex-shrink:0;transition:transform .2s;}
+
+/* nav sub */
+.nav-sub{display:none;flex-direction:column;gap:1px;padding:2px 0 4px 38px;}
+.nav-sub.nav-sub-open{display:flex;}
+.nav-sub a{padding:8px 14px;border-radius:8px;color:var(--t2);font-size:13.5px;text-decoration:none;display:block;cursor:pointer;}
+.nav-sub a:hover{background:var(--g-neutral-200);}
+.nav-sub a.active{background:#EEF0FF;color:var(--g-brand-primary);font-weight:500;}
+
+/* sidebar CTAs */
+.side-cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;border-radius:12px;border:none;font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;width:100%;margin-top:6px;transition:background .12s;}
+.side-cta i{font-size:14px;}
+.side-cta.brand{background:var(--g-brand-100);color:var(--g-brand-primary);}
+.side-cta.brand:hover{background:#D1DCFF;}
+.side-cta.orange{background:#FFF6E5;color:#9F4F02;}
+.side-cta.orange:hover{background:#FFEED1;}
+
+.sf{margin-top:14px;border-top:1px solid var(--bd);padding:14px 8px 0;display:flex;align-items:center;gap:10px;}
+.sf-av{width:36px;height:36px;border-radius:50%;overflow:hidden;background:var(--g-brand-200);flex-shrink:0;}
+.sf-av img{width:100%;height:100%;object-fit:cover;}
+.sf-name{font-size:13.5px;font-weight:500;color:var(--t1);}
+.sf-role{font-size:11.5px;color:var(--t3);margin-top:1px;}
+.sf-more{background:none;border:none;color:var(--t4);width:28px;height:28px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;}
+.sf-more:hover{background:var(--g-neutral-200);color:var(--t1);}
+
+/* ============ MAIN ============ */
+.main{display:flex;flex-direction:column;}
+.topbar{display:flex;align-items:center;padding:24px 32px 8px;gap:16px;}
+.page-title{font-size:26px;font-weight:500;letter-spacing:-.4px;color:var(--t1);}
+.tb-actions{margin-left:auto;display:flex;gap:10px;align-items:center;}
+
+.icon-btn{width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--bd);display:inline-flex;align-items:center;justify-content:center;color:var(--t2);font-size:14px;cursor:pointer;transition:.12s;}
+.icon-btn:hover{border-color:var(--t1);color:var(--t1);background:var(--g-neutral-200);}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:0 22px;height:42px;border-radius:99px;font-size:14px;font-weight:500;border:1px solid transparent;background:var(--g-brand-primary);color:#fff;transition:.14s;}
+.btn:hover{background:var(--g-brand-primary-hover);box-shadow:0 4px 12px -4px rgba(87,102,242,.45);}
+.btn:active{transform:translateY(1px);box-shadow:none;}
+.btn:disabled,.btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none;}
+.btn-w{background:#fff;color:var(--t1);border-color:var(--bd);}
+.btn-w:hover{background:var(--g-neutral-200);border-color:var(--g-neutral-500);box-shadow:none;}
+.btn-sm{height:34px;padding:0 16px;font-size:13px;}
+.btn-t{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--g-brand-primary);font-size:14px;font-weight:500;padding:0;height:auto;}
+.btn-t:hover{text-decoration:underline;text-underline-offset:3px;}
+
+.content{padding:0 32px 60px;display:flex;flex-direction:column;gap:24px;}
+.panel{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:24px;}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;}
+.panel-title{font-size:20px;font-weight:500;color:var(--t1);letter-spacing:-.2px;}
+.view-toggle{display:flex;background:var(--g-neutral-200);border-radius:8px;padding:3px;gap:2px;}
+.vtab{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:6px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:500;color:var(--t3);cursor:pointer;}
+.vtab:hover{color:var(--t1);}
+.vtab.active{background:#fff;color:var(--t1);box-shadow:0 1px 3px rgba(0,0,0,.08);}
+.vtab i{font-size:12px;}
+
+/* ============ SECTIONS ============ */
+.sec-h{display:flex;align-items:center;justify-content:space-between;padding:0 4px;}
+.sec-h-t{font-size:18px;font-weight:600;color:var(--t1);letter-spacing:-.2px;}
+.sec-h-d{font-size:13px;color:var(--t3);margin-top:2px;}
+
+/* ============ PROGRAMS GRID (creator parity) ============ */
+.filter-lbl{font-size:13px;color:var(--t3);}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.pcard{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:14px;display:flex;flex-direction:column;cursor:pointer;transition:.15s;}
+.pcard:hover{border-color:var(--g-brand-200);box-shadow:0 12px 28px -16px rgba(17,17,17,.14);}
+.pthumb{aspect-ratio:16/10;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--g-neutral-200);}
+.pthumb-img{width:100%;height:100%;object-fit:cover;}
+.pcard-body{display:flex;flex-direction:column;gap:6px;padding-top:14px;flex:1;}
+.pcard-meta-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.pcard-more{background:none;border:none;color:var(--t3);font-size:15px;padding:2px 4px;line-height:1;cursor:pointer;}
+.ps{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:500;}
+.ps-active{background:var(--g-brand-100);color:var(--g-brand-primary);}
+.ps-completed{background:var(--g-success-100);color:var(--g-success-300);}
+.ps-expired{background:var(--g-error-100);color:var(--g-error-300);}
+.ps-paused{background:var(--g-neutral-200);color:var(--t3);}
+.pcard-name{font-size:18px;font-weight:600;color:var(--t1);letter-spacing:-.2px;}
+.pcard-coach{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t3);margin-top:2px;}
+.pcard-coach .av{width:22px;height:22px;border-radius:50%;overflow:hidden;flex-shrink:0;}
+.pcard-coach .av img{width:100%;height:100%;object-fit:cover;}
+.pcard-prog{margin-top:auto;padding-top:14px;}
+.pcard-prog-l{display:flex;justify-content:space-between;font-size:12.5px;color:var(--t3);margin-bottom:6px;}
+.pcard-prog-l strong{color:var(--t1);font-weight:600;}
+.pcard-bar{display:flex;gap:3px;height:5px;}
+.pcard-bar > span{flex:1;background:var(--g-neutral-300);border-radius:99px;height:100%;display:block;}
+.pcard-bar > span.done{background:var(--g-brand-primary);}
+.pcard-bar > span.done-success{background:var(--g-success-300);}
+
+/* ============ SESSIONS / BOOKINGS LIST ============ */
+.sess-list{display:flex;flex-direction:column;gap:12px;}
+.sess-card{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:20px 22px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;transition:.12s;}
+.sess-card:hover{border-color:var(--g-neutral-400);}
+.sess-date{display:flex;flex-direction:column;align-items:center;justify-content:center;width:60px;background:var(--g-brand-100);color:var(--g-brand-primary);border-radius:12px;padding:10px 6px;flex-shrink:0;}
+.sess-date.completed{background:var(--g-neutral-200);color:var(--t3);}
+.sess-date.missed{background:var(--g-error-100);color:var(--g-error-300);}
+.sess-date-m{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;}
+.sess-date-d{font-size:22px;font-weight:600;letter-spacing:-.4px;line-height:1.1;}
+.sess-info{min-width:0;}
+.sess-status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;}
+.sess-status.upcoming{background:var(--g-success-100);color:var(--g-success-300);}
+.sess-status.completed{background:var(--g-neutral-200);color:var(--t3);}
+.sess-status.cancelled{background:var(--g-error-100);color:var(--g-error-300);}
+.sess-status.missed{background:var(--g-warning-100);color:var(--g-warning-300);}
+.sess-status.pending{background:var(--g-brand-100);color:var(--g-brand-primary);}
+.sess-status.expired{background:var(--g-error-100);color:var(--g-error-300);}
+.sess-title{font-size:15px;font-weight:600;color:var(--t1);letter-spacing:-.2px;line-height:1.3;}
+.sess-meta{display:flex;align-items:center;gap:14px;margin-top:6px;font-size:12.5px;color:var(--t3);flex-wrap:wrap;}
+.sess-meta span{display:inline-flex;align-items:center;gap:6px;}
+.sess-meta i{font-size:11px;color:var(--t4);}
+.sess-actions{display:flex;gap:8px;flex-shrink:0;}
+
+/* ============ TABS ============ */
+.tabs{display:flex;gap:32px;padding:6px 32px 0;border-bottom:1px solid var(--bd);background:var(--bg);}
+.tab{display:inline-flex;align-items:center;gap:8px;padding:14px 4px;background:none;border:none;font-size:14.5px;font-weight:500;color:var(--t3);position:relative;}
+.tab i{font-size:13px;}
+.tab:hover{color:var(--t1);}
+.tab.active{color:var(--g-brand-primary);}
+.tab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--g-brand-primary);border-radius:2px 2px 0 0;}
+
+/* Search + filter (creator parity) */
+.search{position:relative;}
+.search input{width:100%;height:46px;border-radius:10px;border:1px solid var(--bd);background:#fff;padding:0 18px 0 46px;font-family:inherit;font-size:14px;color:var(--t1);outline:none;}
+.search input::placeholder{color:var(--t4);}
+.search input:focus{border-color:var(--g-brand-primary);}
+.search i{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--t4);font-size:14px;}
+
+.filterbar{display:flex;align-items:center;gap:10px;margin:14px 0 18px;flex-wrap:wrap;}
+.fdrop{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--bd);background:#fff;font-size:13px;color:var(--t2);cursor:pointer;}
+.fdrop i{color:var(--t4);font-size:10px;}
+.fdrop:hover{border-color:var(--g-neutral-500);}
+.fdrop-active{border-color:var(--g-neutral-400);background:#fff;}
+.fdrop-count{color:var(--g-brand-primary);font-weight:600;margin-left:2px;}
+.filter-reset{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 12px;border-radius:8px;border:none;background:none;color:var(--g-brand-primary);font-size:13px;font-weight:500;cursor:pointer;}
+.filter-reset:hover{background:var(--g-brand-100);}
+.filter-reset i{font-size:12px;}
+.pager{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t3);}
+.arr{width:30px;height:30px;border-radius:8px;border:1px solid var(--bd);background:#fff;display:inline-flex;align-items:center;justify-content:center;color:var(--t2);font-size:12px;cursor:pointer;}
+.arr:hover{border-color:var(--g-neutral-500);}
+.arr.dim{color:var(--t4);cursor:default;}
+.arr.dim:hover{border-color:var(--bd);}
+
+/* Bookings table */
+.btable{display:flex;flex-direction:column;}
+.btable-head{display:grid;grid-template-columns:2.4fr 1.3fr 1.2fr 1fr 110px 40px;gap:18px;padding:0 4px 12px;font-size:11px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--bd);}
+.brow{display:grid;grid-template-columns:2.4fr 1.3fr 1.2fr 1fr 110px 40px;gap:18px;align-items:center;padding:18px 4px;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .12s;position:relative;}
+.bsess-sub{font-size:12.5px;color:var(--t3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.brow:last-child{border-bottom:none;}
+.brow:hover{background:var(--g-neutral-200);}
+.bprog-cell{display:flex;align-items:center;gap:14px;min-width:0;}
+.bthumb{width:48px;height:48px;border-radius:10px;flex-shrink:0;background-size:cover;background-position:center;background-color:var(--g-neutral-200);}
+.bprog-name{font-size:14px;font-weight:500;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bsess-name{font-size:13.5px;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bdate{font-size:13.5px;color:var(--t1);font-weight:500;line-height:1.3;}
+.bdate small{display:block;color:var(--t3);font-size:12.5px;margin-top:3px;font-weight:400;}
+.bsess-prog{display:flex;flex-direction:column;gap:6px;width:140px;max-width:140px;}
+.bsess-prog-l{font-size:12.5px;color:var(--t3);}
+.bsess-prog-l strong{color:var(--t1);font-weight:600;}
+.bsess-prog-bar{display:flex;gap:3px;height:5px;}
+.bsess-prog-bar > span{flex:1;background:var(--g-neutral-300);border-radius:99px;height:100%;display:block;}
+.bsess-prog-bar > span.done{background:var(--g-brand-primary);}
+.bsess-prog-bar > span.done-success{background:var(--g-success-300);}
+.bstatus{display:inline-flex;align-items:center;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:500;}
+.bs-up{background:var(--g-success-100);color:var(--g-success-300);}
+.bs-cm{background:var(--g-neutral-200);color:var(--t3);}
+.bs-cn{background:var(--g-error-100);color:var(--g-error-300);}
+.bs-ms{background:var(--g-warning-100);color:var(--g-warning-300);}
+.bs-pn{background:var(--g-brand-100);color:var(--g-brand-primary);}
+.bs-ex{background:var(--g-error-100);color:var(--g-error-300);}
+.bs-live{background:#fee2e2;color:#dc2626;display:inline-flex;align-items:center;gap:6px;}
+.bs-live::before{content:"";width:6px;height:6px;border-radius:50%;background:#dc2626;animation:livepulse 1.6s infinite;}
+.bact{display:flex;justify-content:flex-start;}
+.b-join{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 22px;border-radius:99px;background:var(--g-brand-primary);color:#fff;border:none;font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;transition:.12s;}
+.b-join:hover{background:var(--g-brand-primary-hover);}
+.b-join.disabled,.btn.disabled,.btn-w.disabled,.b-join.b-watch.disabled{opacity:.5;cursor:not-allowed;box-shadow:none;}
+.b-join.disabled:hover,.btn.disabled:hover,.btn-w.disabled:hover,.b-join.b-watch.disabled:hover{box-shadow:none;}
+.b-join.disabled:hover{background:var(--g-brand-primary);}
+.btn-w.disabled:hover,.b-join.b-watch.disabled:hover{background:#fff;border-color:var(--bd);color:var(--t1);}
+[data-tip]{position:relative;}
+[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;font-size:12px;font-weight:500;padding:7px 11px;border-radius:6px;white-space:nowrap;z-index:1000;pointer-events:none;letter-spacing:0;}
+[data-tip]:hover::before{content:"";position:absolute;bottom:calc(100% + 2px);left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a1a1a;z-index:1000;pointer-events:none;}
+.b-join.b-watch{background:#fff;color:var(--t1);border:1px solid var(--bd);}
+.b-join.b-watch:hover{border-color:var(--g-neutral-500);background:var(--g-neutral-200);}
+.b-kebab{background:none;border:none;color:var(--t3);width:32px;height:32px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;}
+.b-kebab:hover{background:var(--g-neutral-200);color:var(--t1);}
+/* Read-only content (Agenda, Notes, Summary on learner side) */
+.ro-box{font-size:13.5px;color:var(--t2);line-height:1.7;background:var(--g-neutral-200);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;white-space:pre-wrap;}
+.ro-box.empty{color:var(--t4);font-style:italic;}
+.sess-summary-box{font-size:13.5px;color:var(--t2);line-height:1.7;background:var(--g-neutral-200);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;}
+/* Recording expiry */
+.rec-expiry{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;}
+.rec-days{font-size:12px;color:var(--t3);display:inline-flex;align-items:center;gap:5px;}
+.rec-days.expired{color:var(--g-error-300);}
+.rec-email-note{background:var(--g-neutral-200);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--t3);margin-top:10px;line-height:1.55;}
+.video-expired-placeholder{aspect-ratio:16/9;background:var(--g-neutral-200);border:1px solid var(--bd);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--t4);margin-top:14px;}
+
+/* Calendar view */
+.cal-nav{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.cal-nav-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:#fff;display:inline-flex;align-items:center;justify-content:center;color:var(--t2);font-size:13px;cursor:pointer;}
+.cal-nav-btn:hover{border-color:var(--t1);}
+.cal-month-label{font-size:17px;font-weight:600;color:var(--t1);letter-spacing:-.2px;min-width:160px;}
+.cal-grid-head{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--bd);margin-bottom:0;}
+.cal-grid-head > div{padding:10px 0;text-align:center;font-size:11px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.06em;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
+.cal-cell{min-height:110px;border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:10px 10px 8px;display:flex;flex-direction:column;gap:4px;}
+.cal-cell:nth-child(7n){border-right:none;}
+.cal-cell.other-month .cal-day{color:var(--t4);}
+.cal-cell.today .cal-day{background:var(--g-brand-primary);color:#fff;border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;}
+.cal-day{font-size:13px;font-weight:500;color:var(--t2);line-height:1;margin-bottom:4px;}
+.cal-event{display:flex;align-items:center;gap:5px;padding:3px 7px;border-radius:5px;font-size:11.5px;font-weight:500;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cal-event:hover{filter:brightness(.95);}
+.cal-event.ev-up{background:var(--g-success-100);color:var(--g-success-300);}
+.cal-event.ev-co{background:var(--g-neutral-200);color:var(--t3);}
+.cal-event.ev-ca{background:var(--g-error-100);color:var(--g-error-300);}
+.cal-event.ev-mi{background:var(--g-warning-100);color:var(--g-warning-300);}
+.cal-event.ev-pn{background:var(--g-brand-100);color:var(--g-brand-primary);}
+.cal-event i{font-size:9px;flex-shrink:0;}
+.cal-more{font-size:11px;color:var(--t4);padding:2px 6px;cursor:pointer;}
+.cal-more:hover{color:var(--g-brand-primary);}
+
+/* Row menu popover */
+.rmenu{position:fixed;background:#fff;border:1px solid var(--bd);border-radius:12px;box-shadow:0 8px 32px -8px rgba(0,0,0,.16);z-index:500;min-width:180px;padding:6px;}
+.rmenu button{width:100%;display:flex;align-items:center;gap:10px;padding:9px 12px;border:none;background:none;font-family:inherit;font-size:13.5px;color:var(--t1);cursor:pointer;border-radius:8px;text-align:left;}
+.rmenu button:hover{background:#EFF1F4;}
+.rmenu button i{color:var(--t4);font-size:13px;width:14px;text-align:center;}
+.rmenu button.danger{color:var(--g-error-300);}
+.rmenu button.danger i{color:var(--g-error-300);}
+.rmenu .sep{height:1px;background:var(--bd);margin:4px 0;}
+
+/* Filter panel */
+.fpanel{position:fixed;background:#fff;border:1px solid var(--bd);border-radius:14px;padding:14px;box-shadow:0 8px 32px -8px rgba(0,0,0,.16);z-index:500;min-width:220px;}
+.fcheck-item{display:flex;align-items:center;gap:12px;padding:10px 6px;cursor:pointer;border-radius:8px;}
+.fcheck-item:hover{background:var(--g-neutral-200);}
+.fcheck-box{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--bd2);background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;transition:.12s;}
+.fcheck-box.checked{background:var(--g-brand-primary);border-color:var(--g-brand-primary);}
+.fcheck-box.checked::after{content:'\f00c';font-family:"Font Awesome 6 Free";font-weight:900;font-size:10px;color:#fff;}
+.fcheck-label{font-size:14px;color:var(--t1);}
+.fpanel-apply{width:100%;height:42px;border-radius:99px;background:var(--g-brand-primary);color:#fff;border:none;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;margin-top:10px;}
+.fpanel-apply:hover{background:var(--g-brand-primary-hover);}
+
+/* ============ DETAIL PAGE ============ */
+.det{grid-column:2;grid-row:1;background:var(--bg);display:none;flex-direction:column;min-height:100vh;}
+.det.open{display:flex;}
+.det-top{display:flex;align-items:center;gap:14px;padding:18px 32px;}
+.det-back{width:40px;height:40px;background:none;border:none;color:var(--t2);display:inline-flex;align-items:center;justify-content:center;font-size:16px;border-radius:8px;}
+.det-back:hover{background:var(--g-neutral-200);color:var(--t1);}
+.det-title{font-size:22px;font-weight:600;color:var(--t1);letter-spacing:-.3px;}
+.det-actions{margin-left:auto;display:flex;gap:10px;}
+.det-body{padding:6px 32px 60px;display:flex;flex-direction:column;gap:20px;}
+
+/* Plan stats */
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.plan-card{background:#fff;border:1px solid var(--bd);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;}
+.plan-card-l{font-size:12.5px;color:var(--t3);font-weight:500;display:flex;align-items:center;gap:7px;}
+.plan-card-l i{color:var(--t4);font-size:13px;}
+.plan-card-v{font-size:18px;font-weight:600;color:var(--t1);letter-spacing:-.2px;line-height:1.25;}
+.plan-card-sub{font-size:12.5px;color:var(--t3);}
+.plan-card-bar{display:flex;gap:3px;height:5px;margin-top:4px;}
+.plan-card-bar > span{flex:1;background:var(--g-neutral-300);border-radius:99px;height:100%;display:block;}
+.plan-card-bar > span.done{background:var(--g-brand-primary);}
+
+/* Session cards in detail */
+.mt-card{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:20px 22px;transition:box-shadow .15s;}
+.mt-card.open{box-shadow:0 4px 16px -4px rgba(17,17,17,.1);}
+.mt-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;}
+.mt-chev{transition:transform .2s;color:var(--t4);font-size:12px;flex-shrink:0;margin-top:2px;}
+.mt-card.open .mt-chev{transform:rotate(180deg);}
+.mt-acc-body{display:none;}
+.mt-card.open .mt-acc-body{display:block;}
+.mt-time{font-size:13px;color:var(--t3);font-weight:500;display:flex;align-items:center;gap:10px;}
+.mt-status{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em;}
+.mt-status.upcoming{background:var(--g-success-100);color:var(--g-success-300);}
+.mt-status.completed{background:var(--g-neutral-200);color:var(--t3);}
+.mt-status.cancelled{background:var(--g-error-100);color:var(--g-error-300);}
+.mt-status.missed{background:var(--g-warning-100);color:var(--g-warning-300);}
+.mt-status.pending{background:var(--g-brand-100);color:var(--g-brand-primary);}
+.mt-status.expired{background:var(--g-error-100);color:var(--g-error-300);}
+.mt-status.live{background:#fee2e2;color:#dc2626;display:inline-flex;align-items:center;gap:6px;}
+.mt-status.live::before{content:"";width:6px;height:6px;border-radius:50%;background:#dc2626;animation:livepulse 1.6s infinite;}
+@keyframes livepulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+.mt-title{font-size:16px;font-weight:500;color:var(--t1);letter-spacing:-.2px;margin-top:8px;}
+.mt-card-meta{display:flex;align-items:center;gap:18px;margin-top:8px;flex-wrap:wrap;}
+.mt-card-meta span{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--t3);}
+.mt-card-meta i{font-size:13px;}
+.mt-meta{display:flex;align-items:center;gap:18px;font-size:13px;color:var(--t3);margin-top:10px;flex-wrap:wrap;}
+.mt-meta span{display:inline-flex;align-items:center;gap:7px;}
+.mt-meta i{font-size:12px;color:var(--t4);}
+.mt-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+.mt-section{margin-top:18px;}
+.mt-section-h{font-size:11.5px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.mt-section-h i{color:var(--t4);font-size:12px;}
+.mt-attach{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--g-neutral-200);border:1px solid var(--bd);border-radius:10px;}
+.mt-attach .ico{width:34px;height:34px;background:#fff;color:var(--g-brand-primary);border-radius:8px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;}
+.mt-attach-name{font-size:13.5px;font-weight:500;color:var(--t1);}
+.mt-attach-sub{font-size:12px;color:var(--t4);margin-top:1px;}
+
+.mt-video{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:#0b0b0d;cursor:pointer;}
+.mt-video img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92;}
+.mt-video-bar{position:absolute;top:0;left:0;right:0;height:22px;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 100%);display:flex;align-items:center;gap:5px;padding:0 10px;}
+.mt-video-bar .dot{width:8px;height:8px;border-radius:50%;}
+.mt-video-bar .dot.r{background:#ff5f57;} .mt-video-bar .dot.y{background:#febc2e;} .mt-video-bar .dot.g{background:#28c840;}
+.mt-video-bar .lbl{margin-left:auto;font-size:11px;color:rgba(255,255,255,.7);font-weight:500;}
+.mt-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;color:var(--g-neutral-800);font-size:22px;box-shadow:0 8px 24px rgba(0,0,0,.3);}
+
+/* Transcript */
+.tx-wrap{background:var(--g-neutral-200);border:1px solid var(--bd);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:14px;max-height:380px;overflow-y:auto;}
+.tx-line{display:flex;gap:14px;}
+.tx-time{font-size:12px;color:var(--t4);font-variant-numeric:tabular-nums;font-weight:500;flex-shrink:0;width:42px;padding-top:1px;}
+.tx-sp{font-size:12px;font-weight:600;margin-bottom:3px;}
+.tx-sp.coach{color:var(--g-brand-primary);}
+.tx-sp.learner{color:var(--g-magenta-300);}
+.tx-text{font-size:13.5px;color:var(--t2);line-height:1.55;}
+.tx-more{font-size:12px;color:var(--t4);text-align:center;padding-top:6px;border-top:1px dashed var(--bd);}
+
+/* Vertical timeline (sessions) */
+.tl-wrap{position:relative;padding-left:26px;margin-top:8px;}
+.tl-wrap::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--g-neutral-300);border-radius:1px;}
+.tl-day{position:relative;margin-bottom:24px;}
+.tl-day:last-child{margin-bottom:0;}
+.tl-day::before{content:"";position:absolute;left:-26px;top:6px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--g-brand-primary);box-shadow:0 0 0 4px var(--bg);}
+.tl-day-h{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;}
+.tl-day-t{font-size:15px;font-weight:600;color:var(--t1);}
+.tl-day-sub{font-size:13px;color:var(--t3);}
+.tl-item{position:relative;margin-bottom:16px;}
+.tl-item:last-child{margin-bottom:0;}
+.tl-num{width:28px;height:28px;border-radius:50%;background:var(--g-brand-100);color:var(--g-brand-primary);display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600;flex-shrink:0;}
+.psess-num{width:28px;height:28px;border-radius:50%;background:var(--g-brand-100);color:var(--g-brand-primary);display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600;flex-shrink:0;}
+.mt-head-l{flex:1;min-width:0;}
+.mt-card{margin-bottom:12px;cursor:pointer;}
+.mt-card:last-child{margin-bottom:0;}
+
+/* DISCOVER cards */
+
+/* ============ MODAL (slot picker, reschedule, cancel, confirm) ============ */
+.modal-bg{position:fixed;inset:0;background:rgba(15,15,20,.45);z-index:1000;display:none;align-items:center;justify-content:center;padding:24px;}
+.modal-bg.open{display:flex;}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:460px;box-shadow:0 24px 60px -20px rgba(17,17,17,.28);overflow:hidden;}
+.modal-h{padding:22px 24px 4px;display:flex;align-items:flex-start;gap:14px;}
+.modal-ico{width:40px;height:40px;border-radius:10px;background:var(--g-brand-100);color:var(--g-brand-primary);display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.modal-ico.danger{background:var(--g-error-100);color:var(--g-error-300);}
+.modal-ico.warning{background:var(--g-warning-100);color:var(--g-warning-300);}
+.modal-ico.success{background:var(--g-success-100);color:var(--g-success-300);}
+.modal-t{font-size:17px;font-weight:600;color:var(--t1);letter-spacing:-.2px;flex:1;padding-top:8px;}
+.modal-x{background:none;border:none;color:var(--t3);width:32px;height:32px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;}
+.modal-x:hover{background:var(--g-neutral-200);color:var(--t1);}
+.modal-b{padding:10px 24px 22px;font-size:13.5px;color:var(--t2);line-height:1.55;}
+.modal-b strong{color:var(--t1);}
+.modal-f{padding:14px 24px 22px;display:flex;justify-content:flex-end;gap:10px;}
+
+/* v2 modal style — heading + divider + body + divider + footer */
+.modal.v2{max-width:560px;}
+.modal.v2 .modal-h{padding:24px 28px;border-bottom:1px solid var(--bd);align-items:center;}
+.modal.v2 .modal-t{font-size:24px;font-weight:500;letter-spacing:-.4px;padding-top:0;color:var(--t1);}
+.modal.v2 .modal-ico{display:none;}
+.modal.v2 .modal-x{width:36px;height:36px;border-radius:50%;background:var(--g-neutral-200);}
+.modal.v2 .modal-x:hover{background:var(--g-neutral-300);}
+.modal.v2 .modal-b{padding:22px 28px;font-size:15px;line-height:1.6;color:var(--t1);}
+.modal.v2 .modal-f{padding:18px 28px;border-top:1px solid var(--bd);gap:12px;}
+.modal.v2 .modal-f .btn,.modal.v2 .modal-f .btn-w{height:46px;padding:0 28px;font-size:15px;}
+.btn-danger{background:#ef4444;color:#fff;border-color:#ef4444;}
+.btn-danger:hover{background:#dc2626;border-color:#dc2626;}
+.btn-danger{background:var(--g-error-300);color:#fff;}
+.btn-danger:hover{background:var(--g-error-200);}
+
+/* Slot picker (Calendly-style) */
+.sp-modal{max-width:1040px;}
+.sp-h{padding:22px 26px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:14px;}
+.sp-h-l{flex:1;}
+.sp-h-t{font-size:18px;font-weight:600;color:var(--t1);}
+.sp-h-d{font-size:13px;color:var(--t3);margin-top:3px;}
+.sp-body{display:grid;grid-template-columns:340px 1fr 280px;min-height:380px;}
+.sp-info{padding:24px 22px;border-right:1px solid var(--bd);background:var(--g-neutral-200);display:flex;flex-direction:column;gap:18px;}
+.sp-info-coach{display:flex;align-items:center;gap:12px;}
+.sp-info-av{width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;}
+.sp-info-av img{width:100%;height:100%;object-fit:cover;}
+.sp-info-coach-name{font-size:14px;font-weight:600;color:var(--t1);}
+.sp-info-coach-role{font-size:12px;color:var(--t3);margin-top:2px;}
+.sp-info-t{font-size:18px;font-weight:600;color:var(--t1);letter-spacing:-.2px;line-height:1.25;}
+.sp-info-meta{display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--t2);}
+.sp-info-meta-row{display:flex;align-items:flex-start;gap:10px;line-height:1.5;}
+.sp-info-meta-row i{color:var(--t4);font-size:13px;width:14px;text-align:center;margin-top:3px;}
+.sp-info-divider{height:1px;background:var(--bd);}
+.sp-info-section-h{font-size:11px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.sp-info-section-d{font-size:13px;color:var(--t2);line-height:1.55;}
+.sp-cal{padding:22px 24px;border-right:1px solid var(--bd);}
+.sp-cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.sp-cal-month{font-size:15px;font-weight:600;color:var(--t1);}
+.sp-cal-arr{width:32px;height:32px;border-radius:8px;border:none;background:none;color:var(--t2);display:inline-flex;align-items:center;justify-content:center;font-size:13px;}
+.sp-cal-arr:hover{background:var(--g-neutral-200);color:var(--t1);}
+.sp-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:38px;gap:4px;justify-items:center;align-items:center;}
+.sp-cal-dow{font-size:11px;font-weight:600;color:var(--t4);text-align:center;padding:6px 0;text-transform:uppercase;letter-spacing:.04em;height:auto;}
+.sp-cal-day{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;color:var(--t3);cursor:default;font-weight:500;position:relative;}
+.sp-cal-day.avail{color:var(--t1);background:var(--g-brand-100);cursor:pointer;}
+.sp-cal-day.avail:hover{background:var(--g-brand-200);}
+.sp-cal-day.selected{background:var(--g-brand-primary)!important;color:#fff!important;}
+.sp-slots{padding:22px 22px 18px;display:flex;flex-direction:column;}
+.sp-slots-list{flex:1;display:flex;flex-direction:column;gap:8px;overflow-y:auto;max-height:460px;padding-right:4px;}
+.sp-slot{padding:10px 14px;border:1.5px solid var(--bd);background:#fff;border-radius:10px;font-size:13.5px;font-weight:500;color:var(--t1);text-align:center;}
+.sp-slot:hover{border-color:var(--g-brand-primary);color:var(--g-brand-primary);}
+.sp-slot.selected{background:var(--g-brand-primary);border-color:var(--g-brand-primary);color:#fff;}
+.sp-slot[disabled]{opacity:.4;cursor:not-allowed;border-color:var(--bd);color:var(--t4);}
+.sp-empty{flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--t4);text-align:center;padding:30px 10px;}
+.sp-foot{padding:18px 26px;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.sp-foot-l{font-size:13px;color:var(--t3);}
+.sp-foot-l strong{color:var(--t1);font-weight:600;}
+
+/* Form helpers */
+.input{width:100%;height:46px;padding:0 14px;border:1px solid var(--bd);border-radius:10px;font-size:14px;font-family:inherit;color:var(--t1);outline:none;background:#fff;}
+.input:focus{border-color:var(--g-brand-primary);box-shadow:0 0 0 3px rgba(87,102,242,.12);}
+.fld-label{font-size:12.5px;font-weight:500;color:var(--t2);margin-bottom:6px;display:block;}
+.req{color:#64748B;font-weight:500;margin-left:2px;}
+.sel{position:relative;}
+.sel select{width:100%;height:46px;border-radius:10px;border:1px solid var(--bd);background:#fff;padding:0 40px 0 14px;font-family:inherit;font-size:14px;color:var(--t1);appearance:none;outline:none;}
+.sel::after{content:'\f078';font-family:"Font Awesome 6 Free";font-weight:900;position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--t3);font-size:11px;pointer-events:none;}
+textarea.input{height:auto;min-height:80px;padding:12px 14px;resize:vertical;line-height:1.55;}
+
+/* Toast */
+.toast{position:fixed;top:24px;right:24px;background:var(--t1);color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;opacity:0;transform:translateY(-12px);transition:.2s;z-index:2000;}
+.toast.show{opacity:1;transform:translateY(0);}
+
+/* Empty state */
+.empty{padding:60px 24px;text-align:center;background:#fff;border:1px solid var(--bd);border-radius:18px;}
+.empty-ico{width:64px;height:64px;border-radius:18px;background:var(--g-neutral-200);color:var(--t4);display:inline-flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px;}
+.empty-t{font-size:16px;font-weight:600;color:var(--t1);margin-bottom:6px;}
+.empty-d{font-size:13.5px;color:var(--t3);max-width:420px;margin:0 auto 16px;line-height:1.55;}
+
+/* ============ MOBILE BOTTOM NAV + SHEETS (hidden on desktop) ============ */
+.mbnav,.mfab,.msheet,.msheet-backdrop{display:none;}
+@media(max-width:767px){
+  .mbnav{display:flex;}
+  .mfab{display:inline-flex;}
+  .msheet{display:block;}
+  .msheet-backdrop{display:none;}
+  .msheet-backdrop.show{display:block;}
+}
+.mbnav{position:fixed;bottom:0;left:0;right:0;height:72px;background:#fff;border-top:1px solid var(--bd);z-index:100;align-items:stretch;padding-bottom:env(safe-area-inset-bottom);}
+.mbnav-tab{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var(--t3);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:inherit;padding:0;position:relative;}
+.mbnav-tab i{font-size:22px;color:var(--t2);line-height:1;}
+.mbnav-tab.active{color:var(--g-brand-primary);}
+.mbnav-tab.active i{color:var(--g-brand-primary);}
+.mbnav-tab.active::before{content:'';position:absolute;top:0;left:18%;right:18%;height:3px;background:var(--g-brand-primary);border-radius:0 0 3px 3px;}
+.mbnav-tab.profile{padding:0;}
+.mbnav-tab.profile .mbnav-av{width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid transparent;}
+.mbnav-tab.profile.active .mbnav-av{border-color:var(--g-brand-primary);}
+.mbnav-tab.profile .mbnav-av img{width:100%;height:100%;object-fit:cover;display:block;}
+
+.mfab{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom));width:52px;height:52px;border-radius:50%;background:var(--g-neutral-800);color:#fff;border:none;align-items:center;justify-content:center;font-size:22px;box-shadow:0 8px 20px rgba(0,0,0,.18);z-index:99;cursor:pointer;}
+.mfab:hover{background:var(--g-neutral-700);}
+
+.msheet-backdrop{position:fixed;inset:0;background:rgba(15,15,20,.35);z-index:95;}
+.msheet{position:fixed;left:0;right:0;bottom:calc(68px + env(safe-area-inset-bottom));background:#fff;border-radius:20px 20px 0 0;max-height:calc(100vh - 100px);overflow-y:auto;z-index:96;transform:translateY(110%);transition:transform .26s cubic-bezier(.22,.61,.36,1);box-shadow:0 -8px 32px rgba(0,0,0,.12);}
+.msheet.open{transform:translateY(0);}
+.msheet-head{display:flex;align-items:center;padding:18px 20px 14px;gap:12px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:#fff;z-index:2;}
+.msheet-back{background:none;border:none;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;color:var(--t1);font-size:15px;cursor:pointer;flex-shrink:0;}
+.msheet-back:hover{color:var(--t2);}
+.msheet-title{flex:1;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--t1);}
+.msheet-close{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:54px;height:54px;border-radius:50%;background:var(--g-neutral-200);border:none;color:var(--t1);font-size:13px;cursor:pointer;flex-shrink:0;line-height:1;}
+.msheet-close span{font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:capitalize;margin-top:3px;color:var(--t2);}
+.msheet-body{padding:8px 0 24px;}
+.msheet-row{display:flex;align-items:center;gap:16px;padding:16px 22px;font-size:15px;color:var(--t1);text-decoration:none;cursor:pointer;background:none;border:none;width:100%;font-family:inherit;text-align:left;}
+.msheet-row:active{background:var(--g-neutral-200);}
+.msheet-row > i:first-child{font-size:22px;color:var(--t3);width:26px;text-align:center;line-height:1;flex-shrink:0;position:relative;}
+.msheet-row .ms-chev{margin-left:auto;color:var(--t4);font-size:13px;}
+.msheet-row .ms-icon-dot{position:absolute;top:-2px;right:-2px;width:8px;height:8px;border-radius:50%;background:#ef4444;border:1.5px solid #fff;}
+.msheet-row.is-active{color:var(--g-brand-primary);font-weight:500;}
+.msheet-row.is-active > i:first-child{color:var(--g-brand-primary);}
+
+/* ============ MOBILE / RESPONSIVE ============ */
+@media(max-width:767px){
+  /* Prevent any horizontal page scroll */
+  html,body{overflow-x:hidden;max-width:100vw;}
+  .app,.main{max-width:100vw;overflow-x:hidden;}
+  img,video,iframe{max-width:100%;height:auto;}
+
+  /* App shell: single column, sidebar hidden */
+  .app{grid-template-columns:1fr;}
+  .side,.side-toggle-wrap{display:none!important;}
+  .det{grid-column:1;}
+
+  /* Topbar — match content's 16px gutter so headings align */
+  .topbar{padding:16px 16px 8px;flex-wrap:wrap;gap:10px;}
+  .page-title{font-size:22px;letter-spacing:-.2px;}
+  .tb-actions{margin-left:auto;}
+  .btn{padding:0 16px;height:40px;font-size:13.5px;}
+
+  /* Content padding — leave room for bottom nav */
+  .main{min-width:0;}
+  .content{padding:0 16px 110px;gap:18px;}
+  .det-body{padding-bottom:120px;}
+
+  /* Tabs: horizontal scroll */
+  .tabs{padding:6px 16px 0;gap:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{padding:12px 4px;font-size:14px;white-space:nowrap;flex-shrink:0;}
+
+  /* Panel: tighter padding */
+  .panel{padding:16px;border-radius:14px;}
+  .panel-head{flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+  .panel-title{font-size:17px;}
+
+  /* Programs grid */
+  .pgrid{grid-template-columns:1fr;gap:14px;}
+
+  /* Session cards: stack actions below */
+  .sess-card{grid-template-columns:auto 1fr;gap:12px;padding:16px;}
+  .sess-actions{grid-column:1 / -1;flex-wrap:wrap;gap:8px;}
+
+  /* Bookings — card layout (status + action right-clustered, like web) */
+  .btable{width:100%;}
+  .btable-head{display:none;}
+  .brow{
+    display:grid!important;
+    grid-template-columns:1fr auto auto;
+    grid-template-areas:
+      "info    info    kebab"
+      "date    date    date"
+      "prog    prog    prog"
+      ".       status  action";
+    gap:10px 10px;align-items:start;
+    padding:14px;border:1px solid var(--bd);border-radius:12px;
+    background:#fff;margin-bottom:10px;width:100%;min-width:0;
+  }
+  .brow > *{min-width:0;}
+  .brow > *:nth-child(1){grid-area:info;}
+  .brow > *:nth-child(2){grid-area:date;}
+  .brow > *:nth-child(3){grid-area:prog;}
+  .brow > *:nth-child(4){grid-area:status;align-self:center;justify-self:end;}
+  .brow > *:nth-child(5){grid-area:action;justify-self:end;align-self:center;}
+  .brow > *:nth-child(6){grid-area:kebab;justify-self:end;align-self:start;}
+  .brow:last-child{margin-bottom:0;}
+  .brow .b-kebab{background:none;border:none;color:var(--t3);padding:4px 6px;cursor:pointer;}
+  .bprog-cell{gap:12px;min-width:0;}
+  .bprog-name,.bsess-name{white-space:normal;}
+  .bsess-prog{width:100%;max-width:none;}
+
+  /* ===== HEADING SIZE OPTIMISATION (mobile) ===== */
+  .wiz-h1,h2.coaching-empty-h,h3.coaching-empty-h{font-size:22px!important;letter-spacing:-.3px;line-height:1.2;}
+  .panel-title{font-size:17px;}
+  .sec-h-t{font-size:16px;}
+  .sec-h-d{font-size:12.5px;}
+  .scard-t{font-size:15px;}
+  .scard-d{font-size:12.5px;}
+  .modal-t{font-size:16px;}
+  .empty-t{font-size:15px;}
+  .empty-d{font-size:13px;}
+  .pcard-name{font-size:16px;}
+  .sess-title{font-size:14.5px;}
+  .bprog-name{font-size:14px;}
+  .bsess-name{font-size:13px;}
+
+  /* Filter bar */
+  .filterbar{gap:8px;align-items:center;}
+  .filterbar > *{flex-shrink:0;}
+  .fdrop{font-size:12px;padding:0 10px;height:36px;}
+  .filter-reset{height:36px;font-size:12px;padding:0 8px;}
+  .search{flex:1 1 100%;}
+  .search input{height:42px;font-size:13.5px;}
+  .pager{margin-left:auto;font-size:12px;gap:6px;}
+  .pager .arr{width:28px;height:28px;}
+
+  /* Filter panels become bottom sheets */
+  .fpanel{
+    position:fixed!important;
+    bottom:0!important;top:auto!important;left:0!important;right:0!important;
+    width:100%!important;max-height:80vh;overflow-y:auto;
+    border-radius:16px 16px 0 0;
+    box-shadow:0 -8px 32px rgba(0,0,0,.14);
+  }
+  .fpanel::before{
+    content:'';display:block;width:40px;height:4px;border-radius:2px;
+    background:var(--g-neutral-300);margin:10px auto 8px;
+  }
+  /* Mini calendar stays inline on mobile */
+  .mini-cal{
+    position:static!important;width:100%!important;
+    box-shadow:none!important;border:1px solid var(--bd)!important;
+    margin-top:8px;
+  }
+
+  /* Modals: full-width with safe margin */
+  .modal-bg{padding:14px;}
+  .modal{max-width:100%!important;border-radius:14px;}
+  .modal.v2{max-width:100%!important;}
+  /* Session slot picker: full screen */
+  .modal-bg .sp-modal{
+    width:100%!important;max-width:100%!important;
+    height:100%!important;border-radius:0!important;
+    overflow-y:auto;
+  }
+
+  /* Calendar */
+  .cal-cell{min-height:64px;padding:6px 4px 4px;}
+  .cal-day{font-size:11px;}
+  .cal-event{font-size:10px;padding:2px 4px;}
+  .cal-nav{flex-wrap:wrap;gap:8px;}
+  .cal-month-label{font-size:15px;min-width:0;}
+
+  /* Program detail */
+  .det-top{padding:14px 16px;flex-wrap:wrap;gap:8px;}
+  .det-title{font-size:17px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .det-tabs{padding:0 12px;gap:18px;overflow-x:auto;}
+  .dtab{white-space:nowrap;flex-shrink:0;}
+  .det-body{padding:14px 14px 120px;}
+
+  /* ===== Attachment rows: stack file info above View/Remove ===== */
+  .mt-attach{flex-wrap:wrap;gap:10px;align-items:flex-start;padding:12px;}
+  .mt-attach > div[style*="flex:1"]{flex:1 1 100%;min-width:0;}
+  .mt-attach-name,.mt-attach-sub{word-break:break-word;overflow-wrap:anywhere;}
+  .mt-attach .btn,.mt-attach .btn-w,.mt-attach .btn-sm{padding:0 12px;height:34px;font-size:12.5px;flex:0 0 auto;}
+
+  /* ===== General text-wrap policy for mobile ===== */
+  .pcard-name,.pcard-desc,
+  .scard-t,.scard-d,
+  .modal-t,
+  .det-title,
+  .bsess-name,.bsess-sub,.bsess-prog-l,
+  .bprog-name,
+  .sess-title,.sess-status,
+  .panel-title,
+  .empty-t,.empty-d{
+    word-break:break-word;overflow-wrap:anywhere;white-space:normal;
+  }
+  .det-title{white-space:nowrap;}
+
+  /* Long file names / URLs */
+  code,kbd,samp{word-break:break-all;overflow-wrap:anywhere;}
+
+  /* Header rows wrap title+actions */
+  .scard-h,.panel-head,.mt-head{flex-wrap:wrap;gap:10px;}
+  .sess-actions,.mt-actions{flex-wrap:wrap;gap:8px;}
+  .sess-actions .btn,.sess-actions .btn-w,
+  .mt-actions .btn,.mt-actions .btn-w{padding:0 12px;height:34px;font-size:12.5px;}
+
+  /* Inline metadata strips */
+  .sess-meta,.mt-meta{flex-wrap:wrap;gap:10px;}
+}
+
+@media(max-width:480px){
+  .topbar{padding-left:60px;}
+  .page-title{font-size:18px;}
+  .cal-cell{min-height:54px;}
+}
+
+/* =========================================================================
+   CUSTOM DROPDOWN (replaces native <select>)
+   ========================================================================= */
+select.dd-enhanced{position:absolute!important;left:0;top:0;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;border:0!important;padding:0!important;margin:0!important;clip:rect(0 0 0 0);overflow:hidden;}
+.dd-trig{
+  font-family:inherit;font-size:14px;color:var(--t1);background:#fff;
+  border:1px solid var(--bd);border-radius:10px;
+  height:46px;padding:0 36px 0 14px;
+  text-align:left;cursor:pointer;
+  display:inline-flex;align-items:center;
+  position:relative;width:100%;
+  transition:border-color .15s, box-shadow .15s;
+}
+.dd-trig:focus{outline:none;}
+.dd-trig:hover{border-color:var(--bd2);}
+.dd-trig.open{border-color:var(--g-brand-primary);box-shadow:0 0 0 3px rgba(87,102,242,.12);}
+.dd-trig::after{
+  content:'\f078';font-family:"Font Awesome 6 Free";font-weight:900;
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  color:var(--t3);font-size:10px;pointer-events:none;
+  transition:transform .15s;
+}
+.dd-trig.open::after{transform:translateY(-50%) rotate(180deg);}
+.dd-trig .dd-trig-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:inherit;}
+.dd-trig.placeholder .dd-trig-text{color:var(--t4);}
+
+.sel{position:relative;}
+.sel .dd-trig{width:100%;}
+.sel:has(.dd-enhanced)::after{display:none;}
+.dual-input > .sel .dd-trig{border:none;border-radius:0;background:transparent;height:46px;}
+.dual-input > .sel .dd-trig.open{box-shadow:none;border-color:transparent;}
+.slot .sel .dd-trig{height:42px;justify-content:center;text-align:center;padding:0 28px;}
+
+.dd-menu{
+  position:fixed;background:#fff;border:1px solid var(--bd);
+  border-radius:12px;padding:6px;box-shadow:0 24px 60px -20px rgba(17,17,17,.18);
+  z-index:10000;max-height:300px;overflow-y:auto;min-width:160px;
+}
+.dd-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 12px;border-radius:8px;font-size:14px;color:var(--t1);
+  cursor:pointer;gap:10px;font-family:inherit;line-height:1.3;
+}
+.dd-item:hover{background:#EFF1F4;}
+.dd-item.selected{background:var(--g-brand-100);color:var(--g-brand-primary);font-weight:500;}
+.dd-item.selected::after{
+  content:'\f00c';font-family:"Font Awesome 6 Free";font-weight:900;
+  color:var(--g-brand-primary);font-size:12px;
+}
+.dd-item.disabled{opacity:.5;cursor:not-allowed;}
+.dd-item.disabled:hover{background:none;}
+</style>
+</head>
+<body>
+
+<div class="app" id="app-root">
+  <!-- ========== SIDEBAR ========== -->
+  <div class="side-toggle-wrap" onclick="toggleSidebar()">
+    <div class="side-toggle-dash"></div>
+    <button class="side-toggle" data-tip="Collapse" id="side-toggle-btn"><i class="fa-solid fa-chevron-left"></i></button>
+  </div>
+  <aside class="side" id="sidebar">
+    <div class="brand">
+      <div class="brand-logo"><span class="sun"></span><i class="fa-solid fa-indian-rupee-sign"></i></div>
+      <div class="brand-name">Rodha Academy</div>
+    </div>
+
+    <nav class="nav">
+      <!-- Library group -->
+      <div class="nav-group">
+        <a class="nav-item parent" href="#" onclick="toggleNavGroup(this,event)">
+          <i class="ph ph-package"></i>
+          <span>Library</span>
+          <i class="fa-solid fa-chevron-up nav-chev"></i>
+        </a>
+        <div class="nav-sub nav-sub-open">
+          <a href="#" onclick="toast('Courses — coming soon');event.preventDefault();">Courses</a>
+          <a href="#" onclick="toast('Webinars — coming soon');event.preventDefault();">Webinars</a>
+          <a href="#" class="active" onclick="setView('home');event.preventDefault();">Coaching</a>
+          <a href="#" onclick="toast('Membership — coming soon');event.preventDefault();">Membership</a>
+        </div>
+      </div>
+
+      <a class="nav-item" href="#" onclick="toast('AI Avatar — coming soon');event.preventDefault();">
+        <i class="ph ph-magic-wand"></i><span>AI Avatar</span>
+      </a>
+
+      <a class="nav-item" href="#" onclick="toast('Bookmarks — coming soon');event.preventDefault();">
+        <i class="ph ph-bookmark-simple"></i><span>Bookmarks</span>
+      </a>
+
+      <div class="nav-group">
+        <a class="nav-item parent" href="#" onclick="toggleNavGroup(this,event)">
+          <i class="ph ph-chats"></i>
+          <span>Community</span>
+          <i class="fa-solid fa-chevron-down nav-chev"></i>
+        </a>
+        <div class="nav-sub">
+          <a href="#" onclick="toast('Discussions — coming soon');event.preventDefault();">Discussions</a>
+          <a href="#" onclick="toast('Members — coming soon');event.preventDefault();">Members</a>
+        </div>
+      </div>
+
+      <a class="nav-item" href="#" onclick="toast('Access Code — coming soon');event.preventDefault();">
+        <i class="ph ph-gift"></i><span>Access Code</span>
+      </a>
+    </nav>
+
+    <button class="side-cta orange" onclick="toast('Store — coming soon')">
+      <i class="fa-solid fa-store"></i>Visit Store
+    </button>
+
+    <div class="sf">
+      <div class="sf-av"><img src="https://i.pravatar.cc/72?img=49" alt="Eva"></div>
+      <div style="min-width:0;flex:1;">
+        <div class="sf-name">Eva Greenfield</div>
+        <div class="sf-role">Student</div>
+      </div>
+      <button class="sf-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+    </div>
+  </aside>
+
+  <!-- ========== MAIN ========== -->
+  <main class="main" id="main">
+    <!-- COACHING (single page with Bookings | Programs tabs) -->
+    <div id="view-coaching"></div>
+  </main>
+
+  <!-- ========== PROGRAM DETAIL (full page overlay) ========== -->
+  <div class="det" id="det">
+    <div class="det-top">
+      <button class="det-back" onclick="closeDet()"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="det-title" id="det-title">Pitch Review</div>
+    </div>
+    <div class="det-body" id="det-body"></div>
+  </div>
+
+</div><!-- /.app -->
+
+<!-- ========== MODAL ========== -->
+<div class="modal-bg" id="modal-bg" onclick="if(event.target.id==='modal-bg')closeModal()">
+  <div class="modal" id="modal" role="dialog" aria-modal="true"></div>
+</div>
+
+<!-- ========== TOAST ========== -->
+<div class="toast" id="toast"></div>
+
+<!-- ========== MOBILE BOTTOM NAV ========== -->
+<nav class="mbnav" aria-label="Primary">
+  <button class="mbnav-tab" onclick="mbTap('courses')"><i class="ph ph-book-bookmark"></i><span>Courses</span></button>
+  <button class="mbnav-tab" onclick="mbTap('webinars')"><i class="ph ph-video-camera"></i><span>Webinars</span></button>
+  <button class="mbnav-tab" onclick="mbTap('ai-avatar')"><i class="ph ph-sparkle"></i><span>AI Avatar</span></button>
+  <button class="mbnav-tab" id="mbnav-more-btn" onclick="mbOpenMore()"><i class="ph ph-caret-double-up"></i><span>More</span></button>
+  <button class="mbnav-tab profile" onclick="mbTap('profile')" aria-label="Profile">
+    <span class="mbnav-av"><img src="https://i.pravatar.cc/72?img=49" alt="Eva"></span>
+  </button>
+</nav>
+
+<!-- ========== FLOATING CHAT ACTION ========== -->
+<button class="mfab" aria-label="Chat with coach" onclick="toast('Chat — coming soon')"><i class="ph ph-chat-circle-dots"></i></button>
+
+<!-- ========== MOBILE BOTTOM SHEETS ========== -->
+<div class="msheet-backdrop" id="msheet-backdrop" onclick="mbCloseAll()"></div>
+
+<div class="msheet" id="msheet-more">
+  <div class="msheet-head">
+    <div class="msheet-title">More</div>
+    <button class="msheet-close" onclick="mbCloseAll()"><i class="fa-solid fa-chevron-down"></i><span>Close</span></button>
+  </div>
+  <div class="msheet-body">
+    <button class="msheet-row" onclick="mbOpenSub('community')"><i class="ph ph-chats"><span class="ms-icon-dot"></span></i><span>Community</span><i class="fa-solid fa-chevron-right ms-chev"></i></button>
+    <button class="msheet-row" onclick="toast('Bookmarks — coming soon')"><i class="ph ph-bookmark-simple"></i><span>Bookmarks</span></button>
+    <button class="msheet-row is-active" onclick="mbCloseAll();setView('home');"><i class="ph ph-graduation-cap"></i><span>Coaching</span></button>
+    <button class="msheet-row" onclick="toast('Membership — coming soon')"><i class="ph ph-star"></i><span>Membership</span></button>
+    <button class="msheet-row" onclick="toast('Access Code — coming soon')"><i class="ph ph-gift"></i><span>Access Code</span></button>
+    <button class="msheet-row" onclick="toast('Store — coming soon')"><i class="fa-solid fa-store"></i><span>Visit Store</span></button>
+  </div>
+</div>
+
+<div class="msheet" id="msheet-community">
+  <div class="msheet-head">
+    <button class="msheet-back" onclick="mbBack()"><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="msheet-title">Community</div>
+    <button class="msheet-close" onclick="mbCloseAll()"><i class="fa-solid fa-chevron-down"></i><span>Close</span></button>
+  </div>
+  <div class="msheet-body">
+    <button class="msheet-row" onclick="toast('Discussions — coming soon')"><span>Discussions</span></button>
+    <button class="msheet-row" onclick="toast('Members — coming soon')"><span>Members</span></button>
+  </div>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const ME = { name:'Eva', fullName:'Eva Greenfield', email:'eva.greenfield@gmail.com', avatar:'https://i.pravatar.cc/200?img=49' };
+
+const COACHES = {
+  roshnara: { name:'Roshnara Anwar', role:'Angel investor', avatar:'https://i.pravatar.cc/72?img=47' },
+  jordan:   { name:'Jordan Park',    role:'Senior PM',      avatar:'https://i.pravatar.cc/72?img=14' },
+  marcus:   { name:'Marcus Cloeten', role:'Engineering',    avatar:'https://i.pravatar.cc/72?img=12' },
+};
+
+const PROGRAMS = [
+  { id:'pr1', name:'Pitch Review', coach:'roshnara', total:3, completed:1, status:'active', image:'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&h=375&fit=crop',
+    sessions:[
+      { id:'p1s1', num:1, name:'Portfolio Walkthrough & Initial Feedback', date:'May 5, 2026 · 11:00 AM IST', state:'completed', hasVideo:true, daysLeft:9,
+        notes:'Strong hook on slide 1. Market sizing on slides 4–7 needs bottom-up narrative.', agenda:'Walk through the deck top-to-bottom. Identify top 3 things to fix.', attach:{name:'session_1_brief.pdf',size:'420 KB'},
+        summary:'Strong first session — your hook lands well and the product story is clear. The market sizing section needs a full rebuild using a bottom-up model (accounts × ACP × attach-rate). Competitor slide reads too defensive; we\'ll reframe it as a strategic positioning map. Action items emailed after the session.' },
+      { id:'p1s2', num:2, name:'Market Sizing Deep-Dive & Competitor Mapping', date:'May 8, 2026 · 11:00 AM IST', state:'upcoming', joinable:true,
+        notes:'', agenda:'Walk through the revised TAM/SAM/SOM model. Pressure-test bottom-up assumptions.', attach:null },
+      { id:'p1s3', num:3, name:'Final Investor Run-Through (Mock Pitch)', date:null, state:'pending',
+        notes:'', agenda:'Live mock pitch end-to-end with hard investor questions.', attach:null },
+    ]
+  },
+  { id:'pr2', name:'Fundraising Interview Prep', coach:'jordan', total:5, completed:2, status:'active', image:'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&h=375&fit=crop',
+    sessions:[
+      { id:'p2s1', num:1, name:'Story arc & narrative blocks', date:'Apr 18, 2026 · 4:00 PM IST', state:'completed', hasVideo:true, daysLeft:0, notes:'', agenda:'', attach:null, summary:'Covered the core narrative arc structure — hook, tension, resolution. Strong instinct on the why-now angle. Focus for next session: tightening the founder-market fit story into a single crisp sentence.' },
+      { id:'p2s2', num:2, name:'Practising the why-now answer', date:'Apr 25, 2026 · 4:00 PM IST', state:'cancelled', notes:'', agenda:'Coach unavailable — rescheduled and then cancelled.', attach:null },
+      { id:'p2s3', num:3, name:'Hard founder/market fit questions', date:'May 8, 2026 · 4:00 PM IST', state:'live', notes:'', agenda:'Drill the toughest investor questions on market and competition.', attach:null },
+      { id:'p2s4', num:4, name:'Numbers & defensibility drill', date:'Apr 30, 2026 · 4:00 PM IST', state:'missed', notes:'', agenda:'Walk the financial model and defensibility narrative.', attach:null },
+      { id:'p2s5', num:5, name:'Full mock interview', date:null, state:'pending', notes:'', agenda:'Full mock interview with timed delivery.', attach:null },
+    ]
+  },
+  { id:'pr3', name:'Build a Viral App in 30 Days', coach:'marcus', total:4, completed:4, status:'completed', image:'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&h=375&fit=crop',
+    sessions:[
+      { id:'p3s1', num:1, name:'Idea & wedge', date:'Mar 2, 2026',  state:'completed', hasVideo:true, daysLeft:0, notes:'', agenda:'', attach:null, summary:'Validated the wedge hypothesis. Narrow ICP chosen: indie developers with < 10k DAU. Identified the one hair-on-fire problem worth solving first.' },
+      { id:'p3s2', num:2, name:'V1 in a weekend', date:'Mar 9, 2026', state:'completed', hasVideo:true, daysLeft:0, notes:'', agenda:'', attach:null, summary:'Shipped a rough V1 by end of session. Core loop works. Three usability blockers identified for the next iteration.' },
+      { id:'p3s3', num:3, name:'Distribution loops', date:'Mar 16, 2026', state:'completed', hasVideo:true, daysLeft:0, notes:'', agenda:'', attach:null, summary:'Mapped two viral loops: referral and embed. Referral loop has the most leverage given current user profile. Next: instrument the share trigger.' },
+      { id:'p3s4', num:4, name:'Retention & re-engagement', date:'Mar 23, 2026', state:'completed', hasVideo:true, daysLeft:0, notes:'', agenda:'', attach:null, summary:'Day-7 retention reviewed — 34%, strong for the category. Re-engagement sequence designed: 3 touches, value-led, no-discount. Program completed.' },
+    ]
+  },
+  { id:'pr4', name:'Resume Review & Strategy', coach:'roshnara', total:2, completed:1, status:'expired', image:'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=600&h=375&fit=crop',
+    sessions:[
+      { id:'p4s1', num:1, name:'Resume audit', date:'Feb 10, 2026 · 11:00 AM IST', state:'completed', hasVideo:true, daysLeft:0, notes:'', agenda:'Walk through resume top-to-bottom.', attach:null, summary:'Resume structure is solid but buries the impact. Lead each role with a quantified outcome, not responsibilities. Top action: rewrite the first bullet of every role to start with a number.' },
+      { id:'p4s2', num:2, name:'Cover letter & positioning', date:null, state:'pending', notes:'', agenda:'Polish cover letter and elevator pitch.', attach:null },
+    ]
+  },
+];
+
+const DISCOVER = [
+  { name:'Negotiation Masterclass', coach:'roshnara', sessions:4, dur:'30 min', price:'₹2,499', thumb:'t1' },
+  { name:'Storytelling for Founders', coach:'jordan', sessions:3, dur:'45 min', price:'₹1,799', thumb:'t2' },
+  { name:'Mock System Design Interviews', coach:'marcus', sessions:5, dur:'60 min', price:'₹3,499', thumb:'t3' },
+  { name:'Career Path Coaching', coach:'jordan', sessions:6, dur:'30 min', price:'₹2,999', thumb:'t4' },
+  { name:'Resume Review & Strategy', coach:'roshnara', sessions:2, dur:'30 min', price:'₹999', thumb:'t5' },
+  { name:'Founder Office Hours', coach:'marcus', sessions:1, dur:'30 min', price:'₹599', thumb:'t6' },
+];
+
+/* ============ HELPERS ============ */
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+function av(coachId){
+  const c = COACHES[coachId]; if(!c) return '';
+  return `<span class="av"><img src="${c.avatar}" alt="${c.name}"></span>`;
+}
+function coachName(id){ return COACHES[id]?.name || ''; }
+
+/* ============ NAVIGATION ============ */
+let COACHING_TAB = 'bookings'; // 'bookings' | 'programs'
+let BOOKING_VIEW = 'list';     // 'list' | 'calendar'
+let calYear = new Date().getFullYear();
+let calMonth = new Date().getMonth();
+const LRNFILTERS = {
+  status:  new Set(['upcoming']),  // bookings: default upcoming
+  coach:   new Set(),
+  program: new Set(),
+  pstatus: new Set(),              // programs tab
+  pcoach:  new Set(),
+};
+let _lrnPending = {};
+
+function setView(name){
+  // close detail if open
+  document.getElementById('det').classList.remove('open');
+  document.querySelector('.main').style.display='';
+  if(name==='home') name='coaching'; // legacy alias
+  renderCoaching();
+  window.scrollTo(0,0);
+}
+
+function toggleSidebar(){
+  const side = document.getElementById('sidebar');
+  const app = document.querySelector('.app');
+  const isCollapsed = side.classList.toggle('collapsed');
+  app.classList.toggle('side-collapsed', isCollapsed);
+  const btn = document.getElementById('side-toggle-btn');
+  if(btn) btn.setAttribute('data-tip', isCollapsed ? 'Expand' : 'Collapse');
+}
+
+/* ============ MOBILE BOTTOM-NAV / SHEET LOGIC ============ */
+function _mbAllSheets(){ return document.querySelectorAll('.msheet'); }
+function _mbBackdrop(){ return document.getElementById('msheet-backdrop'); }
+function _mbCloseAllSheets(){ _mbAllSheets().forEach(s => s.classList.remove('open')); }
+
+function mbOpenMore(){
+  _mbCloseAllSheets();
+  _mbBackdrop().classList.add('show');
+  document.getElementById('msheet-more').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  _mbSetActive('mbnav-more-btn');
+}
+function mbOpenSub(id){
+  _mbCloseAllSheets();
+  _mbBackdrop().classList.add('show');
+  document.getElementById('msheet-' + id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function mbBack(){
+  _mbCloseAllSheets();
+  document.getElementById('msheet-more').classList.add('open');
+}
+function mbCloseAll(){
+  _mbCloseAllSheets();
+  _mbBackdrop().classList.remove('show');
+  document.body.style.overflow = '';
+}
+function _mbSetActive(id){
+  document.querySelectorAll('.mbnav-tab').forEach(t => t.classList.remove('active'));
+  if(id){
+    const el = typeof id === 'string' ? document.getElementById(id) : id;
+    if(el) el.classList.add('active');
+  }
+}
+function mbTap(which){
+  mbCloseAll();
+  _mbSetActive(event && event.currentTarget);
+  const labels = { courses:'Courses', webinars:'Webinars', 'ai-avatar':'AI Avatar', profile:'Profile' };
+  if(labels[which]) toast(labels[which] + ' — coming soon');
+}
+// Mark current view (Coaching is shown via the More sheet) on initial load
+window.addEventListener('DOMContentLoaded', function(){
+  // None of the four primary tabs maps to the current "Coaching" page,
+  // so leave them all inactive until the user picks one.
+});
+
+function toggleNavGroup(el, e){
+  if(e) e.preventDefault();
+  const group = el.closest('.nav-group');
+  const sub = group.querySelector('.nav-sub');
+  if(!sub) return;
+  const isOpen = sub.classList.toggle('nav-sub-open');
+  const chev = el.querySelector('.nav-chev');
+  if(chev){
+    chev.classList.remove('fa-chevron-up','fa-chevron-down');
+    chev.classList.add(isOpen ? 'fa-chevron-up' : 'fa-chevron-down');
+  }
+}
+
+function setCoachTab(t){ COACHING_TAB = t; renderCoaching(); }
+function setBookingView(v){ BOOKING_VIEW = v; renderCoaching(); }
+
+/* Calendar view */
+const EV_CLS  = {upcoming:'ev-up',completed:'ev-co',cancelled:'ev-ca',missed:'ev-mi',pending:'ev-pn'};
+const EV_ICON = {upcoming:'fa-solid fa-circle-dot',completed:'fa-solid fa-circle-check',cancelled:'fa-solid fa-circle-xmark',missed:'fa-solid fa-circle-minus',pending:'fa-regular fa-circle'};
+
+function buildBookingDateMap(){
+  const map = {};
+  PROGRAMS.forEach(p => p.sessions.forEach(s => {
+    if(!s.date) return;
+    // formats: "May 8, 2026 · 11:00 AM IST" OR "May 8, 2026 · 11:00 AM IST"
+    const m = s.date.match(/(\w+)\s+(\d+),\s+(\d+)/);
+    if(!m) return;
+    const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+    const dt = new Date(parseInt(m[3]), months[m[1].slice(0,3)], parseInt(m[2]));
+    const key = dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
+    if(!map[key]) map[key]=[];
+    map[key].push({...s, prog:p});
+  }));
+  return map;
+}
+
+function renderLrnCalendar(){
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const today = new Date();
+  const first = new Date(calYear, calMonth, 1);
+  const last  = new Date(calYear, calMonth+1, 0);
+  const startDay = first.getDay();
+  const map = buildBookingDateMap();
+  const cells = [];
+  for(let i=0;i<startDay;i++){
+    const d = new Date(calYear, calMonth, -startDay+i+1);
+    cells.push({date:d, otherMonth:true});
+  }
+  for(let d=1;d<=last.getDate();d++) cells.push({date:new Date(calYear,calMonth,d), otherMonth:false});
+  const remaining = 42 - cells.length;
+  for(let d=1;d<=remaining;d++) cells.push({date:new Date(calYear,calMonth+1,d), otherMonth:true});
+
+  const cellsHTML = cells.map(c=>{
+    const isToday = c.date.toDateString()===today.toDateString();
+    const key = c.date.getFullYear()+'-'+String(c.date.getMonth()+1).padStart(2,'0')+'-'+String(c.date.getDate()).padStart(2,'0');
+    const evts = map[key] || [];
+    const evtHtml = evts.slice(0,2).map(e=>
+      `<div class="cal-event ${EV_CLS[e.state]||'ev-up'}" onclick="event.stopPropagation();previewCalendarEvent('${e.id}','${e.prog.id}')" title="${e.name} · ${e.prog.name}">
+         <i class="${EV_ICON[e.state]||EV_ICON.upcoming}"></i>${e.prog.name}
+      </div>`
+    ).join('');
+    const more = evts.length>2 ? `<div class="cal-more">+${evts.length-2} more</div>` : '';
+    return `<div class="cal-cell${c.otherMonth?' other-month':''}${isToday?' today':''}">
+      <div class="cal-day">${c.date.getDate()}</div>
+      ${evtHtml}${more}
+    </div>`;
+  }).join('');
+
+  return `
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="lrnCalShift(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="cal-month-label">${months[calMonth]} ${calYear}</div>
+      <button class="cal-nav-btn" onclick="lrnCalShift(1)"><i class="fa-solid fa-chevron-right"></i></button>
+      <button class="btn btn-w btn-sm" style="margin-left:auto;" onclick="lrnCalGoToday()">Today</button>
+    </div>
+    <div class="cal-grid-head">
+      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+    </div>
+    <div class="cal-grid">${cellsHTML}</div>
+  `;
+}
+function lrnCalShift(dir){
+  calMonth += dir;
+  if(calMonth>11){calMonth=0;calYear++;}
+  if(calMonth<0){calMonth=11;calYear--;}
+  renderCoaching();
+}
+function lrnCalGoToday(){
+  const t = new Date();
+  calYear=t.getFullYear(); calMonth=t.getMonth();
+  renderCoaching();
+}
+
+/* Bookings filters */
+function resetLrnFilters(){
+  LRNFILTERS.status = new Set(['upcoming']); LRNFILTERS.coach.clear(); LRNFILTERS.program.clear();
+  renderCoaching();
+}
+function resetLrnProgFilters(){
+  LRNFILTERS.pstatus.clear(); LRNFILTERS.pcoach.clear();
+  renderCoaching();
+}
+function openLrnDrop(e, key){
+  e.stopPropagation();
+  closeLrnDrop();
+  const btn = e.currentTarget;
+  const r = btn.getBoundingClientRect();
+  const opts = key==='status'   ? [{v:'upcoming',l:'Upcoming'},{v:'completed',l:'Completed'},{v:'pending',l:'Ready to book'},{v:'cancelled',l:'Cancelled'},{v:'missed',l:'Missed'},{v:'expired',l:'Expired'}]
+             : key==='coach'    ? Object.entries(COACHES).map(([id,c])=>({v:id,l:c.name}))
+             : key==='program'  ? PROGRAMS.map(p=>({v:p.id,l:p.name}))
+             : key==='pstatus'  ? [{v:'active',l:'Active'},{v:'completed',l:'Completed'},{v:'expired',l:'Expired'},{v:'paused',l:'Paused'}]
+             : key==='pcoach'   ? Object.entries(COACHES).map(([id,c])=>({v:id,l:c.name}))
+             : [];
+  _lrnPending[key] = new Set(LRNFILTERS[key]);
+  const panel = document.createElement('div');
+  panel.className='fpanel';
+  panel.id='lrn-drop';
+  panel.dataset.key=key;
+  panel.style.cssText = `top:${r.bottom+6}px;left:${r.left}px;`;
+  panel.innerHTML = opts.map(o=>`
+    <div class="fcheck-item" onclick="toggleLrnPending('${key}','${o.v}',this)">
+      <span class="fcheck-box${_lrnPending[key].has(o.v)?' checked':''}"></span>
+      <span class="fcheck-label">${o.l}</span>
+    </div>`).join('') +
+    `<button class="fpanel-apply" onclick="applyLrnDrop('${key}')">Apply changes</button>`;
+  document.body.appendChild(panel);
+  setTimeout(()=>document.addEventListener('click', closeLrnDropOutside), 0);
+}
+function toggleLrnPending(key, val, row){
+  const set = _lrnPending[key]||new Set();
+  const box = row.querySelector('.fcheck-box');
+  if(set.has(val)){ set.delete(val); box.classList.remove('checked'); }
+  else { set.add(val); box.classList.add('checked'); }
+  _lrnPending[key]=set;
+}
+function applyLrnDrop(key){
+  LRNFILTERS[key] = new Set(_lrnPending[key]);
+  closeLrnDrop();
+  renderCoaching();
+}
+function closeLrnDropOutside(e){
+  if(!document.getElementById('lrn-drop')?.contains(e.target) && !e.target.closest('.fdrop')){ closeLrnDrop(); }
+}
+function closeLrnDrop(){
+  document.getElementById('lrn-drop')?.remove();
+  document.removeEventListener('click', closeLrnDropOutside);
+}
+
+/* Calendar event preview (centered pop-up) */
+function previewCalendarEvent(sessId, progId){
+  const p = PROGRAMS.find(x=>x.id===progId); if(!p) return;
+  const s = p.sessions.find(x=>x.id===sessId); if(!s) return;
+  const c = COACHES[p.coach];
+  const status = s.state;
+  const showExpired = p.status === 'expired' && (status==='pending' || status==='missed');
+  const statusLabel = showExpired ? 'Expired'
+    : status==='pending' ? 'Ready to book'
+    : status==='live' ? 'Live'
+    : status.charAt(0).toUpperCase()+status.slice(1);
+  const statusClass = showExpired ? 'expired' : status;
+  const datePart = s.date ? s.date.split(' · ')[0] : '';
+  const timePartRaw = s.date ? (s.date.split(' · ')[1] || '') : '';
+  // Reuse timeRange if available
+  const timePart = (typeof timeRange === 'function' && timePartRaw) ? timeRange(timePartRaw, 30) : timePartRaw;
+
+  let primaryAction = '';
+  if(status==='live'){
+    primaryAction = `<button class="btn" onclick="closeModal();toast('Joining session…')"><i class="fa-solid fa-video"></i> Join</button>`;
+  } else if(status==='upcoming'){
+    primaryAction = s.joinable
+      ? `<button class="btn" onclick="closeModal();toast('Joining session…')"><i class="fa-solid fa-video"></i> Join</button>`
+      : `<button class="btn disabled" data-tip="Join enables 5 minutes before the session"><i class="fa-solid fa-video"></i> Join</button>`;
+  } else if(status==='completed' && s.hasVideo){
+    primaryAction = s.daysLeft > 0
+      ? `<button class="btn" onclick="closeModal();openSessionDetail('${sessId}','${progId}')"><i class="fa-solid fa-play"></i> Watch</button>`
+      : `<button class="btn disabled" data-tip="Recording expired — a download link was emailed after the session"><i class="fa-solid fa-play"></i> Watch</button>`;
+  } else if(status==='pending'){
+    primaryAction = p.status==='expired'
+      ? `<button class="btn disabled" data-tip="This program has expired — booking is no longer available"><i class="fa-regular fa-calendar"></i> Book</button>`
+      : `<button class="btn" onclick="closeModal();openSlotPicker('${progId}','${sessId}')"><i class="fa-regular fa-calendar"></i> Book</button>`;
+  } else if(status==='missed'){
+    primaryAction = p.status==='expired'
+      ? `<button class="btn disabled" data-tip="This program has expired — booking is no longer available"><i class="fa-regular fa-calendar"></i> Rebook</button>`
+      : `<button class="btn" onclick="closeModal();openSlotPicker('${progId}','${sessId}')"><i class="fa-regular fa-calendar"></i> Rebook</button>`;
+  }
+
+  const m = document.getElementById('modal');
+  m.className = 'modal v2';
+  m.style.maxWidth = '';
+  m.innerHTML = `
+    <div class="modal-h">
+      <div class="modal-t">${s.name}</div>
+      <button class="modal-x" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-b">
+      <span class="mt-status ${statusClass}">${statusLabel}</span>
+      <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--t2);">
+        ${datePart ? `<div style="display:flex;align-items:center;gap:10px;"><i class="fa-regular fa-calendar" style="width:14px;color:var(--t4);"></i>${datePart}</div>` : ''}
+        ${s.date ? `<div style="display:flex;align-items:center;gap:10px;"><i class="fa-regular fa-clock" style="width:14px;color:var(--t4);"></i>${timePart}</div>` : ''}
+        <div style="display:flex;align-items:center;gap:10px;"><i class="fa-regular fa-folder" style="width:14px;color:var(--t4);"></i>${p.name}</div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="width:22px;height:22px;border-radius:50%;overflow:hidden;display:inline-block;flex-shrink:0;"><img src="${c.avatar}" alt="" style="width:100%;height:100%;object-fit:cover;"></span><span>${c.name}</span></div>
+      </div>
+      ${s.agenda ? `<div style="margin-top:18px;"><div style="font-size:11px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Agenda</div><div class="ro-box">${s.agenda}</div></div>` : ''}
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-w" onclick="closeModal();openSessionDetail('${sessId}','${progId}')">View details</button>
+      ${primaryAction}
+    </div>`;
+  document.getElementById('modal-bg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+/* Row kebab menu */
+function openRowMenu(e, sessId, progId, status){
+  e.stopPropagation();
+  closeRowMenu();
+  const btn = e.currentTarget;
+  const r = btn.getBoundingClientRect();
+  const m = document.createElement('div');
+  m.className='rmenu';
+  m.id='rmenu';
+  m.style.cssText = `top:${r.bottom+6}px;right:${window.innerWidth-r.right}px;`;
+  const isUpcoming = status==='upcoming';
+  const isPending  = status==='pending';
+  const prog = PROGRAMS.find(p => p.id===progId);
+  const progExpired = prog && prog.status==='expired';
+  m.innerHTML = `
+    <button onclick="closeRowMenu();openSessionDetail('${sessId}','${progId}')"><i class="fa-regular fa-eye"></i>View details</button>
+    ${isUpcoming ? `
+      <div class="sep"></div>
+      <button onclick="closeRowMenu();confirmReschedule('${sessId}')"><i class="fa-regular fa-calendar"></i>Reschedule</button>
+      <button class="danger" onclick="closeRowMenu();confirmCancel('${sessId}')"><i class="fa-regular fa-trash-can"></i>Cancel session</button>
+    ` : ''}
+    ${isPending ? `
+      <div class="sep"></div>
+      ${progExpired
+        ? `<button class="disabled" data-tip="This program has expired — booking is no longer available"><i class="fa-regular fa-calendar"></i>Book session</button>`
+        : `<button onclick="closeRowMenu();openSlotPicker('${progId}','${sessId}')"><i class="fa-regular fa-calendar"></i>Book session</button>`}
+    ` : ''}
+  `;
+  document.body.appendChild(m);
+  setTimeout(()=>document.addEventListener('click', closeRowMenuOutside), 0);
+}
+function closeRowMenuOutside(e){
+  if(!document.getElementById('rmenu')?.contains(e.target) && !e.target.closest('.b-kebab')){ closeRowMenu(); }
+}
+function closeRowMenu(){
+  document.getElementById('rmenu')?.remove();
+  document.removeEventListener('click', closeRowMenuOutside);
+}
+
+/* Booking table row */
+function timeRange(start, durationMin){
+  const m = start.match(/^(\d+):(\d+)\s*(AM|PM)\s*(.*)$/i);
+  if(!m) return start;
+  let h = parseInt(m[1]), mins = parseInt(m[2]), period = m[3].toUpperCase(), tz = m[4].trim();
+  let endMins = mins + durationMin, endH = h;
+  if(endMins >= 60){ endH += Math.floor(endMins/60); endMins %= 60; }
+  let endPeriod = period;
+  if(endH === 12 && period === 'AM') endPeriod = 'PM';
+  if(endH > 12){ endH -= 12; endPeriod = period === 'AM' ? 'PM' : 'AM'; }
+  return `${h}:${String(mins).padStart(2,'0')} ${period} - ${endH}:${String(endMins).padStart(2,'0')} ${endPeriod} ${tz}`.trim();
+}
+
+function renderBookingRow(s){
+  const date = s.date ? s.date.split(' · ')[0] : null;
+  const time = s.date ? timeRange(s.date.split(' · ')[1], 30) : null;
+  const c = COACHES[s.prog.coach];
+  const status = s.state;
+  // Program-level "expired" overrides the session label when the session hasn't been
+  // used yet (pending or missed). Already-completed sessions keep their own label.
+  const showExpired = s.prog.status === 'expired' && (status==='pending' || status==='missed');
+  const statusLabel = showExpired ? 'Expired'
+    : status==='pending' ? 'Ready to book'
+    : status.charAt(0).toUpperCase()+status.slice(1);
+  const statusCls = showExpired ? 'bs-ex'
+    : status==='upcoming'?'bs-up'
+    : status==='completed'?'bs-cm'
+    : status==='cancelled'?'bs-cn'
+    : status==='missed'?'bs-ms'
+    : status==='live'?'bs-live'
+    : 'bs-pn';
+  const statusDisplay = status==='live' ? 'Live' : statusLabel;
+  const action = status==='live'
+    ? `<button class="b-join" onclick="event.stopPropagation();toast('Joining session…')"><i class="fa-solid fa-video"></i>Join</button>`
+    : status==='upcoming'
+      ? (s.joinable ? `<button class="b-join" onclick="event.stopPropagation();toast('Joining session…')"><i class="fa-solid fa-video"></i>Join</button>` : `<button class="b-join disabled" data-tip="Join enables 5 minutes before the session" onclick="event.stopPropagation()"><i class="fa-solid fa-video"></i>Join</button>`)
+      : status==='completed' && s.hasVideo
+        ? (s.daysLeft > 0
+          ? `<button class="b-join b-watch" onclick="event.stopPropagation()"><i class="fa-solid fa-play"></i>Watch</button>`
+          : `<button class="b-join b-watch disabled" data-tip="Recording expired — a download link was emailed after the session" onclick="event.stopPropagation()"><i class="fa-solid fa-play"></i>Watch</button>`)
+        : status==='pending'
+          ? (s.prog.status==='expired'
+            ? `<button class="b-join disabled" data-tip="This program has expired — booking is no longer available" onclick="event.stopPropagation()"><i class="fa-regular fa-calendar"></i>Book</button>`
+            : `<button class="b-join" onclick="event.stopPropagation();openSlotPicker('${s.prog.id}','${s.id}')"><i class="fa-regular fa-calendar"></i>Book</button>`)
+          : status==='missed'
+            ? (s.prog.status==='expired'
+              ? `<button class="b-join b-watch disabled" data-tip="This program has expired — booking is no longer available" onclick="event.stopPropagation()"><i class="fa-regular fa-calendar"></i>Rebook</button>`
+              : `<button class="b-join b-watch" onclick="event.stopPropagation();openSlotPicker('${s.prog.id}','${s.id}')"><i class="fa-regular fa-calendar"></i>Rebook</button>`)
+            : '';
+  const pct = Math.round(s.prog.completed/s.prog.total*100);
+  const isDone = s.prog.completed === s.prog.total;
+  return `
+    <div class="brow" onclick="openSessionDetail('${s.id}','${s.prog.id}')">
+      <div class="bprog-cell">
+        <div class="bthumb" style="background-image:url('${s.prog.image}');"></div>
+        <div style="min-width:0;">
+          <div class="bprog-name">${s.name}</div>
+          <div class="bsess-sub">${s.prog.name}</div>
+        </div>
+      </div>
+      <div class="bdate">${date||'<span style="color:var(--t4);">Not scheduled</span>'}${time?`<small>${time}</small>`:''}</div>
+      <div class="bsess-prog">
+        <div class="bsess-prog-l"><strong>${s.prog.completed}</strong> of ${s.prog.total} sessions</div>
+        <div class="bsess-prog-bar">${Array.from({length:s.prog.total}).map((_,i)=>`<span class="${i<s.prog.completed?(isDone?'done-success':'done'):''}"></span>`).join('')}</div>
+      </div>
+      <div><span class="bstatus ${statusCls}">${statusDisplay}</span></div>
+      <div class="bact">${action}</div>
+      <button class="b-kebab" onclick="event.stopPropagation();openRowMenu(event,'${s.id}','${s.prog.id}','${status}')"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+    </div>`;
+}
+
+/* ============ HOME ============ */
+function renderCoaching(){
+  const allSessions = window.__forceEmptyBookings ? [] : PROGRAMS.flatMap(p => p.sessions.map(s => ({...s, prog:p})));
+
+  // Apply filters
+  const q = (document.getElementById('learner-search')?.value || '').toLowerCase();
+  let list = allSessions.slice();
+  if(LRNFILTERS.status.size) list = list.filter(s => {
+    // "Expired" matches sessions in an expired program that haven't been used yet
+    const isExpired = s.prog.status === 'expired' && (s.state==='pending' || s.state==='missed');
+    if(LRNFILTERS.status.has('expired') && isExpired) return true;
+    // Otherwise match the session's own state, but exclude sessions counted as Expired
+    return LRNFILTERS.status.has(s.state) && !isExpired;
+  });
+  if(LRNFILTERS.coach.size)  list = list.filter(s => LRNFILTERS.coach.has(s.prog.coach));
+  if(LRNFILTERS.program.size) list = list.filter(s => LRNFILTERS.program.has(s.prog.id));
+  if(q) list = list.filter(s => (s.name+' '+s.prog.name+' '+coachName(s.prog.coach)).toLowerCase().includes(q));
+
+  // Sort: upcoming first by date, then completed by date desc, then pending, then cancelled
+  const order = { upcoming:0, pending:1, completed:2, cancelled:3, missed:3 };
+  list.sort((a,b)=> (order[a.state]??9) - (order[b.state]??9));
+
+  const totalActive = LRNFILTERS.status.size + LRNFILTERS.coach.size + LRNFILTERS.program.size;
+
+  const bookingsBody = `
+  <section class="panel">
+    <div class="panel-head">
+      <h2 class="panel-title">Bookings</h2>
+      <div class="view-toggle">
+        <button class="vtab ${BOOKING_VIEW==='list'?'active':''}" onclick="setBookingView('list')"><i class="fa-solid fa-list"></i>List</button>
+        <button class="vtab ${BOOKING_VIEW==='calendar'?'active':''}" onclick="setBookingView('calendar')"><i class="fa-regular fa-calendar"></i>Calendar</button>
+      </div>
+    </div>
+    ${BOOKING_VIEW==='calendar' ? renderLrnCalendar() : `
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="learner-search" placeholder="Search by session, coach or program" oninput="renderCoaching()" value="${(document.getElementById('learner-search')?.value||'').replace(/"/g,'&quot;')}">
+    </div>
+    <div class="filterbar">
+      ${totalActive>0 ? `<button class="filter-reset" onclick="resetLrnFilters()"><i class="fa-solid fa-rotate-left"></i>Reset</button>` : ''}
+      <button class="fdrop ${LRNFILTERS.status.size?'fdrop-active':''}" id="ldrop-status" onclick="openLrnDrop(event,'status')">Status${LRNFILTERS.status.size?` <span class="fdrop-count">${LRNFILTERS.status.size}</span>`:''} <i class="fa-solid fa-chevron-down"></i></button>
+      <button class="fdrop ${LRNFILTERS.program.size?'fdrop-active':''}" id="ldrop-program" onclick="openLrnDrop(event,'program')">Program${LRNFILTERS.program.size?` <span class="fdrop-count">${LRNFILTERS.program.size}</span>`:''} <i class="fa-solid fa-chevron-down"></i></button>
+      <div class="pager">
+        <span>1–${list.length} of ${allSessions.length}</span>
+        <button class="arr dim"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="arr"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+    ${list.length ? `
+      <div class="btable">
+        <div class="btable-head">
+          <div>Session</div><div>Scheduled on</div><div>Sessions</div><div>Status</div><div></div><div></div>
+        </div>
+        ${list.map(s=>renderBookingRow(s)).join('')}
+      </div>
+    ` : `
+      <div class="empty">
+        <div class="empty-ico"><i class="fa-regular fa-calendar"></i></div>
+        <div class="empty-t">${totalActive>0 ? 'No sessions match your filters' : 'Book your first session'}</div>
+        <div class="empty-d">${totalActive>0 ? 'Try clearing filters to see more sessions.' : "You haven't booked any sessions yet. Pick a program and lock in your first session — it takes about 30 seconds."}</div>
+        ${totalActive>0 ? `<button class="btn btn-sm" onclick="resetLrnFilters()">Reset filters</button>` : `<button class="btn btn-sm" onclick="setCoachTab('programs')"><i class="fa-regular fa-calendar"></i> Book your first session</button>`}
+      </div>
+    `}
+    `}
+  </section>
+  `;
+
+  // Programs tab: search + filters
+  const pq = (document.getElementById('learner-prog-search')?.value || '').toLowerCase();
+  let progList = window.__forceEmptyPrograms ? [] : PROGRAMS.slice();
+  if(LRNFILTERS.pstatus.size) progList = progList.filter(p => LRNFILTERS.pstatus.has(p.status));
+  if(LRNFILTERS.pcoach.size)  progList = progList.filter(p => LRNFILTERS.pcoach.has(p.coach));
+  if(pq) progList = progList.filter(p => (p.name+' '+coachName(p.coach)).toLowerCase().includes(pq));
+  // Active first
+  progList.sort((a,b)=> (a.status==='active'?0:1) - (b.status==='active'?0:1));
+  const pTotalActive = LRNFILTERS.pstatus.size + LRNFILTERS.pcoach.size;
+
+  const programsBody = `
+  <section class="panel">
+    <div class="panel-head">
+      <h2 class="panel-title">Programs</h2>
+    </div>
+    <div class="search" style="margin-bottom:14px;">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="learner-prog-search" placeholder="Search programs by name or coach" oninput="renderCoaching()" value="${(document.getElementById('learner-prog-search')?.value||'').replace(/"/g,'&quot;')}">
+    </div>
+    <div class="filterbar">
+      ${pTotalActive>0 ? `<button class="filter-reset" onclick="resetLrnProgFilters()"><i class="fa-solid fa-rotate-left"></i>Reset</button>` : ''}
+      <button class="fdrop ${LRNFILTERS.pstatus.size?'fdrop-active':''}" id="ldrop-pstatus" onclick="openLrnDrop(event,'pstatus')">Status${LRNFILTERS.pstatus.size?` <span class="fdrop-count">${LRNFILTERS.pstatus.size}</span>`:''} <i class="fa-solid fa-chevron-down"></i></button>
+      <button class="fdrop ${LRNFILTERS.pcoach.size?'fdrop-active':''}" id="ldrop-pcoach" onclick="openLrnDrop(event,'pcoach')">Coach${LRNFILTERS.pcoach.size?` <span class="fdrop-count">${LRNFILTERS.pcoach.size}</span>`:''} <i class="fa-solid fa-chevron-down"></i></button>
+    </div>
+    ${progList.length ? `
+      <div class="pgrid">
+        ${progList.map(p=>renderProgramCard(p)).join('')}
+      </div>
+    ` : `
+      <div class="empty">
+        <div class="empty-ico"><i class="fa-regular fa-folder"></i></div>
+        <div class="empty-t">${pTotalActive>0 ? 'No programs match your filters' : 'Enrol in your first program'}</div>
+        <div class="empty-d">${pTotalActive>0 ? 'Try clearing filters to see more programs.' : "You're not enrolled in any coaching programs yet. Browse the catalogue to find one that fits."}</div>
+        ${pTotalActive>0 ? `<button class="btn btn-sm" onclick="resetLrnProgFilters()">Reset filters</button>` : `<button class="btn btn-sm"><i class="fa-solid fa-compass"></i> Explore programs</button>`}
+      </div>
+    `}
+  </section>
+  `;
+
+  document.getElementById('view-coaching').innerHTML = `
+    <div class="topbar">
+      <h1 class="page-title">Coaching</h1>
+    </div>
+    <div class="tabs">
+      <button class="tab ${COACHING_TAB==='bookings'?'active':''}" onclick="setCoachTab('bookings')">Bookings</button>
+      <button class="tab ${COACHING_TAB==='programs'?'active':''}" onclick="setCoachTab('programs')">Programs</button>
+    </div>
+    <div class="content" style="padding-top:24px;">
+      ${COACHING_TAB==='bookings' ? bookingsBody : programsBody}
+    </div>
+  `;
+}
+
+function renderProgramCard(p){
+  const pct = Math.round(p.completed/p.total*100);
+  const statusLabel = p.status==='completed' ? 'Completed' : p.status==='expired' ? 'Expired' : 'In progress';
+  const statusCls   = p.status==='completed' ? 'ps-completed' : p.status==='expired' ? 'ps-expired' : 'ps-active';
+  return `
+    <div class="pcard" onclick="openProgDetail('${p.id}')">
+      <div class="pthumb"><img class="pthumb-img" src="${p.image}" alt="${p.name}"></div>
+      <div class="pcard-body">
+        <div class="pcard-meta-row">
+          <span class="ps ${statusCls}">${statusLabel}</span>
+          <button class="pcard-more" onclick="event.stopPropagation()"><i class="fa-solid fa-ellipsis"></i></button>
+        </div>
+        <div class="pcard-name">${p.name}</div>
+        <div class="pcard-coach">${av(p.coach)} ${coachName(p.coach)}</div>
+        <div class="pcard-prog">
+          <div class="pcard-prog-l"><span><strong>${p.completed}</strong> of ${p.total} sessions</span><span>${pct}%</span></div>
+          <div class="pcard-bar">${Array.from({length:p.total}).map((_,i)=>`<span class="${i<p.completed?(p.status==='completed'?'done-success':'done'):''}"></span>`).join('')}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderSessRow(s){
+  const date = s.date ? new Date(s.date.split(' · ')[0]) : null;
+  const month = date ? date.toLocaleDateString(undefined,{month:'short'}) : '—';
+  const day = date ? date.getDate() : '—';
+  const stateCls = s.state;
+  const showExpired = s.prog && s.prog.status === 'expired' && (stateCls==='pending' || stateCls==='missed');
+  const badgeCls = showExpired ? 'expired' : stateCls;
+  const badgeLabel = showExpired ? 'Expired' : (stateCls.charAt(0).toUpperCase()+stateCls.slice(1));
+  return `
+    <div class="sess-card" onclick="openSessionDetail('${s.id}','${s.prog.id}')">
+      <div class="sess-date ${stateCls==='completed'?'completed':stateCls==='missed'?'missed':''}">
+        <div class="sess-date-m">${month}</div>
+        <div class="sess-date-d">${day}</div>
+      </div>
+      <div class="sess-info">
+        <span class="sess-status ${badgeCls}">${badgeLabel}</span>
+        <div class="sess-title">${s.name}</div>
+        <div class="sess-meta">
+          <span>${av(s.prog.coach)} ${coachName(s.prog.coach)}</span>
+          <span><i class="fa-regular fa-folder"></i>${s.prog.name}</span>
+          ${s.date ? `<span><i class="fa-regular fa-clock"></i>${s.date.split(' · ')[1]||''}</span>` : ''}
+        </div>
+      </div>
+      <div class="sess-actions">
+        ${s.state==='upcoming' ? (s.joinable ? `<button class="btn btn-sm" onclick="event.stopPropagation();toast('Joining session…')"><i class="fa-solid fa-video"></i> Join</button>` : `<button class="btn btn-sm disabled" data-tip="Join enables 5 minutes before the session" onclick="event.stopPropagation()"><i class="fa-solid fa-video"></i> Join</button>`) : ''}
+        ${s.state==='completed' && s.hasVideo ? (s.daysLeft > 0
+          ? `<button class="btn btn-w btn-sm" onclick="event.stopPropagation()"><i class="fa-solid fa-play"></i> Watch</button>`
+          : `<button class="btn btn-w btn-sm disabled" data-tip="Recording expired — a download link was emailed after the session" onclick="event.stopPropagation()"><i class="fa-solid fa-play"></i> Watch</button>`) : ''}
+        ${s.state==='pending' ? (s.prog.status==='expired'
+          ? `<button class="btn btn-sm disabled" data-tip="This program has expired — booking is no longer available" onclick="event.stopPropagation()"><i class="fa-regular fa-calendar"></i> Book</button>`
+          : `<button class="btn btn-sm" onclick="event.stopPropagation();openSlotPicker('${s.prog.id}','${s.id}')"><i class="fa-regular fa-calendar"></i> Book</button>`) : ''}
+      </div>
+    </div>`;
+}
+
+/* ============ PROGRAM DETAIL ============ */
+function openProgDetail(progId){
+  const p = PROGRAMS.find(x=>x.id===progId); if(!p) return;
+  document.querySelector('.main').style.display='none';
+  document.getElementById('det').classList.add('open');
+  document.getElementById('det-title').textContent = p.name;
+  const pct = Math.round(p.completed/p.total*100);
+  const c = COACHES[p.coach];
+
+  document.getElementById('det-body').innerHTML = `
+    <div class="plan-grid">
+      <div class="plan-card">
+        <div class="plan-card-l"><i class="fa-regular fa-folder"></i>Program</div>
+        <div class="plan-card-v">${p.name}</div>
+        <div class="plan-card-sub">${p.status==='completed'?'Completed':'In progress'}</div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-card-l"><i class="fa-regular fa-circle-dot"></i>Sessions</div>
+        <div class="plan-card-v">${p.completed} <span style="color:var(--t4);font-weight:400;font-size:14px;">of ${p.total}</span></div>
+        <div class="plan-card-bar">${Array.from({length:p.total}).map((_,i)=>`<span class="${i<p.completed?'done':''}"></span>`).join('')}</div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-card-l"><i class="fa-regular fa-user"></i>Coach</div>
+        <div class="plan-card-v" style="font-size:15px;display:flex;align-items:center;gap:10px;">
+          <span style="width:28px;height:28px;border-radius:50%;overflow:hidden;display:inline-block;"><img src="${c.avatar}" alt="" style="width:100%;height:100%;object-fit:cover;"></span>
+          ${c.name}
+        </div>
+        <div class="plan-card-sub">${c.role}</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sec-h" style="margin-bottom:22px;"><div><div class="sec-h-t">All sessions</div><div class="sec-h-d">Click any session to see notes, recording, and transcript</div></div></div>
+      <div class="tl-wrap" style="margin-top:0;">
+        ${renderGroupedSessions(p, c)}
+      </div>
+    </div>
+  `;
+}
+
+/* ============ DAY GROUPING (same pattern as creator timeline) ============ */
+function dayLabel(dateStr){
+  if(!dateStr) return {day:'Not scheduled', dayLong:''};
+  const m = dateStr.match(/^([A-Za-z]+)\s+(\d+),\s+(\d+)/);
+  if(!m) return {day:dateStr, dayLong:''};
+  const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  const monKey = m[1].slice(0,3);
+  const dt = new Date(parseInt(m[3]), months[monKey], parseInt(m[2]));
+  const today = new Date(2026, 4, 11);
+  today.setHours(0,0,0,0); dt.setHours(0,0,0,0);
+  const diff = Math.round((dt - today) / 86400000);
+  const weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const longLabel = `${weekdays[dt.getDay()]}, ${monKey} ${m[2]}`;
+  let day;
+  if(diff === 0) day = 'Today';
+  else if(diff === 1) day = 'Tomorrow';
+  else if(diff === -1) day = 'Yesterday';
+  else if(diff > 1 && diff <= 7) day = 'This week';
+  else if(diff < -1 && diff >= -7) day = 'Last week';
+  else if(diff < -7 && diff >= -14) day = 'Two weeks ago';
+  else day = `${monKey} ${m[2]}`;
+  return {day, dayLong: longLabel};
+}
+
+function renderGroupedSessions(p, c){
+  const sessions = p.sessions.map(s => ({...s, ...dayLabel(s.date)}));
+  const grouped = {};
+  const order = [];
+  sessions.forEach(s => {
+    if(!grouped[s.day]){ grouped[s.day] = {dayLong:s.dayLong, items:[]}; order.push(s.day); }
+    grouped[s.day].items.push(s);
+  });
+  return order.map(day => `
+    <div class="tl-day">
+      <div class="tl-day-h"><span class="tl-day-t">${day}</span>${grouped[day].dayLong?`<span class="tl-day-sub">${grouped[day].dayLong}</span>`:''}</div>
+      ${grouped[day].items.map(s => renderLrnSessCard(s, p, c)).join('')}
+    </div>`).join('');
+}
+
+function renderLrnSessCard(s, p, c){
+  const showExpired = p && p.status === 'expired' && (s.state==='pending' || s.state==='missed');
+  const badgeCls = showExpired ? 'expired' : s.state;
+  const stateLabel = showExpired ? 'Expired'
+    : s.state==='pending' ? 'Ready to book'
+    : s.state.charAt(0).toUpperCase()+s.state.slice(1);
+  const timePart = s.date ? (s.date.split(' · ')[1] || s.date) : 'Not scheduled yet';
+  return `
+    <div class="mt-card" id="acc-${s.id}" data-state="${s.state}" onclick="toggleSessAcc('${s.id}',event)" style="display:flex;gap:14px;align-items:flex-start;">
+      <div class="psess-num" style="margin-top:2px;">${s.num}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="mt-head">
+          <div class="mt-head-l">
+            <div class="mt-time" style="display:flex;align-items:center;gap:10px;">
+              <span>${timePart}</span>
+              <span class="mt-status ${badgeCls}">${s.state==='completed'?'<i class="fa-solid fa-check"></i> Completed':stateLabel}</span>
+            </div>
+            <div class="mt-title">${s.name}</div>
+            <div class="mt-meta" style="margin-top:8px;">
+              <span><i class="fa-regular fa-user"></i>${ME.name.split(' ')[0]} ↔ ${c.name.split(' ')[0]}</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-down mt-chev"></i>
+        </div>
+        ${s.state==='live' ? `
+          <div class="mt-actions">
+            <button class="btn btn-sm" onclick="event.stopPropagation();toast('Joining session…')"><i class="fa-solid fa-video"></i> Join now</button>
+          </div>` : ''}
+        ${s.state==='upcoming' ? `
+          <div class="mt-actions">
+            <button class="btn btn-sm" onclick="event.stopPropagation();confirmReschedule('${s.id}')">Reschedule</button>
+            <button class="btn btn-w btn-sm" onclick="event.stopPropagation();confirmCancel('${s.id}')">Cancel</button>
+          </div>` : ''}
+        ${s.state==='missed' ? `
+          <div class="mt-actions">
+            ${p.status==='expired'
+              ? `<button class="btn btn-sm disabled" data-tip="This program has expired — booking is no longer available" onclick="event.stopPropagation()"><i class="fa-regular fa-calendar"></i> Rebook</button>`
+              : `<button class="btn btn-sm" onclick="event.stopPropagation();openSlotPicker('${p.id}','${s.id}')"><i class="fa-regular fa-calendar"></i> Rebook</button>`}
+          </div>` : ''}
+        ${s.state==='completed' && s.hasVideo ? `
+          <div class="mt-actions">
+            ${s.daysLeft > 0
+              ? `<button class="btn btn-w btn-sm" onclick="event.stopPropagation()"><i class="fa-solid fa-play"></i> Watch recording</button>
+                 <button class="btn btn-w btn-sm" onclick="event.stopPropagation()"><i class="fa-solid fa-download"></i> Download</button>`
+              : `<button class="btn btn-w btn-sm disabled" data-tip="Recording expired — a download link was emailed after the session" onclick="event.stopPropagation()"><i class="fa-solid fa-play"></i> Watch recording</button>
+                 <button class="btn btn-w btn-sm disabled" data-tip="Download window closed 15 days after the session" onclick="event.stopPropagation()"><i class="fa-solid fa-download"></i> Download</button>`}
+          </div>
+          ${s.daysLeft > 0
+            ? `<div style="font-size:12px;color:var(--t4);margin-top:8px;display:flex;align-items:center;gap:6px;"><i class="fa-regular fa-clock"></i>${s.daysLeft} day${s.daysLeft===1?'':'s'} left to watch &amp; download</div>`
+            : `<div style="font-size:12px;color:var(--g-error-300);margin-top:8px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-lock"></i>Recording access expired</div>`}` : ''}
+        ${s.state==='pending' ? `
+          <div class="mt-actions">
+            ${p.status==='expired'
+              ? `<button class="btn btn-sm disabled" data-tip="This program has expired — booking is no longer available" onclick="event.stopPropagation()"><i class="fa-regular fa-calendar"></i> Book session</button>`
+              : `<button class="btn btn-sm" onclick="event.stopPropagation();openSlotPicker('${p.id}','${s.id}')"><i class="fa-regular fa-calendar"></i> Book session</button>`}
+          </div>` : ''}
+        <div class="mt-acc-body">
+          ${s.agenda ? `
+          <div class="mt-section">
+            <div class="mt-section-h"><i class="fa-regular fa-file-lines"></i>Agenda</div>
+            <div class="ro-box">${s.agenda}</div>
+          </div>` : ''}
+          ${s.notes ? `
+          <div class="mt-section">
+            <div class="mt-section-h"><i class="fa-regular fa-pen-to-square"></i>Notes</div>
+            <div class="ro-box">${s.notes}</div>
+          </div>` : ''}
+          ${s.state==='completed' && s.summary ? `
+          <div class="mt-section">
+            <div class="mt-section-h"><i class="fa-solid fa-align-left"></i>Session Summary</div>
+            <div class="sess-summary-box">${s.summary}</div>
+          </div>` : ''}
+          ${s.attach ? `
+          <div class="mt-section">
+            <div class="mt-section-h"><i class="fa-solid fa-paperclip"></i>Coach shared</div>
+            <div class="mt-attach">
+              <span class="ico"><i class="fa-regular fa-file"></i></span>
+              <div style="flex:1;min-width:0;">
+                <div class="mt-attach-name">${s.attach.name}</div>
+                <div class="mt-attach-sub">${s.attach.size} · From ${c.name}</div>
+              </div>
+              <button class="btn btn-w btn-sm" onclick="event.stopPropagation()"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+          </div>` : ''}
+          ${s.state==='completed' && s.hasVideo ? `
+          <div class="mt-section">
+            <div class="mt-section-h"><i class="fa-solid fa-video"></i>Recording</div>
+            ${s.daysLeft > 0 ? `
+              <div class="mt-video">
+                <div class="mt-video-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="lbl">Zoom · 28 min</span></div>
+                <img src="https://images.unsplash.com/photo-1573497019418-b400bb3ab074?w=1200&h=675&fit=crop" alt="Recording">
+                <div class="mt-play" onclick="event.stopPropagation()"><i class="fa-solid fa-play" style="margin-left:4px;"></i></div>
+              </div>
+            ` : `
+              <div class="video-expired-placeholder">
+                <i class="fa-solid fa-lock" style="font-size:26px;"></i>
+                <div style="font-size:13px;font-weight:500;">Recording no longer available</div>
+                <div style="font-size:12px;">Access expired 15 days after the session</div>
+              </div>
+            `}
+          </div>
+          <div class="mt-section">
+            <div class="mt-section-h"><i class="fa-regular fa-file-lines"></i>Transcript</div>
+            <div class="tx-wrap">
+              <div class="tx-line"><div class="tx-time">0:00</div><div style="flex:1;min-width:0;"><div class="tx-sp coach">${c.name} (Coach)</div><div class="tx-text">Hey ${ME.name}, walk me through where you are with the deck right now.</div></div></div>
+              <div class="tx-line"><div class="tx-time">0:42</div><div style="flex:1;min-width:0;"><div class="tx-sp learner">${ME.name} (You)</div><div class="tx-text">Sure! We're building an AI-powered compliance tool for mid-market SaaS. Market is ~$4.2B growing at 24% CAGR…</div></div></div>
+              <div class="tx-line"><div class="tx-time">3:18</div><div style="flex:1;min-width:0;"><div class="tx-sp coach">${c.name} (Coach)</div><div class="tx-text">Hold on — when you say $4.2B, is that TAM, SAM, or SOM? Investors are going to push hard on this.</div></div></div>
+              <div class="tx-more">· · · 23 more minutes · · ·</div>
+            </div>
+          </div>` : ''}
+        </div>
+      </div>
+    </div>`;
+}
+function toggleSessAcc(id, e){
+  if(e && e.target.closest('button,a,input,select,textarea')) return;
+  document.getElementById('acc-'+id)?.classList.toggle('open');
+}
+
+function closeDet(){
+  document.getElementById('det').classList.remove('open');
+  document.querySelector('.main').style.display='';
+}
+
+/* ============ SESSION DETAIL (recording + transcript + notes) ============ */
+function openSessionDetail(sessId, progId){
+  const p = PROGRAMS.find(x=>x.id===progId); if(!p) return;
+  const s = p.sessions.find(x=>x.id===sessId); if(!s) return;
+  const c = COACHES[p.coach];
+
+  document.querySelector('.main').style.display='none';
+  document.getElementById('det').classList.add('open');
+  document.getElementById('det-title').textContent = `${p.name} · Session ${s.num}`;
+
+  const transcriptLines = [
+    { t:'0:00', who:'coach',  sp:c.name+' (Coach)', text:`Hey ${ME.name}, walk me through where you are with the deck right now.` },
+    { t:'0:42', who:'learner', sp:`${ME.name} (You)`, text:`Sure! We're building an AI-powered compliance tool for mid-market SaaS. Market is ~$4.2B growing at 24% CAGR…` },
+    { t:'3:18', who:'coach',  sp:c.name+' (Coach)', text:`Hold on — when you say $4.2B, is that TAM, SAM, or SOM? Investors are going to push hard on this.` },
+    { t:'3:30', who:'learner', sp:`${ME.name} (You)`, text:`That's our TAM. SAM would be ~$800M — Series A–C SaaS in the US initially.` },
+    { t:'7:05', who:'coach',  sp:c.name+' (Coach)', text:`Better. Now build it bottom-up: number of accounts × ACP × attach-rate. Show your work on slide 5.` },
+  ];
+
+  const detailShowExpired = p.status === 'expired' && (s.state==='pending' || s.state==='missed');
+  const detailBadgeCls = detailShowExpired ? 'expired' : s.state;
+  const detailBadgeLabel = detailShowExpired ? 'Expired'
+    : s.state==='pending' ? 'Ready to book'
+    : s.state.charAt(0).toUpperCase()+s.state.slice(1);
+
+  document.getElementById('det-body').innerHTML = `
+    <div class="mt-card">
+      <div class="mt-head">
+        <div style="flex:1;min-width:0;">
+          <div class="mt-time">
+            ${s.date ? `<span>${s.date}</span>` : '<span style="color:var(--t4);">Not scheduled yet</span>'}
+            <span class="mt-status ${detailBadgeCls}">${detailBadgeLabel}</span>
+          </div>
+          <div class="mt-title">${s.name}</div>
+          <div class="mt-card-meta">
+            <span><i class="fa-regular fa-user"></i>${ME.name.split(' ')[0]} ↔ ${c.name.split(' ')[0]}</span>
+            ${s.state==='upcoming' ? `<span><i class="fa-solid fa-video"></i>zoom.com/edhi763gi</span>` : ''}
+          </div>
+        </div>
+        <div style="flex-shrink:0;display:flex;gap:8px;">
+          ${s.state==='upcoming' ? (s.joinable ? `<button class="btn btn-sm" onclick="toast('Joining session…')"><i class="fa-solid fa-video"></i> Join</button>` : `<button class="btn btn-sm disabled" data-tip="Join enables 5 minutes before the session"><i class="fa-solid fa-video"></i> Join</button>`) : ''}
+          ${s.state==='pending' ? (p.status==='expired'
+            ? `<button class="btn btn-sm disabled" data-tip="This program has expired — booking is no longer available"><i class="fa-regular fa-calendar"></i> Book session</button>`
+            : `<button class="btn btn-sm" onclick="openSlotPicker('${p.id}','${s.id}')"><i class="fa-regular fa-calendar"></i> Book session</button>`) : ''}
+          ${s.state==='completed' && s.hasVideo ? (s.daysLeft > 0
+            ? `<button class="btn btn-w btn-sm"><i class="fa-solid fa-play"></i> Watch recording</button>
+               <button class="btn btn-w btn-sm"><i class="fa-solid fa-download"></i> Download</button>`
+            : `<button class="btn btn-w btn-sm disabled" data-tip="Recording expired — a download link was emailed after the session"><i class="fa-solid fa-play"></i> Watch recording</button>
+               <button class="btn btn-w btn-sm disabled" data-tip="Download window closed 15 days after the session"><i class="fa-solid fa-download"></i> Download</button>`) : ''}
+        </div>
+      </div>
+      ${s.state==='completed' && s.hasVideo ? (s.daysLeft > 0
+        ? `<div style="font-size:12px;color:var(--t4);margin-top:8px;display:flex;align-items:center;gap:6px;"><i class="fa-regular fa-clock"></i>${s.daysLeft} day${s.daysLeft===1?'':'s'} left to watch &amp; download</div>`
+        : `<div style="font-size:12px;color:var(--g-error-300);margin-top:8px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-lock"></i>Recording access expired</div>`) : ''}
+      ${s.state==='upcoming' ? `
+        <div class="mt-actions">
+          <button class="btn btn-sm" onclick="confirmReschedule('${s.id}')">Reschedule</button>
+          <button class="btn btn-w btn-sm" onclick="confirmCancel('${s.id}')">Cancel</button>
+        </div>` : ''}
+
+      ${s.agenda ? `
+      <div class="mt-section">
+        <div class="mt-section-h"><i class="fa-regular fa-file-lines"></i>Agenda</div>
+        <div class="ro-box">${s.agenda}</div>
+      </div>` : ''}
+
+      ${s.notes ? `
+      <div class="mt-section">
+        <div class="mt-section-h"><i class="fa-regular fa-pen-to-square"></i>Notes</div>
+        <div class="ro-box">${s.notes}</div>
+      </div>` : ''}
+
+      ${s.state==='completed' && s.summary ? `
+      <div class="mt-section">
+        <div class="mt-section-h"><i class="fa-solid fa-align-left"></i>Session Summary</div>
+        <div class="sess-summary-box">${s.summary}</div>
+      </div>` : ''}
+
+      ${s.attach ? `
+      <div class="mt-section">
+        <div class="mt-section-h"><i class="fa-solid fa-paperclip"></i>Coach shared</div>
+        <div class="mt-attach">
+          <span class="ico"><i class="fa-regular fa-file"></i></span>
+          <div style="flex:1;min-width:0;">
+            <div class="mt-attach-name">${s.attach.name}</div>
+            <div class="mt-attach-sub">${s.attach.size} · From ${c.name}</div>
+          </div>
+          <button class="btn btn-w btn-sm"><i class="fa-solid fa-download"></i> Download</button>
+        </div>
+      </div>` : ''}
+
+      ${s.state==='completed' && s.hasVideo ? `
+      <div class="mt-section">
+        <div class="mt-section-h"><i class="fa-solid fa-video"></i>Recording</div>
+        ${s.daysLeft > 0 ? `
+          <div class="mt-video">
+            <div class="mt-video-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="lbl">Zoom · 28 min</span></div>
+            <img src="https://images.unsplash.com/photo-1573497019418-b400bb3ab074?w=1200&h=675&fit=crop" alt="Recording">
+            <div class="mt-play"><i class="fa-solid fa-play" style="margin-left:4px;"></i></div>
+          </div>
+        ` : `
+          <div class="video-expired-placeholder">
+            <i class="fa-solid fa-lock" style="font-size:26px;"></i>
+            <div style="font-size:13px;font-weight:500;">Recording no longer available</div>
+            <div style="font-size:12px;">Access expired 15 days after the session</div>
+          </div>
+        `}
+      </div>
+
+      <div class="mt-section">
+        <div class="mt-section-h"><i class="fa-regular fa-file-lines"></i>Transcript</div>
+        <div class="tx-wrap">
+          ${transcriptLines.map(l=>`
+            <div class="tx-line">
+              <div class="tx-time">${l.t}</div>
+              <div style="flex:1;min-width:0;">
+                <div class="tx-sp ${l.who}">${l.sp}</div>
+                <div class="tx-text">${l.text}</div>
+              </div>
+            </div>`).join('')}
+          <div class="tx-more">· · · 23 more minutes · · ·</div>
+        </div>
+      </div>` : ''}
+    </div>
+  `;
+}
+
+/* ============ MODALS ============ */
+function openModal({title, body, icon='info', primary='Confirm', primaryClass='btn', secondary='Cancel', onConfirm}){
+  const m = document.getElementById('modal');
+  m.className = 'modal v2';
+  m.style.maxWidth = '';
+  m.innerHTML = `
+    <div class="modal-h">
+      <div class="modal-t">${title}</div>
+      <button class="modal-x" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-b">${body||''}</div>
+    <div class="modal-f">
+      ${secondary?`<button class="btn btn-w" onclick="closeModal()">${secondary}</button>`:''}
+      <button class="${primaryClass}" id="modal-confirm">${primary}</button>
+    </div>`;
+  document.getElementById('modal-bg').classList.add('open');
+  document.body.style.overflow='hidden';
+  document.getElementById('modal-confirm').onclick = () => { if(onConfirm) onConfirm(); closeModal(); };
+}
+function closeModal(){
+  document.getElementById('modal-bg').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape' && document.getElementById('modal-bg').classList.contains('open')) closeModal(); });
+
+function coachUnavailable(){
+  openModal({
+    icon:'info',
+    title:'No availability this month',
+    body:`<p>Your coach hasn't opened any slots this month. Here's what you can do:</p>
+      <ul style="margin:10px 0 0 16px;padding:0;font-size:13.5px;color:var(--t2);line-height:1.7;">
+        <li>Wait for next month's calendar to open (usually a week before the month starts).</li>
+        <li>Send your coach a note — they may add ad-hoc slots.</li>
+        <li>Browse other coaches in the meantime.</li>
+      </ul>`,
+    primary:'Notify me when slots open',
+    primaryClass:'btn',
+    secondary:'Close',
+    onConfirm:()=>toast("We'll email you when slots open")
+  });
+}
+
+function networkError(){
+  openModal({
+    icon:'danger',
+    title:'Something went wrong',
+    body:`<p>We couldn't load your sessions. Check your connection and try again.</p>
+      <div style="background:var(--g-error-100);color:#991b1b;font-size:12px;padding:10px 12px;border-radius:8px;margin-top:14px;font-family:ui-monospace,Menlo,monospace;">Error · NET_ERR_TIMEOUT (request id: ab9c12)</div>`,
+    primary:'Retry',
+    primaryClass:'btn',
+    secondary:'Close',
+    onConfirm:()=>toast('Retrying…')
+  });
+}
+
+function showSkeleton(){
+  const body = document.getElementById('view-coaching');
+  body.innerHTML = `
+    <section class="panel">
+      <div class="panel-head"><div class="skel" style="width:140px;height:24px;"></div></div>
+      <div class="skel" style="height:46px;border-radius:10px;margin-bottom:18px;"></div>
+      <div class="btable">
+        <div class="btable-head"><div>Session</div><div>Scheduled on</div><div>Sessions</div><div>Status</div><div></div><div></div></div>
+        ${Array.from({length:4}).map(()=>`
+        <div class="brow" style="cursor:default;">
+          <div class="bprog-cell"><div class="skel" style="width:48px;height:48px;border-radius:10px;"></div><div style="flex:1;"><div class="skel" style="width:80%;height:14px;margin-bottom:8px;"></div><div class="skel" style="width:50%;height:12px;"></div></div></div>
+          <div><div class="skel" style="width:90%;height:13px;margin-bottom:6px;"></div><div class="skel" style="width:60%;height:11px;"></div></div>
+          <div><div class="skel" style="width:80%;height:13px;margin-bottom:6px;"></div><div class="skel" style="width:100%;height:5px;"></div></div>
+          <div><div class="skel" style="width:60%;height:20px;border-radius:99px;"></div></div>
+          <div><div class="skel" style="width:80px;height:34px;border-radius:99px;"></div></div>
+          <div><div class="skel" style="width:24px;height:24px;border-radius:50%;"></div></div>
+        </div>`).join('')}
+      </div>
+    </section>`;
+}
+
+function calendarEmpty(){
+  setView('home');
+  COACHING_TAB='bookings'; BOOKING_VIEW='calendar';
+  renderCoaching();
+  setTimeout(()=>{
+    const grid = document.querySelector('.cal-grid');
+    if(grid){
+      const wrap = grid.parentElement;
+      grid.style.display = 'none';
+      const empty = document.createElement('div');
+      empty.style.cssText = 'padding:80px 24px;text-align:center;';
+      empty.innerHTML = `
+        <div style="width:64px;height:64px;border-radius:18px;background:var(--g-neutral-200);color:var(--t4);display:inline-flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px;"><i class="fa-regular fa-calendar"></i></div>
+        <div style="font-size:16px;font-weight:600;color:var(--t1);margin-bottom:6px;">No sessions this week</div>
+        <div style="font-size:13.5px;color:var(--t3);max-width:380px;margin:0 auto 16px;line-height:1.55;">Your week is clear. Book a pending session or browse programs to add more.</div>
+        <button class="btn btn-sm" onclick="setCoachTab('programs')">Browse programs</button>`;
+      wrap.appendChild(empty);
+    }
+  }, 80);
+}
+
+function rescheduleLimitReached(){
+  openModal({
+    icon:'warning',
+    title:'Reschedule limit reached',
+    body:`<p>You've already rescheduled this session <strong>2 times</strong>, which is the maximum allowed for this program.</p>
+      <p style="margin-top:10px;">If you can't make this session, you can cancel — but the session will count toward your plan if you're within the cancellation-notice window.</p>
+      <div style="background:var(--g-error-100);color:#991b1b;font-size:12.5px;padding:12px 14px;border-radius:10px;margin-top:14px;line-height:1.55;">
+        <strong>Tip:</strong> Reach out to your coach via email — they may be able to make a one-off exception for emergencies.
+      </div>`,
+    primary:'Cancel session instead',
+    primaryClass:'btn',
+    secondary:'Keep session',
+    onConfirm:()=>confirmCancel('p1s2')
+  });
+}
+
+function cancellationDeadlinePassed(){
+  openModal({
+    icon:'danger',
+    title:"You're past the cancellation window",
+    body:`<p>This session starts in <strong>2 hours</strong>, which is inside the coach's 4-hour cancellation-notice window.</p>
+      <p style="margin-top:10px;">If you cancel now, the session will <strong>count toward your plan</strong> — you'll lose this credit.</p>
+      <div style="background:var(--g-warning-100,#fef3c7);color:#92400e;font-size:12.5px;padding:12px 14px;border-radius:10px;margin-top:14px;line-height:1.55;">
+        <strong>Heads-up:</strong> Your coach has already prepared. Cancelling within this window can't be undone.
+      </div>
+      <label class="fld-label" style="margin-top:14px;">I understand and want to cancel anyway</label>
+      <textarea class="input" placeholder="Tell your coach what happened (optional)…"></textarea>`,
+    primary:'Cancel and forfeit credit',
+    primaryClass:'btn btn-danger',
+    secondary:'Keep session',
+    onConfirm:()=>toast('Session cancelled · credit forfeited')
+  });
+}
+
+function confirmReschedule(id){
+  openModal({
+    icon:'calendar',
+    title:'Reschedule session',
+    body:`<p>Pick a new time for this session. Your coach will be notified and the calendar invite updated.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
+        <div><label class="fld-label">New date <span class="req">*</span></label><input class="input" type="date" value="2026-05-12"></div>
+        <div><label class="fld-label">New time <span class="req">*</span></label><input class="input" type="time" value="11:00"></div>
+      </div>
+      <label class="fld-label" style="margin-top:14px;">Message to coach <span style="font-weight:400;color:var(--t4);font-size:11.5px;">(optional)</span></label>
+      <textarea class="input" placeholder="Sorry for the change — let me know if this works on your end."></textarea>`,
+    primary:'Send reschedule request',
+    onConfirm:()=>toast('Reschedule request sent to coach')
+  });
+}
+function confirmCancel(id){
+  openModal({
+    icon:'danger',
+    title:'Cancel this session?',
+    body:`<p>Your coach will be notified. If you cancel within the cancellation-notice window, this counts toward your plan.</p>
+      <label class="fld-label" style="margin-top:14px;">Reason <span class="req">*</span></label>
+      <div class="sel"><select><option>Personal emergency</option><option>Schedule conflict</option><option>Not prepared</option><option>Other</option></select></div>
+      <label class="fld-label" style="margin-top:12px;">Note to coach <span style="font-weight:400;color:var(--t4);font-size:11.5px;">(optional)</span></label>
+      <textarea class="input" placeholder="Sorry — let me know what other slots you have."></textarea>`,
+    primary:'Cancel session',
+    primaryClass:'btn btn-danger',
+    secondary:'Keep session',
+    onConfirm:()=>toast('Session cancelled')
+  });
+}
+
+/* ============ SLOT PICKER ============ */
+const SP_TZS = [
+  {value:'IST',  label:'India Standard Time (GMT+5:30)',   offset:5.5},
+  {value:'PT',   label:'Pacific Time (GMT-8:00)',          offset:-8},
+  {value:'ET',   label:'Eastern Time (GMT-5:00)',          offset:-5},
+  {value:'GMT',  label:'Greenwich Mean Time (GMT+0:00)',   offset:0},
+  {value:'CET',  label:'Central European Time (GMT+1:00)', offset:1},
+  {value:'GST',  label:'Gulf Standard Time (GMT+4:00)',    offset:4},
+  {value:'SGT',  label:'Singapore Time (GMT+8:00)',        offset:8},
+  {value:'JST',  label:'Japan Standard Time (GMT+9:00)',   offset:9},
+];
+const SP_AVAILABILITY = (()=>{
+  const out = {};
+  const now = new Date();
+  for(let m=0;m<2;m++){
+    const ref = new Date(now.getFullYear(), now.getMonth()+m, 1);
+    const days = new Date(ref.getFullYear(), ref.getMonth()+1, 0).getDate();
+    for(let d=1;d<=days;d++){
+      const dt = new Date(ref.getFullYear(), ref.getMonth(), d);
+      const dow = dt.getDay();
+      if(dow===0||dow===6) continue;
+      if(dt < new Date(now.getFullYear(),now.getMonth(),now.getDate())) continue;
+      const iso = `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const slots = ['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM','12:00 PM','12:30 PM','2:00 PM','2:30 PM','3:00 PM','3:30 PM','4:00 PM','4:30 PM','5:00 PM','5:30 PM','6:00 PM','6:30 PM'];
+      out[iso] = slots.map(t=>({time:t, taken:(d+t.length)%5===0}));
+    }
+  }
+  return out;
+})();
+const SP_STATE = { date:null, slot:null, viewMonth:null, tz:'IST', progId:null, sessId:null };
+function spConvertTime(timeStr, tgtOffset, addMin=0){
+  const m = timeStr.match(/(\d+):(\d+)\s+(AM|PM)/);
+  if(!m) return timeStr;
+  let h = parseInt(m[1]);
+  const mn = parseInt(m[2]);
+  if(m[3]==='PM' && h!==12) h += 12;
+  if(m[3]==='AM' && h===12) h = 0;
+  let totalMin = h*60 + mn - 5.5*60 + tgtOffset*60 + addMin;
+  totalMin = ((totalMin % 1440) + 1440) % 1440;
+  const outH = Math.floor(totalMin/60);
+  const outMin = totalMin % 60;
+  const outPeriod = outH >= 12 ? 'PM' : 'AM';
+  let displayH = outH % 12;
+  if(displayH===0) displayH = 12;
+  return `${displayH}:${String(outMin).padStart(2,'0')} ${outPeriod}`;
+}
+function spSlotRange(t, off){ return `${spConvertTime(t,off)} – ${spConvertTime(t,off,30)}`; }
+
+function openSlotPicker(progId, sessId){
+  const p = PROGRAMS.find(x=>x.id===progId); if(!p) return;
+  const s = p.sessions.find(x=>x.id===sessId); if(!s) return;
+  SP_STATE.progId = progId; SP_STATE.sessId = sessId;
+  SP_STATE.viewMonth = new Date();
+  SP_STATE.viewMonth = new Date(SP_STATE.viewMonth.getFullYear(), SP_STATE.viewMonth.getMonth(), 1);
+  SP_STATE.date = Object.keys(SP_AVAILABILITY).sort()[0];
+  SP_STATE.slot = null;
+  renderSlotPicker(p, s);
+  document.getElementById('modal-bg').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function renderSlotPicker(p, s){
+  if(!p) p = PROGRAMS.find(x=>x.id===SP_STATE.progId);
+  if(!s) s = p.sessions.find(x=>x.id===SP_STATE.sessId);
+  const c = COACHES[p.coach];
+  const m = document.getElementById('modal');
+  m.className='modal sp-modal';
+  m.style.maxWidth='1040px';
+  const v = SP_STATE.viewMonth;
+  const y = v.getFullYear(), mo = v.getMonth();
+  const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const first = new Date(y,mo,1).getDay();
+  const days = new Date(y,mo+1,0).getDate();
+  const today = new Date(); today.setHours(0,0,0,0);
+  const tzObj = SP_TZS.find(t=>t.value===SP_STATE.tz) || SP_TZS[0];
+
+  let cells='';
+  for(let i=0;i<first;i++) cells += `<div></div>`;
+  for(let d=1;d<=days;d++){
+    const iso = `${y}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dt = new Date(y,mo,d);
+    const isPast = dt < today;
+    const avail = !isPast && SP_AVAILABILITY[iso] && SP_AVAILABILITY[iso].some(x=>!x.taken);
+    const sel = SP_STATE.date===iso;
+    cells += `<div class="sp-cal-day ${avail?'avail':''} ${sel?'selected':''}" ${avail?`onclick="pickSPDate('${iso}')"`:''}>${d}</div>`;
+  }
+
+  const slotsHTML = SP_STATE.date && SP_AVAILABILITY[SP_STATE.date]
+    ? `<div class="sp-slots-list">${SP_AVAILABILITY[SP_STATE.date].map(x=>{
+        const sel = SP_STATE.slot===x.time && !x.taken;
+        return `<button class="sp-slot ${sel?'selected':''}" ${x.taken?'disabled':''} onclick="pickSPSlot('${x.time}')">${spSlotRange(x.time, tzObj.offset)}</button>`;
+      }).join('')}</div>`
+    : `<div class="sp-empty">Select an available date to see open slots.</div>`;
+
+  const footLeft = SP_STATE.slot
+    ? `<div class="sp-foot-l">Booking <strong>${p.name} · Session ${s.num}</strong> on <strong>${new Date(SP_STATE.date).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</strong> at <strong>${spSlotRange(SP_STATE.slot, tzObj.offset)} ${tzObj.value}</strong></div>`
+    : `<div class="sp-foot-l">Pick a date and time to book your session</div>`;
+
+  m.innerHTML = `
+    <div class="sp-h">
+      <div class="sp-h-l">
+        <div class="sp-h-t">Book Session ${s.num}</div>
+        <div class="sp-h-d">${p.name} — ${c.name} · 30 min</div>
+      </div>
+      <button class="modal-x" onclick="closeSP()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="sp-body">
+      <div class="sp-info">
+        <div class="sp-info-coach">
+          <div class="sp-info-av"><img src="${c.avatar}" alt="${c.name}"></div>
+          <div style="min-width:0;"><div class="sp-info-coach-name">${c.name}</div><div class="sp-info-coach-role">${c.role}</div></div>
+        </div>
+        <div>
+          <div class="sp-info-section-h">Session ${s.num} of ${p.total}</div>
+          <div class="sp-info-t">${s.name}</div>
+        </div>
+        <div class="sp-info-meta">
+          <div class="sp-info-meta-row"><i class="fa-regular fa-clock"></i><span>30 minutes</span></div>
+          <div class="sp-info-meta-row"><i class="fa-solid fa-video"></i><span>Zoom Meeting</span></div>
+          <div class="sp-info-meta-row"><i class="fa-regular fa-comments"></i><span>1-on-1 with ${c.name}</span></div>
+        </div>
+        ${s.agenda ? `
+        <div class="sp-info-divider"></div>
+        <div>
+          <div class="sp-info-section-h">Agenda</div>
+          <div class="sp-info-section-d">${s.agenda}</div>
+        </div>` : ''}
+      </div>
+      <div class="sp-cal">
+        <div class="sp-cal-nav">
+          <button class="sp-cal-arr" onclick="spNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="sp-cal-month">${MONTHS[mo]} ${y}</div>
+          <button class="sp-cal-arr" onclick="spNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+        <div class="sp-cal-grid">
+          ${['Su','Mo','Tu','We','Th','Fr','Sa'].map(d=>`<div class="sp-cal-dow">${d}</div>`).join('')}
+          ${cells}
+        </div>
+        <div style="margin-top:20px;">
+          <div style="font-size:11.5px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;display:flex;align-items:center;gap:6px;"><i class="fa-regular fa-clock" style="font-size:11px;"></i>Timezone</div>
+          <div class="sel"><select onchange="setSPTz(this.value)">
+            ${SP_TZS.map(t=>`<option value="${t.value}"${SP_STATE.tz===t.value?' selected':''}>${t.label}</option>`).join('')}
+          </select></div>
+        </div>
+      </div>
+      <div class="sp-slots">${slotsHTML}</div>
+    </div>
+    <div class="sp-foot">
+      ${footLeft}
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="btn btn-w" onclick="closeSP()">Cancel</button>
+        <button class="btn" onclick="confirmBookSlot()" ${SP_STATE.slot?'':'disabled style=\"opacity:.45;cursor:not-allowed;\"'}>Confirm booking</button>
+      </div>
+    </div>`;
+}
+function pickSPDate(iso){ SP_STATE.date=iso; SP_STATE.slot=null; renderSlotPicker(); }
+function pickSPSlot(t){ SP_STATE.slot=t; renderSlotPicker(); }
+function spNav(dir){ SP_STATE.viewMonth = new Date(SP_STATE.viewMonth.getFullYear(), SP_STATE.viewMonth.getMonth()+dir, 1); renderSlotPicker(); }
+function setSPTz(tz){ SP_STATE.tz=tz; renderSlotPicker(); }
+function closeSP(){
+  document.getElementById('modal').className='modal';
+  document.getElementById('modal').style.maxWidth='460px';
+  closeModal();
+}
+function confirmBookSlot(){
+  const p = PROGRAMS.find(x=>x.id===SP_STATE.progId);
+  const s = p.sessions.find(x=>x.id===SP_STATE.sessId);
+  const tz = SP_TZS.find(t=>t.value===SP_STATE.tz);
+  const c = COACHES[p.coach];
+  s.state = 'upcoming';
+  const dateStr = new Date(SP_STATE.date).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+  s.date = `${new Date(SP_STATE.date).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})} · ${spConvertTime(SP_STATE.slot, tz.offset)} ${tz.value}`;
+  closeSP();
+  showBookingConfirmation(p, s, c, dateStr, tz);
+}
+
+function showBookingConfirmation(p, s, c, dateStr, tz){
+  const m = document.getElementById('modal');
+  m.className = 'modal v2';
+  m.style.maxWidth = '';
+  const timeRange = `${spConvertTime(SP_STATE.slot, tz.offset)} – ${spConvertTime(SP_STATE.slot, tz.offset, 30)} ${tz.value}`;
+  m.innerHTML = `
+    <div class="modal-h">
+      <div class="modal-t">You're booked in</div>
+      <button class="modal-x" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-b">
+      <p style="margin-bottom:18px;">A calendar invite has been sent to you and ${c.name}.</p>
+      <div style="background:var(--g-neutral-200);border-radius:12px;padding:18px;">
+        <div style="font-size:11px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Session ${s.num}</div>
+        <div style="font-size:16px;font-weight:600;color:var(--t1);margin-bottom:14px;">${s.name}</div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--t2);margin-bottom:6px;"><i class="fa-regular fa-calendar" style="color:var(--t4);width:14px;"></i>${dateStr}</div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--t2);margin-bottom:6px;"><i class="fa-regular fa-clock" style="color:var(--t4);width:14px;"></i>${timeRange}</div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--t2);"><i class="fa-regular fa-user" style="color:var(--t4);width:14px;"></i>with ${c.name}</div>
+      </div>
+      <div style="font-size:13px;color:var(--t3);margin-top:14px;line-height:1.55;">You'll get an email reminder 1 hour before the session. The Join button enables 5 minutes before the start time.</div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-w" onclick="closeModal()">View details</button>
+      <button class="btn" onclick="closeModal()">Got it</button>
+    </div>`;
+  document.getElementById('modal-bg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Re-render underlying view so it's up to date when closed
+  if(document.getElementById('det').classList.contains('open')){
+    openProgDetail(p.id);
+  } else {
+    renderCoaching();
+  }
+}
+
+/* ============ INIT ============ */
+function applyRoute(){
+  const hash = location.hash.replace(/^#/,'').trim().toLowerCase();
+  if(!hash){ setView('home'); return; }
+  const parts = hash.split('/');
+  setView('home');
+  // Close any open detail/modal first
+  closeDet();
+  closeModal();
+  switch(parts[0]){
+    case 'bookings':
+      COACHING_TAB = 'bookings';
+      BOOKING_VIEW = parts[1]==='calendar' ? 'calendar' : 'list';
+      renderCoaching(); break;
+    case 'programs':
+      COACHING_TAB = 'programs'; renderCoaching(); break;
+    case 'program':
+      if(parts[1]) setTimeout(()=>openProgDetail(parts[1]), 50); break;
+    case 'session':
+      if(parts[1]){
+        const sid = parts[1];
+        const prog = PROGRAMS.find(p => p.sessions.some(s=>s.id===sid));
+        if(prog) setTimeout(()=>openSessionDetail(sid, prog.id), 50);
+      }
+      break;
+    case 'reschedule':
+      setTimeout(()=>confirmReschedule('p1s2'), 50); break;
+    case 'cancel':
+      setTimeout(()=>confirmCancel('p1s2'), 50); break;
+    case 'slot-picker':
+      setTimeout(()=>openSlotPicker('pr1','p1s3'), 50); break;
+    case 'booking-confirmed':
+      setTimeout(()=>{
+        const p = PROGRAMS.find(x=>x.id==='pr1');
+        const s = p.sessions.find(x=>x.id==='p1s3');
+        const c = COACHES[p.coach];
+        SP_STATE.slot = '11:00 AM';
+        SP_STATE.tz = 'IST';
+        SP_STATE.date = '2026-05-15';
+        const tz = SP_TZS.find(t=>t.value==='IST');
+        showBookingConfirmation(p, s, c, 'Fri, May 15, 2026', tz);
+      }, 50); break;
+    case 'reschedule-limit':
+      setTimeout(()=>rescheduleLimitReached(), 50); break;
+    case 'cancel-deadline':
+      setTimeout(()=>cancellationDeadlinePassed(), 50); break;
+    case 'coach-unavailable':
+      setTimeout(()=>coachUnavailable(), 50); break;
+    case 'network-error':
+      setTimeout(()=>networkError(), 50); break;
+    case 'skeleton':
+      setView('home');
+      setTimeout(()=>showSkeleton(), 30); break;
+    case 'calendar-empty':
+      calendarEmpty(); break;
+    case 'bookings-empty':
+      COACHING_TAB='bookings'; BOOKING_VIEW='list';
+      LRNFILTERS.status.clear(); LRNFILTERS.coach.clear(); LRNFILTERS.program.clear();
+      window.__forceEmptyBookings = true;
+      renderCoaching();
+      window.__forceEmptyBookings = false;
+      break;
+    case 'bookings-filter-empty':
+      COACHING_TAB='bookings'; BOOKING_VIEW='list';
+      LRNFILTERS.status = new Set(['__nomatch__']);
+      renderCoaching(); break;
+    case 'programs-empty':
+      COACHING_TAB='programs';
+      LRNFILTERS.pstatus.clear(); LRNFILTERS.pcoach.clear();
+      window.__forceEmptyPrograms = true;
+      renderCoaching();
+      window.__forceEmptyPrograms = false;
+      break;
+    case 'programs-filter-empty':
+      COACHING_TAB='programs';
+      LRNFILTERS.pstatus = new Set(['__nomatch__']);
+      renderCoaching(); break;
+  }
+}
+window.addEventListener('DOMContentLoaded', applyRoute);
+window.addEventListener('hashchange', applyRoute);
+
+/* =========================================================================
+   CUSTOM DROPDOWN — auto-enhance every <select> on the page
+   ========================================================================= */
+(function(){
+  let _openDD = null;
+
+  function selectedText(sel){
+    const o = sel.options[sel.selectedIndex];
+    return o ? o.text : '';
+  }
+
+  function closeDD(){
+    if(!_openDD) return;
+    _openDD.trig.classList.remove('open');
+    if(_openDD.menu && _openDD.menu.parentNode) _openDD.menu.parentNode.removeChild(_openDD.menu);
+    document.removeEventListener('mousedown', outsideClose, true);
+    document.removeEventListener('keydown', escClose, true);
+    window.removeEventListener('scroll', closeDD, true);
+    window.removeEventListener('resize', closeDD, true);
+    _openDD = null;
+  }
+  function escClose(e){ if(e.key === 'Escape'){ e.stopPropagation(); closeDD(); } }
+  function outsideClose(e){
+    if(!_openDD) return;
+    if(_openDD.menu.contains(e.target) || _openDD.trig.contains(e.target)) return;
+    closeDD();
+  }
+
+  function openDD(sel, trig){
+    if(_openDD && _openDD.trig === trig){ closeDD(); return; }
+    closeDD();
+
+    const menu = document.createElement('div');
+    menu.className = 'dd-menu';
+    const opts = Array.from(sel.options);
+    menu.innerHTML = opts.map((o,i)=>{
+      const isSel = i === sel.selectedIndex;
+      const dis = o.disabled ? ' disabled' : '';
+      return `<div class="dd-item${isSel?' selected':''}${dis}" data-idx="${i}">${o.innerHTML}</div>`;
+    }).join('');
+
+    document.body.appendChild(menu);
+
+    const r = trig.getBoundingClientRect();
+    const minW = Math.max(r.width, 160);
+    menu.style.minWidth = minW + 'px';
+    menu.style.left = r.left + 'px';
+    menu.style.top = (r.bottom + 4) + 'px';
+
+    const mr = menu.getBoundingClientRect();
+    if(mr.bottom > window.innerHeight - 8){
+      const newTop = r.top - mr.height - 4;
+      if(newTop > 8) menu.style.top = newTop + 'px';
+    }
+    if(mr.right > window.innerWidth - 8){
+      menu.style.left = Math.max(8, window.innerWidth - mr.width - 8) + 'px';
+    }
+
+    menu.addEventListener('click', e=>{
+      const item = e.target.closest('.dd-item');
+      if(!item || item.classList.contains('disabled')) return;
+      const idx = parseInt(item.dataset.idx, 10);
+      if(isNaN(idx) || idx === sel.selectedIndex){ closeDD(); return; }
+      sel.selectedIndex = idx;
+      const txt = trig.querySelector('.dd-trig-text');
+      if(txt) txt.innerHTML = sel.options[idx].innerHTML;
+      sel.dispatchEvent(new Event('input', {bubbles:true}));
+      sel.dispatchEvent(new Event('change', {bubbles:true}));
+      closeDD();
+    });
+
+    trig.classList.add('open');
+    _openDD = { trig, menu, sel };
+
+    setTimeout(()=>{
+      document.addEventListener('mousedown', outsideClose, true);
+      document.addEventListener('keydown', escClose, true);
+      window.addEventListener('scroll', closeDD, true);
+      window.addEventListener('resize', closeDD, true);
+    }, 0);
+  }
+
+  function enhanceSelect(sel){
+    if(!sel || sel.tagName !== 'SELECT') return;
+    if(sel.dataset.ddEnhanced === '1') return;
+    sel.dataset.ddEnhanced = '1';
+
+    const trig = document.createElement('button');
+    trig.type = 'button';
+    trig.className = 'dd-trig';
+
+    const origStyle = sel.getAttribute('style');
+    if(origStyle) trig.setAttribute('style', origStyle);
+
+    const txt = document.createElement('span');
+    txt.className = 'dd-trig-text';
+    txt.innerHTML = selectedText(sel) || '';
+    trig.appendChild(txt);
+
+    trig.addEventListener('click', e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      openDD(sel, trig);
+    });
+
+    sel.addEventListener('change', ()=>{
+      const t = trig.querySelector('.dd-trig-text');
+      if(t) t.innerHTML = selectedText(sel);
+    });
+
+    sel.classList.add('dd-enhanced');
+    sel.parentNode.insertBefore(trig, sel);
+
+    const cs = window.getComputedStyle(trig);
+    const pr = parseInt(cs.paddingRight, 10) || 0;
+    if(pr < 28) trig.style.paddingRight = '28px';
+  }
+
+  function enhanceAll(root){
+    (root || document).querySelectorAll('select').forEach(s=>{
+      if(s.dataset.ddEnhanced !== '1') enhanceSelect(s);
+    });
+  }
+
+  const obs = new MutationObserver(muts=>{
+    for(const m of muts){
+      m.addedNodes.forEach(n=>{
+        if(n.nodeType !== 1) return;
+        if(n.tagName === 'SELECT'){ enhanceSelect(n); return; }
+        if(n.querySelectorAll){ n.querySelectorAll('select').forEach(s=>{ if(s.dataset.ddEnhanced !== '1') enhanceSelect(s); }); }
+      });
+    }
+  });
+
+  function boot(){
+    enhanceAll();
+    obs.observe(document.body, { childList:true, subtree:true });
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+</body>
+</html>
