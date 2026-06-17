@@ -2201,17 +2201,6 @@ select.dd-enhanced{position:absolute!important;left:0;top:0;width:1px!important;
       <h2 class="wiz-h1">Program details</h2>
       <p class="wiz-sub">Set up sessions for your coaching program. You can edit, add, or remove sessions later from the program detail page.</p>
 
-      <!-- Google Calendar connection banner -->
-      <div class="gcal-banner" id="gcal-banner">
-        <div class="gcal-banner-l">
-          <div class="gcal-banner-icon"><i class="fa-regular fa-calendar"></i></div>
-          <div>
-            <div class="gcal-banner-title">Connect Google Calendar to publish.</div>
-            <div class="gcal-banner-sub">Sync your organization's availability and avoid double bookings.</div>
-          </div>
-        </div>
-        <button class="btn btn-w btn-sm" onclick="connectGcal()" style="white-space:nowrap;flex-shrink:0;"><i class="fa-brands fa-google"></i> Connect Google Calendar</button>
-      </div>
 
       <div class="gcal-connected" id="gcal-connected" style="display:none;">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
@@ -2223,14 +2212,33 @@ select.dd-enhanced{position:absolute!important;left:0;top:0;width:1px!important;
         </div>
       </div>
 
-      <div id="wiz-profile-card" style="display:none;flex-direction:column;gap:12px;">
-        <div>
-          <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">Select profile</div>
-          <div style="position:relative;">
-            <div id="wiz-coach-trigger" class="input" style="display:flex;align-items:center;gap:10px;padding:8px 12px;">
-              <div id="wiz-coach-avatar" style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--g-brand-100);"><img id="wiz-coach-avatar-img" src="https://i.pravatar.cc/76?img=47" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
-              <div style="flex:1;min-width:0;text-align:left;">
-                <div id="wiz-coach-name" style="font-size:13px;font-weight:600;color:var(--t1);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+      <!-- Coaches section -->
+      <div style="background:#fff;border:1px solid var(--bd);border-radius:16px;overflow:hidden;">
+        <div style="padding:18px 22px;border-bottom:1px solid var(--bd);">
+          <div style="font-size:15px;font-weight:600;color:var(--t1);margin-bottom:3px;">Coaches</div>
+          <div style="font-size:13px;color:var(--t3);">Assign coaches who can deliver sessions in this program. You can edit this in settings.</div>
+        </div>
+        <div style="padding:18px 22px;">
+          <!-- Empty state: no calendar connected -->
+          <div id="wiz-coaches-empty" class="gcal-banner">
+            <div class="gcal-banner-l">
+              <div class="gcal-banner-icon"><i class="fa-regular fa-calendar"></i></div>
+              <div>
+                <div class="gcal-banner-title">Connect Google Calendar to publish.</div>
+                <div class="gcal-banner-sub">Sync your organization's availability and avoid double bookings.</div>
+              </div>
+            </div>
+            <button class="btn btn-w btn-sm" onclick="connectGcal();openCoachingSettings('gcal')" style="white-space:nowrap;flex-shrink:0;"><i class="fa-brands fa-google"></i> Connect Google Calendar</button>
+          </div>
+          <!-- Connected state: select profile -->
+          <div id="wiz-profile-card" style="display:none;flex-direction:column;gap:12px;">
+            <div>
+              <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">Select profile</div>
+              <div style="position:relative;">
+                <div id="wiz-coach-trigger" class="input" style="display:flex;align-items:center;gap:10px;padding:8px 12px;">
+                  <div id="wiz-coach-avatar" style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--g-brand-100);"><img id="wiz-coach-avatar-img" src="https://i.pravatar.cc/76?img=47" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+                  <div style="flex:1;min-width:0;text-align:left;">
+                    <div id="wiz-coach-name" style="font-size:13px;font-weight:600;color:var(--t1);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
                 <div id="wiz-coach-email" style="font-size:12px;color:var(--t3);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
               </div>
               <i id="wiz-coach-chev" class="fa-solid fa-chevron-down" style="display:none;font-size:11px;color:var(--t4);flex-shrink:0;"></i>
@@ -2242,7 +2250,9 @@ select.dd-enhanced{position:absolute!important;left:0;top:0;width:1px!important;
           <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">About the coach</div>
           <p id="wiz-coach-about" style="margin:0;font-size:13px;color:var(--t2);line-height:1.6;"><span style="color:var(--t4);font-style:italic;">No description added.</span></p>
         </div>
-      </div>
+          </div><!-- /wiz-profile-card -->
+        </div><!-- /card body -->
+      </div><!-- /coaches card -->
 
       <div id="wiz-sessions-list" style="display:flex;flex-direction:column;gap:14px;"></div>
       <button class="btn btn-w btn-sm" style="align-self:flex-start;" onclick="wizAddSession()"><i class="fa-solid fa-plus"></i>Add session</button>
@@ -3478,7 +3488,7 @@ function setGcalState(){
     if(wizConn) wizConn.style.display = 'none';
   } else {
     if(banner) banner.style.display = connected ? 'none' : '';
-    if(wizConn) wizConn.style.display = connected ? 'flex' : 'none';
+    if(wizConn) wizConn.style.display = 'none';
   }
   // settings modal: show connected status card or connect banner
   const csetConn = document.getElementById('cset-gcal-connected');
@@ -3489,8 +3499,10 @@ function setGcalState(){
   // profile section
   const profSec = document.getElementById('cset-profile-section');
   if(profSec) profSec.style.display = connected ? 'block' : 'none';
-  // wizard profile card
-  const wizCard = document.getElementById('wiz-profile-card');
+  // wizard coaches section
+  const wizEmpty = document.getElementById('wiz-coaches-empty');
+  const wizCard  = document.getElementById('wiz-profile-card');
+  if(wizEmpty) wizEmpty.style.display = connected ? 'none' : '';
   if(wizCard){
     wizCard.style.display = connected ? 'flex' : 'none';
     if(connected) applyWizProfileMode();
@@ -3780,7 +3792,8 @@ function renderSettingsAccordions(){
           <textarea rows="3" maxlength="400" placeholder="Tell learners about yourself…" oninput="saveCalField('${cal.id}','about',this.value)">${cal.about||''}</textarea>
         </div>
         <div style="display:flex;justify-content:flex-end;padding-top:4px;">
-          <button class="btn btn-w btn-sm" id="cset-save-btn-${cal.id}" onclick="saveCalField('${cal.id}','name',document.querySelector('#cset-acc-body-${cal.id} input[type=text]:not([readonly])').value);(function(b){b.textContent='Saved';b.style.color='var(--g-success-300)';setTimeout(()=>{b.textContent='Save';b.style.color='';},2000);})(this)">Save</button>
+          <button class="btn btn-w btn-sm" id="cset-save-btn-${cal.id}" onclick="saveCalField('${cal.id}','name',document.querySelector('#cset-acc-body-${cal.id} input[type=text]:not([readonly])').value);(function(b){b.textContent='Saved';b.style.color='var(--t1)';setTimeout(()=>{b.textContent='Save';b.style.color='';},2000);})(this)">Save</button>
+        </div>
       </div>
     </div>`).join('');
 
@@ -5825,7 +5838,7 @@ function showCoachEmpty(){
       const chev = card.querySelector('.scard-chev');
       if(chev) chev.style.display='none';
       const header = card.querySelector('.scard-h');
-      if(header) header.style.cursor='default';
+      if(header){ header.style.cursor='default'; header.style.pointerEvents='none'; }
       header.onclick = null;
     }
   });
@@ -5847,7 +5860,7 @@ function showCoachEmpty(){
           <div class="gcal-banner-sub">Sync your organization's availability and avoid double bookings.</div>
         </div>
       </div>
-      <button class="btn btn-w btn-sm" onclick="connectGcal()" style="white-space:nowrap;flex-shrink:0;"><i class="fa-brands fa-google"></i> Connect Google Calendar</button>
+      <button class="btn btn-w btn-sm" onclick="connectGcal();openCoachingSettings('gcal')" style="white-space:nowrap;flex-shrink:0;"><i class="fa-brands fa-google"></i> Connect Google Calendar</button>
     </div>`;
 }
 
