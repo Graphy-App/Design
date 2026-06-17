@@ -6184,8 +6184,8 @@ function pdToggleDropdown(e, ddId){
     dd.style.width = rect.width + 'px';
     dd.style.right = 'auto';
     dd.style.display = 'block';
-    const close = ()=>{ dd.style.display='none'; document.removeEventListener('click',close); };
-    setTimeout(()=>document.addEventListener('click',close), 0);
+    const close = ()=>{ dd.style.display='none'; document.removeEventListener('click',close); window.removeEventListener('scroll',close,true); };
+    setTimeout(()=>{ document.addEventListener('click',close); window.addEventListener('scroll',close,true); }, 0);
   }
 }
 
