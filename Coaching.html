@@ -2206,8 +2206,8 @@ select.dd-enhanced{position:absolute!important;left:0;top:0;width:1px!important;
         <div class="gcal-banner-l">
           <div class="gcal-banner-icon"><i class="fa-regular fa-calendar"></i></div>
           <div>
-            <div class="gcal-banner-title">Connect Google Calendar</div>
-            <div class="gcal-banner-sub">Sync your availability and avoid double bookings by connecting your Google Calendar.</div>
+            <div class="gcal-banner-title">Connect Google Calendar to publish.</div>
+            <div class="gcal-banner-sub">Sync your organization's availability and avoid double bookings.</div>
           </div>
         </div>
         <button class="btn btn-w btn-sm" onclick="connectGcal()" style="white-space:nowrap;flex-shrink:0;"><i class="fa-brands fa-google"></i> Connect Google Calendar</button>
@@ -2223,62 +2223,24 @@ select.dd-enhanced{position:absolute!important;left:0;top:0;width:1px!important;
         </div>
       </div>
 
-      <div id="wiz-profile-card" style="display:none;background:#fff;border:1px solid var(--bd);border-radius:var(--g-radius-md);flex-direction:column;">
-        <!-- Collapsed header — always visible -->
-        <div onclick="toggleWizProfile()" style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none;">
-          <div style="flex:1;min-width:0;">
-            <div style="font-size:13px;font-weight:600;color:var(--t1);margin-bottom:8px;">Coach profile</div>
-            <div id="wiz-profile-preview" style="font-size:12px;color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">You can edit in settings</div>
-          </div>
-          <i id="wiz-profile-chev" class="fa-solid fa-chevron-down" style="font-size:12px;color:var(--t4);transition:transform .2s;flex-shrink:0;"></i>
-        </div>
-        <!-- Expandable body — editable during onboarding -->
-        <div id="wiz-profile-body" style="display:none;padding:12px 16px 20px;border-top:1px solid var(--bd);flex-direction:column;gap:12px;">
-          <!-- Editable (onboarding) -->
-          <div id="wiz-profile-edit-mode" style="display:flex;flex-direction:column;gap:12px;">
-            <div id="wiz-cal-select-wrap" style="display:none;">
-              <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">Select profile</div>
-              <select id="wiz-cal-select" class="input" style="width:100%;" onchange="switchWizCalendar(this.value)"></select>
-            </div>
-            <div>
-              <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">Name</div>
-              <input id="wiz-profile-name" class="input" style="width:100%;" oninput="saveWizCalField('name',this.value)">
-            </div>
-            <div>
-              <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">Email ID</div>
-              <input id="wiz-profile-email-ro" class="input" style="width:100%;background:var(--g-neutral-200);color:var(--t3);cursor:not-allowed;" readonly>
-            </div>
-            <div>
-              <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">About the coach</div>
-              <textarea id="wiz-profile-about" class="input" rows="3" style="width:100%;resize:none;" placeholder="Tell learners about yourself…" maxlength="400" oninput="saveWizCalField('about',this.value);updateWizAboutCount('wiz-about-count-1',this.value)"></textarea>
-              <div style="text-align:right;font-size:12px;color:var(--t4);margin-top:4px;"><span id="wiz-about-count-1">0</span>/400</div>
-            </div>
-          </div>
-          <!-- Editable (non-onboarding) -->
-          <div id="wiz-profile-readonly-mode" style="display:none;flex-direction:column;gap:12px;">
-            <!-- Dropdown shown when 2+ calendars -->
-            <div id="wiz-ro-name-row"></div>
-            <div id="wiz-ro-name-group">
-              <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">Name</div>
-              <input id="wiz-profile-ro-name" class="input" style="width:100%;" oninput="saveWizCalField('name',this.value)">
-            </div>
-            <div id="wiz-ro-email-group">
-              <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">Email ID</div>
-              <div style="position:relative;">
-                <div id="wiz-ro-email-avatar" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--g-brand-100);">
-                  <img id="wiz-ro-email-avatar-img" src="https://i.pravatar.cc/76?img=47" alt="" style="width:100%;height:100%;object-fit:cover;">
-                </div>
-                <input id="wiz-profile-ro-email" class="input" style="width:100%;background:var(--g-neutral-200);color:var(--t3);cursor:not-allowed;padding-left:44px;box-sizing:border-box;" readonly>
+      <div id="wiz-profile-card" style="display:none;flex-direction:column;gap:12px;">
+        <div>
+          <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">Select profile</div>
+          <div style="position:relative;">
+            <div id="wiz-coach-trigger" class="input" style="display:flex;align-items:center;gap:10px;padding:8px 12px;">
+              <div id="wiz-coach-avatar" style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--g-brand-100);"><img id="wiz-coach-avatar-img" src="https://i.pravatar.cc/76?img=47" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+              <div style="flex:1;min-width:0;text-align:left;">
+                <div id="wiz-coach-name" style="font-size:13px;font-weight:600;color:var(--t1);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+                <div id="wiz-coach-email" style="font-size:12px;color:var(--t3);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
               </div>
+              <i id="wiz-coach-chev" class="fa-solid fa-chevron-down" style="display:none;font-size:11px;color:var(--t4);flex-shrink:0;"></i>
             </div>
-            <div>
-              <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">About the coach</div>
-              <textarea id="wiz-profile-ro-about" class="input" rows="3" style="width:100%;resize:none;" placeholder="Tell learners about yourself…" maxlength="400" oninput="saveWizCalField('about',this.value);updateWizAboutCount('wiz-about-count-2',this.value)"></textarea>
-              <p id="wiz-profile-ro-about-text" style="display:none;font-size:13px;color:var(--t2);line-height:1.6;margin:0;white-space:pre-wrap;"></p>
-              <div id="wiz-ro-about-count-row" style="text-align:right;font-size:12px;color:var(--t4);margin-top:4px;"><span id="wiz-about-count-2">0</span>/400</div>
-            </div>
-            <div id="wiz-ro-edit-btn-row" style="display:none;"></div>
+            <div id="wiz-coach-dropdown" style="display:none;position:fixed;background:#fff;border:1px solid var(--bd);border-radius:var(--g-radius-md);box-shadow:var(--g-shadow-pop);z-index:200;overflow:hidden;"></div>
           </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">About the coach</div>
+          <p id="wiz-coach-about" style="margin:0;font-size:13px;color:var(--t2);line-height:1.6;"><span style="color:var(--t4);font-style:italic;">No description added.</span></p>
         </div>
       </div>
 
@@ -3586,90 +3548,70 @@ function onProfileNameSelect(val){
 }
 
 function applyWizProfileMode(){
-  const editMode = document.getElementById('wiz-profile-edit-mode');
-  const roMode = document.getElementById('wiz-profile-readonly-mode');
-  if(!editMode || !roMode) return;
-  // always use the rich readonly UI for consistent look
-  editMode.style.display = 'none';
-  roMode.style.display = 'flex';
   renderWizReadonly();
 }
 
 function renderWizReadonly(){
-  const nameEl = document.getElementById('wiz-profile-ro-name');
-  const aboutWrap = document.getElementById('wiz-profile-ro-about-wrap');
-  const aboutEl = document.getElementById('wiz-profile-ro-about');
-  const preview = document.getElementById('wiz-profile-preview');
-  // if multiple calendars, replace the static name with a dropdown
-  const roMode = document.getElementById('wiz-profile-readonly-mode');
-  const multi = connectedCalendars.length > 1;
   const cal = connectedCalendars.find(c => c.id === activeCalendarId) || connectedCalendars[0];
   if(!cal) return;
-  if(preview) preview.textContent = 'You can edit in settings later';
-  const emailEl = document.getElementById('wiz-profile-ro-email');
-  if(emailEl) emailEl.value = cal.email;
-  const emailAvatarImg = document.getElementById('wiz-ro-email-avatar-img');
-  if(emailAvatarImg) emailAvatarImg.src = cal.avatarSrc || 'https://i.pravatar.cc/76?img=47';
-  // name row — dropdown or plain text
-  let nameRow = document.getElementById('wiz-ro-name-row');
-  if(!nameRow){
-    nameRow = document.createElement('div');
-    nameRow.id = 'wiz-ro-name-row';
-    if(nameEl && nameEl.parentNode) nameEl.parentNode.insertBefore(nameRow, nameEl);
-  }
-  const nameGroup = document.getElementById('wiz-ro-name-group');
-  const emailGroup = document.getElementById('wiz-ro-email-group');
-  const aboutText = document.getElementById('wiz-profile-ro-about-text');
-  const editBtnRow = document.getElementById('wiz-ro-edit-btn-row');
-  const aboutCountRow = document.getElementById('wiz-ro-about-count-row');
-  // always use rich dropdown UI (single or multi)
+  const multi = connectedCalendars.length > 1;
   const avSrc = cal.avatarSrc || 'https://i.pravatar.cc/76?img=47';
-  nameRow.innerHTML = `<div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">Select profile</div>
-    <div style="position:relative;">
-      <div class="input" onclick="toggleWizProfileDropdown(event)" style="width:100%;display:flex;align-items:center;gap:10px;cursor:pointer;">
-        <div style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--g-brand-100);"><img src="${avSrc}" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
-        <div style="flex:1;min-width:0;text-align:left;">
-          <div style="font-size:13px;font-weight:600;color:var(--t1);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${cal.name}</div>
-          <div style="font-size:12px;color:var(--t3);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${cal.email}</div>
-        </div>
-        <i class="fa-solid fa-chevron-down" style="font-size:11px;color:var(--t4);flex-shrink:0;"></i>
+
+  const avatarImg = document.getElementById('wiz-coach-avatar-img');
+  const nameEl    = document.getElementById('wiz-coach-name');
+  const emailEl   = document.getElementById('wiz-coach-email');
+  const chev      = document.getElementById('wiz-coach-chev');
+  const trigger   = document.getElementById('wiz-coach-trigger');
+  const aboutEl   = document.getElementById('wiz-coach-about');
+
+  if(avatarImg) avatarImg.src = avSrc;
+  if(nameEl)    nameEl.textContent  = cal.name;
+  if(emailEl)   emailEl.textContent = cal.email;
+
+  // show chevron + enable click only when 2+ calendars
+  if(chev)    chev.style.display   = multi ? '' : 'none';
+  if(trigger) trigger.style.cursor = multi ? 'pointer' : 'default';
+  if(trigger) trigger.onclick      = multi ? (e => toggleWizCoachDropdown(e)) : null;
+
+  if(aboutEl) aboutEl.innerHTML = cal.about
+    ? cal.about.replace(/</g,'&lt;')
+    : '<span style="color:var(--t4);font-style:italic;">No description added.</span>';
+
+  // rebuild dropdown list
+  const dd = document.getElementById('wiz-coach-dropdown');
+  if(dd) dd.innerHTML = connectedCalendars.map(c=>`
+    <div onclick="switchWizCalendar('${c.id}');renderWizReadonly();document.getElementById('wiz-coach-dropdown').style.display='none';"
+      style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;${c.id===activeCalendarId?'background:var(--g-neutral-200);':''}"
+      onmouseover="this.style.background='var(--g-neutral-100)'"
+      onmouseout="this.style.background='${c.id===activeCalendarId?'var(--g-neutral-200)':'transparent'}'">
+      <div style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--g-brand-100);"><img src="${c.avatarSrc||'https://i.pravatar.cc/76?img=47'}" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:600;color:var(--t1);line-height:1.2;">${c.name}</div>
+        <div style="font-size:12px;color:var(--t3);line-height:1.3;">${c.email}</div>
       </div>
-      <div id="wiz-profile-dropdown-list" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid var(--bd);border-radius:var(--g-radius-md);box-shadow:var(--g-shadow-pop);z-index:10;overflow:hidden;">
-        ${connectedCalendars.map(c=>`<div onclick="switchWizCalendar('${c.id}');renderWizReadonly()" style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;${c.id===activeCalendarId?'background:var(--g-neutral-200);':''}" onmouseover="this.style.background='var(--g-neutral-100)'" onmouseout="this.style.background='${c.id===activeCalendarId?'var(--g-neutral-200)':'transparent'}'">
-          <div style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--g-brand-100);"><img src="${c.avatarSrc||'https://i.pravatar.cc/76?img=47'}" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
-          <div style="flex:1;min-width:0;">
-            <div style="font-size:13px;font-weight:600;color:var(--t1);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.name}</div>
-            <div style="font-size:12px;color:var(--t3);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.email}</div>
-          </div>
-        </div>`).join('')}
-        <div onclick="document.getElementById('wiz-profile-dropdown-list').style.display='none';openCoachingSettings('gcal')" style="display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;border-top:1px solid var(--bd);color:var(--g-brand-primary);font-size:13px;font-weight:500;" onmouseover="this.style.background='var(--g-neutral-100)'" onmouseout="this.style.background='transparent'">
-          <i class="fa-solid fa-plus" style="font-size:11px;"></i> Add new calendar
-        </div>
-      </div>
+      ${c.id===activeCalendarId?'<i class="fa-solid fa-check" style="font-size:12px;color:var(--g-brand-primary);"></i>':''}
+    </div>`).join('') + `
+    <div onclick="document.getElementById('wiz-coach-dropdown').style.display='none';openCoachingSettings('gcal')"
+      style="display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;border-top:1px solid var(--bd);color:var(--g-brand-primary);font-size:13px;font-weight:500;"
+      onmouseover="this.style.background='var(--g-neutral-100)'" onmouseout="this.style.background='transparent'">
+      <i class="fa-solid fa-plus" style="font-size:11px;"></i> Add new calendar
     </div>`;
-  if(nameEl) nameEl.style.display = 'none';
-  // hide separate name/email fields, show about as read-only paragraph
-  if(nameGroup) nameGroup.style.display = 'none';
-  if(emailGroup) emailGroup.style.display = 'none';
-  if(editBtnRow) editBtnRow.style.display = 'block';
-  if(aboutCountRow) aboutCountRow.style.display = 'none';
-  if(aboutEl) aboutEl.style.display = 'none';
-  if(aboutText){
-    aboutText.style.display = 'block';
-    aboutText.innerHTML = cal.about ? cal.about.replace(/</g,'&lt;') : '<span style="color:var(--t4);font-style:italic;">No description added.</span>';
-  }
 }
 
-function toggleWizProfileDropdown(e){
+function toggleWizCoachDropdown(e){
   e.stopPropagation();
-  const list = document.getElementById('wiz-profile-dropdown-list');
-  if(!list) return;
-  const open = list.style.display === 'block';
-  list.style.display = open ? 'none' : 'block';
-  if(!open){
-    const close = () => { list.style.display = 'none'; document.removeEventListener('click', close); };
-    setTimeout(() => document.addEventListener('click', close), 0);
-  }
+  const dd = document.getElementById('wiz-coach-dropdown');
+  const trigger = document.getElementById('wiz-coach-trigger');
+  if(!dd || !trigger) return;
+  const open = dd.style.display === 'block';
+  if(open){ dd.style.display='none'; return; }
+  const rect = trigger.getBoundingClientRect();
+  dd.style.top   = (rect.bottom + 4) + 'px';
+  dd.style.left  = rect.left + 'px';
+  dd.style.width = rect.width + 'px';
+  dd.style.display = 'block';
+  const close = ()=>{ dd.style.display='none'; document.removeEventListener('click',close); window.removeEventListener('scroll',close,true); };
+  setTimeout(()=>{ document.addEventListener('click',close); window.addEventListener('scroll',close,true); }, 0);
 }
 
 function connectGcal(){
@@ -3917,28 +3859,11 @@ function disconnectCalendarPrimary(){
 }
 
 function lockWizProfileReadonly(name, about){
-  const editMode = document.getElementById('wiz-profile-edit-mode');
-  const roMode = document.getElementById('wiz-profile-readonly-mode');
-  if(!editMode || !roMode) return;
-  editMode.style.display = 'none';
-  roMode.style.display = 'flex';
-  document.getElementById('wiz-profile-ro-name').value = name;
-  const roAboutWrap = document.getElementById('wiz-profile-ro-about-wrap');
-  const roAbout = document.getElementById('wiz-profile-ro-about');
-  if(about){
-    roAbout.textContent = about;
-    roAboutWrap.style.display = 'block';
-  } else {
-    roAboutWrap.style.display = 'none';
-  }
+  renderWizReadonly();
 }
 
 function toggleWizProfile(){
-  const body = document.getElementById('wiz-profile-body');
-  const chev = document.getElementById('wiz-profile-chev');
-  const open = body.style.display === 'flex';
-  body.style.display = open ? 'none' : 'flex';
-  chev.style.transform = open ? '' : 'rotate(180deg)';
+  // no-op — card is no longer collapsible
 }
 
 function syncProfileName(val){
@@ -5442,7 +5367,7 @@ function renderPD(){
     </div>
   </div>
   <div class="scard acc collapsed">
-    <div class="scard-h" onclick="togglePDCard(this,event)"><div class="scard-h-l"><div class="scard-t">Coaches</div><div class="scard-d">Assign coaches who can deliver sessions in this program</div></div><i class="fa-solid fa-chevron-down scard-chev"></i></div>
+    <div class="scard-h" onclick="togglePDCard(this,event)"><div class="scard-h-l"><div class="scard-t">Coaches</div><div class="scard-d">Assign coaches who can deliver sessions in this program. You can edit this in settings.</div></div><i class="fa-solid fa-chevron-down scard-chev"></i></div>
     <div class="scard-b">
       <div id="coaches-list" style="display:flex;flex-direction:column;gap:16px;"></div>
     </div>
@@ -5889,7 +5814,7 @@ function applyRoute(){
   }
 }
 function showCoachEmpty(){
-  // expand the Coaches accordion
+  // expand the Coaches accordion and remove chevron
   const scards = document.querySelectorAll('#dt-pd .scard.acc');
   scards.forEach(card=>{
     const title = card.querySelector('.scard-t');
@@ -5897,6 +5822,11 @@ function showCoachEmpty(){
       card.classList.remove('collapsed');
       const body = card.querySelector('.scard-b');
       if(body) body.style.display='';
+      const chev = card.querySelector('.scard-chev');
+      if(chev) chev.style.display='none';
+      const header = card.querySelector('.scard-h');
+      if(header) header.style.cursor='default';
+      header.onclick = null;
     }
   });
   // swap Availability pill to disconnected state
