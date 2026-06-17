@@ -600,6 +600,7 @@ textarea.input{height:120px;padding:12px 14px;resize:vertical;}
 .lp-col-side{display:flex;flex-direction:column;gap:20px;}
 
 .gcal-pill{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--g-success-300);background:var(--g-success-100);padding:6px 12px;border-radius:6px;flex-shrink:0;}
+.gcal-pill.disconnected{color:var(--t3);background:var(--g-neutral-200);}
 .gcal-pill i{font-size:9px;}
 .scard-h > .gcal-pill{align-self:center;}
 .gcal-banner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border:1.5px solid var(--g-brand-100);background:var(--g-brand-100);border-radius:14px;}
@@ -5898,21 +5899,25 @@ function showCoachEmpty(){
       if(body) body.style.display='';
     }
   });
+  // swap Availability pill to disconnected state
+  const avPill = document.querySelector('#dt-pd .scard-h .gcal-pill');
+  if(avPill){
+    avPill.classList.add('disconnected');
+    avPill.innerHTML = '<i class="fa-solid fa-circle"></i>Google Calendar not connected';
+  }
   // replace coaches-list with empty state banner
   const list = document.getElementById('coaches-list');
   if(!list) return;
   list.innerHTML = `
-    <div class="gcal-banner" style="margin-bottom:4px;">
+    <div class="gcal-banner">
       <div class="gcal-banner-l">
-        <div class="gcal-banner-icon"><i class="fa-regular fa-user"></i></div>
+        <div class="gcal-banner-icon"><i class="fa-regular fa-calendar"></i></div>
         <div>
-          <div class="gcal-banner-title">No coaches assigned yet</div>
-          <div class="gcal-banner-sub">Assign coaches who can deliver sessions in this program. Each coach needs a connected calendar to accept bookings.</div>
+          <div class="gcal-banner-title">Connect Google Calendar to publish.</div>
+          <div class="gcal-banner-sub">Sync your organization's availability and avoid double bookings.</div>
         </div>
       </div>
-      <button class="btn btn-w btn-sm" onclick="pdAddCoachEntry(ALL_COACHES[0].id)" style="white-space:nowrap;flex-shrink:0;">
-        <i class="fa-solid fa-plus"></i> Add Coach
-      </button>
+      <button class="btn btn-w btn-sm" onclick="connectGcal()" style="white-space:nowrap;flex-shrink:0;"><i class="fa-brands fa-google"></i> Connect Google Calendar</button>
     </div>`;
 }
 
