@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pitch Review — Rodha Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root {
+  --g-brand-100:#E0E9FF; --g-brand-200:#A4BAFD; --g-brand-300:#5766F2; --g-brand-400:#2F31A4;
+  --g-brand-primary:var(--g-brand-300); --g-brand-primary-hover:var(--g-brand-400);
+  --g-neutral-200:#F7F9FA; --g-neutral-300:#E5E5E5; --g-neutral-400:#D2D6D8;
+  --g-neutral-500:#AAB1B7; --g-neutral-600:#878C90; --g-neutral-700:#393F41; --g-neutral-800:#232228;
+  --g-success-100:#DDFFC4; --g-success-300:#45A124;
+  --g-font-sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --bd:var(--g-neutral-300); --bd2:var(--g-neutral-400);
+  --t1:var(--g-neutral-800); --t2:var(--g-neutral-700); --t3:var(--g-neutral-600); --t4:var(--g-neutral-500);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:var(--g-font-sans);background:#fff;color:var(--t1);font-size:14px;-webkit-font-smoothing:antialiased;}
+button{font-family:inherit;cursor:pointer;}
+a{color:inherit;text-decoration:none;}
+
+/* PREVIEW BAR */
+.lp-pbar{background:var(--g-neutral-800);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;color:#fff;}
+.lp-plbl{font-size:11px;font-weight:600;color:var(--g-neutral-500);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:10px;}
+.lp-url{background:rgba(87,102,242,.25);color:var(--g-brand-200);padding:3px 10px;border-radius:6px;font-size:11px;letter-spacing:0;text-transform:none;}
+.lp-pbar-center{font-size:11px;color:var(--g-neutral-500);}
+.lp-close{background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--g-neutral-500);padding:6px 14px;border-radius:99px;font-size:12px;}
+.lp-close:hover{color:#fff;border-color:rgba(255,255,255,.4);}
+
+/* NAV */
+.lp-nav{padding:18px 24px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:center;background:#fff;}
+.lp-nav-inner{max-width:960px;width:100%;display:flex;align-items:center;justify-content:space-between;}
+.lp-logo{font-weight:600;font-size:20px;color:var(--t1);letter-spacing:-.4px;}
+
+/* HERO */
+.lp-hero{background:#fff;padding:48px 24px 40px;display:flex;align-items:stretch;}
+.lp-hero-inner{max-width:960px;width:100%;margin:0 auto;display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:stretch;}
+.lp-hero-left{display:flex;flex-direction:column;}
+.lp-hero-left .lp-h-desc{flex:1;}
+.lp-hero-right{display:flex;flex-direction:column;}
+.lp-breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--t3);margin-bottom:20px;}
+.lp-breadcrumb a{color:var(--t3);}
+.lp-breadcrumb a:hover{color:var(--t1);}
+.lp-breadcrumb span{color:var(--t1);}
+.lp-h1{font-size:28px;font-weight:600;line-height:1.3;letter-spacing:-.4px;color:var(--t1);}
+.lp-h1 em{font-style:normal;}
+.lp-h-desc{font-size:14px;color:var(--t3);line-height:1.5;margin-top:12px;max-width:480px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 22px;height:42px;border-radius:99px;font-size:14px;font-weight:500;border:1px solid transparent;background:var(--g-brand-primary);color:#fff;cursor:pointer;transition:.14s;}
+.btn:hover{background:var(--g-brand-primary-hover);box-shadow:0 4px 12px -4px rgba(87,102,242,.45);}
+.lp-cover{background:none;padding:0;overflow:hidden;border-radius:20px;flex:1;display:flex;align-items:stretch;min-height:200px;}
+.lp-cover img{width:100%;height:100%;object-fit:cover;border-radius:20px;display:block;}
+
+/* SESSIONS */
+.lp-included-wrap{padding:80px 24px 0;margin-bottom:80px;}
+.lp-included-wrap > *{max-width:960px;margin-left:auto;margin-right:auto;}
+.lp-included-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g-brand-primary);margin-bottom:12px;}
+.lp-included-label{font-size:32px;font-weight:700;color:var(--t1);letter-spacing:-.5px;line-height:1.2;margin-bottom:40px;}
+.lp-sessions{max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:18px;}
+.lp-sess{background:#fff;border:1px solid var(--bd);border-radius:20px;padding:28px 32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:flex-start;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;}
+.lp-sess:hover{transform:translateY(-2px);box-shadow:0 12px 32px -16px rgba(17,17,17,.14);border-color:var(--g-neutral-400);}
+.lp-sess-eyebrow{font-size:11.5px;color:var(--g-brand-primary);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;}
+.lp-sess-t{font-size:20px;font-weight:600;color:var(--t1);letter-spacing:-.3px;line-height:1.25;margin-bottom:8px;}
+.lp-sess-d{font-size:14px;color:var(--t3);line-height:1.55;margin-bottom:14px;}
+.lp-sess-takeaways{display:flex;flex-direction:column;gap:6px;}
+.lp-sess-takeaway{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;color:var(--t2);line-height:1.5;}
+.lp-sess-takeaway i{color:var(--g-brand-primary);font-size:11px;margin-top:5px;flex-shrink:0;}
+.lp-sess-meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;font-size:12.5px;color:var(--t3);text-align:right;}
+.lp-sess-meta-pill{background:var(--g-neutral-200);padding:4px 12px;border-radius:99px;font-weight:500;color:var(--t2);}
+
+/* PICK A PLAN */
+.lp-plans-wrap{padding:40px 24px 0;margin-bottom:80px;}
+.lp-plans-wrap > *{max-width:960px;margin-left:auto;margin-right:auto;}
+.lp-plans-h{font-size:28px;font-weight:700;letter-spacing:-.4px;color:var(--t1);text-align:center;margin-bottom:24px;}
+.lp-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:960px;margin:0 auto;}
+.lp-plan-card{background:#fff;border:1px solid var(--bd);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;}
+.lp-plan-cover{height:110px;background:linear-gradient(180deg,#c5d3f8 0%,#dde6fb 100%);flex-shrink:0;}
+.lp-plan-body{padding:16px;display:flex;flex-direction:column;gap:0;flex:1;}
+.lp-plan-name{font-size:15px;font-weight:700;color:var(--t1);margin-bottom:8px;}
+.lp-plan-price-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.lp-plan-price{font-size:22px;font-weight:700;color:var(--t1);letter-spacing:-.3px;}
+.lp-plan-price-orig{font-size:13px;color:var(--t4);text-decoration:line-through;margin-left:6px;}
+.lp-plan-badge-active{font-size:11.5px;font-weight:600;background:#dcfce7;color:#16a34a;padding:3px 10px;border-radius:99px;white-space:nowrap;}
+.lp-plan-taxes{font-size:12px;color:var(--t3);margin-top:3px;}
+.lp-plan-type{font-size:13px;color:var(--t3);margin-top:4px;}
+.lp-plan-billing{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--t2);border:1px solid var(--bd);border-radius:8px;padding:5px 10px;margin-top:14px;align-self:flex-start;}
+.lp-plan-billing i{color:var(--t4);font-size:12px;}
+.lp-plan-btn{margin-top:auto;padding-top:16px;}
+.lp-plan-btn .btn{width:100%;justify-content:center;height:44px;font-size:14px;}
+.btn-renew{background:#eef0ff;color:var(--g-brand-primary);border-color:transparent;}
+.btn-renew:hover{background:#dde0ff;}
+
+/* WHY THIS PRODUCT */
+.lp-why{background:var(--g-neutral-200);padding:72px 24px;}
+.lp-why-inner{max-width:960px;margin:0 auto;}
+.lp-section-eyebrow{display:inline-block;font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--g-brand-primary);margin-bottom:12px;}
+.lp-section-t{font-size:32px;font-weight:600;letter-spacing:-.5px;color:var(--t1);line-height:1.2;margin-bottom:14px;}
+.lp-section-d{font-size:15px;color:var(--t3);line-height:1.65;max-width:640px;}
+.lp-why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
+.lp-why-card{background:#fff;border:1px solid var(--bd);border-radius:18px;padding:26px;}
+.lp-why-ico{width:44px;height:44px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:16px;}
+.lp-why-ico.brand{background:var(--g-brand-100);color:var(--g-brand-primary);}
+.lp-why-ico.green{background:var(--g-success-100);color:var(--g-success-300);}
+.lp-why-ico.purple{background:#f3e8ff;color:#7c3aed;}
+.lp-why-t{font-size:15.5px;font-weight:600;color:var(--t1);letter-spacing:-.2px;margin-bottom:8px;}
+.lp-why-d{font-size:13.5px;color:var(--t3);line-height:1.6;}
+
+/* BENEFITS */
+.lp-benefits{background:#fff;padding:72px 24px;}
+.lp-benefits-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.lp-benefits-left{}
+.lp-benefits-subtext{font-size:15px;color:var(--t3);line-height:1.7;margin-top:20px;}
+.lp-benefits-right{display:flex;flex-direction:column;gap:0;margin-top:4px;}
+.lp-benefit-row{display:flex;align-items:flex-start;gap:14px;padding:18px 0;border-bottom:1px solid var(--bd);}
+.lp-benefit-row:first-child{padding-top:0;}
+.lp-benefit-row:last-child{border-bottom:none;}
+.lp-benefit-check{width:22px;height:22px;border-radius:50%;background:var(--g-brand-100);color:var(--g-brand-primary);display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px;}
+.lp-benefit-t{font-size:14.5px;font-weight:600;color:var(--t1);letter-spacing:-.1px;margin-bottom:4px;}
+.lp-benefit-d{font-size:13px;color:var(--t3);line-height:1.6;}
+
+.lp-benefits-img-placeholder{margin-top:32px;height:200px;border-radius:16px;background:linear-gradient(135deg,#2F31A4 0%,#5766F2 55%,#A4BAFD 100%);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55);font-size:32px;}
+
+/* ABOUT THE COACH */
+.lp-coach-wrap{background:#F7F9FA;padding:80px 24px;}
+.lp-coach-card{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 360px;gap:64px;align-items:center;}
+.lp-coach-left{display:flex;flex-direction:column;gap:20px;}
+.lp-coach-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g-brand-primary);}
+.lp-coach-name{font-size:38px;font-weight:700;color:#232228;letter-spacing:-.6px;line-height:1.05;}
+.lp-coach-title{font-size:14px;color:var(--g-neutral-600);font-weight:400;}
+.lp-coach-divider{width:36px;height:2px;background:var(--g-brand-primary);border-radius:2px;}
+.lp-coach-bio{font-size:15px;color:#393F41;line-height:1.75;}
+.lp-coach-email{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--g-brand-primary);font-weight:500;text-decoration:none;}
+.lp-coach-email:hover{text-decoration:underline;text-underline-offset:3px;}
+.lp-coach-photo-wrap{
+  aspect-ratio:3/4;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,#2F31A4 0%,#5766F2 55%,#A4BAFD 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+}
+.lp-coach-photo-icon{
+  width:68px;height:68px;border-radius:50%;
+  background:rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;color:rgba(255,255,255,.6);
+}
+.lp-coach-photo-lbl{font-size:12px;color:rgba(255,255,255,.4);font-weight:500;letter-spacing:.04em;}
+
+/* FAQs */
+.lp-faqs-wrap{background:var(--g-neutral-200);padding:64px 24px 72px;}
+.lp-faqs-inner{max-width:960px;margin:0 auto;width:100%;}
+.lp-faqs-h{font-size:20px;font-weight:600;letter-spacing:-.2px;color:var(--t1);margin-bottom:20px;}
+.lp-faq{display:flex;flex-direction:column;gap:10px;}
+.lp-faq-item{background:#fff;border:1px solid var(--bd);border-radius:14px;overflow:hidden;}
+.lp-faq-q{padding:20px 24px;font-size:15.5px;font-weight:500;color:var(--t1);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;user-select:none;}
+.lp-faq-q i{color:var(--t3);font-size:13px;transition:transform .2s;}
+.lp-faq-item.open .lp-faq-q i{transform:rotate(180deg);}
+.lp-faq-a{display:none;padding:0 24px 22px;font-size:14px;color:var(--t2);line-height:1.65;}
+.lp-faq-item.open .lp-faq-a{display:block;}
+
+/* CTA SECTION */
+.lp-cta-section{
+  position:relative;overflow:hidden;
+  min-height:440px;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  padding:80px 24px;
+}
+.lp-cta-gradient{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 120% at 85% 50%, #5766F2 0%, #2F31A4 40%, #1A1B4C 75%),
+    radial-gradient(ellipse 60% 100% at 15% 50%, #2F31A4 0%, #1A1B4C 60%);
+}
+.lp-cta-content{position:relative;z-index:1;max-width:680px;margin:0 auto;}
+.lp-cta-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:20px;}
+.lp-cta-heading{font-size:44px;font-weight:700;color:#fff;letter-spacing:-.8px;line-height:1.1;margin-bottom:16px;}
+.lp-cta-sub{font-size:16px;color:rgba(255,255,255,.7);line-height:1.65;margin-bottom:36px;}
+.lp-cta-actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
+.lp-cta-btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;color:var(--g-brand-500);
+  border:none;border-radius:99px;
+  padding:0 28px;height:50px;font-size:15px;font-weight:600;
+  font-family:inherit;cursor:pointer;transition:.14s;letter-spacing:-.1px;
+}
+.lp-cta-btn-primary:hover{background:var(--g-brand-secondary);color:#1a2800;}
+.lp-cta-btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:#fff;
+  border:1.5px solid rgba(255,255,255,.35);border-radius:99px;
+  padding:0 24px;height:50px;font-size:15px;font-weight:500;
+  font-family:inherit;cursor:pointer;transition:.14s;
+}
+.lp-cta-btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08);}
+@media(max-width:767px){
+  .lp-cta-heading{font-size:28px;}
+  .lp-cta-sub{font-size:14px;}
+}
+
+/* FOOTER */
+.lp-foot{background:var(--g-neutral-800);color:var(--g-neutral-500);padding:48px 48px 32px;font-size:13px;}
+.lp-foot-links{display:flex;gap:24px;flex-wrap:wrap;}
+.lp-foot-links a{color:var(--g-neutral-500);text-decoration:none;font-size:13.5px;}
+.lp-foot-links a:hover{color:#fff;}
+.lp-foot-copy{padding-top:20px;font-size:12.5px;text-align:center;}
+
+@media(max-width:767px){
+  .lp-nav{padding:14px 16px;}
+  .lp-hero{padding:12px 16px 24px;}
+  .lp-hero-inner{display:flex;flex-direction:column;gap:16px;}
+  .lp-hero-right{order:-1;}
+  .lp-cover{min-height:180px;max-height:220px;}
+  .lp-h1{font-size:22px;}
+  .lp-included-wrap{padding:40px 16px 0;margin-bottom:40px;}
+  .lp-sessions{gap:12px;}
+  .lp-sess{grid-template-columns:1fr;gap:14px;padding:18px 16px;}
+  .lp-sess-meta{display:none;}
+  .lp-sess-t{font-size:15px;}
+  .lp-coach-card{grid-template-columns:1fr;gap:32px;}
+  .lp-coach-right{order:-1;}
+  .lp-coach-name{font-size:26px;}
+  .lp-coach-photo-wrap{aspect-ratio:4/3;}
+  .lp-coach-stat:first-child{border-top:2px solid #C8A84B;}
+  .lp-why-grid{grid-template-columns:1fr;}
+  .lp-benefits-inner{grid-template-columns:1fr;gap:40px;}
+  .lp-plans{grid-template-columns:1fr;}
+  .lp-section-t{font-size:24px;}
+  .lp-faqs-wrap{padding:40px 16px 80px;}
+  .lp-foot{padding:32px 20px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- PREVIEW BAR -->
+<div class="lp-pbar">
+  <div class="lp-plbl">
+    <i class="fa-regular fa-eye"></i>
+    Preview
+    <span class="lp-url">graphy.com/coaching/pitch-review</span>
+  </div>
+  <div class="lp-pbar-center">Not saved in preview mode</div>
+  <button class="lp-close"><i class="fa-solid fa-xmark"></i> Exit Preview</button>
+</div>
+
+<!-- NAV -->
+<div class="lp-nav">
+  <div class="lp-nav-inner">
+    <div class="lp-logo">Rodha Academy</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="lp-hero">
+  <div class="lp-hero-inner">
+    <div class="lp-hero-left">
+      <div class="lp-breadcrumb">
+        <a href="#">Home</a>
+        <span style="color:var(--t4);">/</span>
+        <span>Coaching</span>
+      </div>
+      <div class="lp-h1">Get your pitch deck <em>investor-ready</em> in 3 sessions</div>
+      <div class="lp-h-desc">Detailed feedback, storytelling coaching, and Q&amp;A prep from an experienced angel investor. Used by 300+ founders raising seed to Series B. Each session builds on the last — we pressure-test your market sizing, sharpen your narrative, and run live mock Q&amp;A so you walk into every investor meeting fully prepared.</div>
+      <button class="btn" onclick="document.querySelector('.lp-plans-wrap').scrollIntoView({behavior:'smooth'})" style="width:100%;justify-content:center;height:48px;font-size:15px;margin-top:28px;">Pick a plan</button>
+    </div>
+    <div class="lp-hero-right">
+      <div class="lp-cover">
+        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=500&fit=crop" alt="Pitch Review">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY THIS PRODUCT -->
+<div class="lp-why">
+  <div class="lp-why-inner">
+    <div class="lp-section-eyebrow">Why this program</div>
+    <div class="lp-section-t">Built for founders who need investor-ready decks — fast</div>
+    <div class="lp-section-d">Most pitch feedback is shallow, generic, or too late. This program gives you focused, experienced, pressure-tested input at every stage of your deck — so you stop guessing and start closing.</div>
+    <div class="lp-why-grid">
+      <div class="lp-why-card">
+        <div class="lp-why-ico brand"><i class="fa-solid fa-crosshairs"></i></div>
+        <div class="lp-why-t">Specific, not generic</div>
+        <div class="lp-why-d">Every session targets the exact weaknesses in your deck — no cookie-cutter advice, just line-by-line notes that matter.</div>
+      </div>
+      <div class="lp-why-card">
+        <div class="lp-why-ico green"><i class="fa-solid fa-user-tie"></i></div>
+        <div class="lp-why-t">Angel investor perspective</div>
+        <div class="lp-why-d">Your coach has sat on both sides of the table — you get the real questions investors ask behind closed doors, before your pitch.</div>
+      </div>
+      <div class="lp-why-card">
+        <div class="lp-why-ico purple"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="lp-why-t">Progressive, not one-off</div>
+        <div class="lp-why-d">Each session builds on the last. By session 3, your deck is sharper, your delivery is tighter, and your market story holds up to scrutiny.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<div class="lp-benefits">
+  <div class="lp-benefits-inner">
+    <div class="lp-benefits-left">
+      <div class="lp-section-eyebrow">What you walk away with</div>
+      <div class="lp-section-t">Everything you need to walk into any investor meeting with confidence</div>
+      <div class="lp-benefits-subtext">Six focused outcomes — built into every coaching engagement so you leave each session with something real, not just notes.</div>
+      <div class="lp-benefits-img-placeholder">
+        <i class="fa-regular fa-image"></i>
+      </div>
+    </div>
+    <div class="lp-benefits-right">
+      <div class="lp-benefit-row">
+        <div class="lp-benefit-check"><i class="fa-solid fa-check"></i></div>
+        <div>
+          <div class="lp-benefit-t">A deck that survives the first 30 seconds</div>
+          <div class="lp-benefit-d">Hook, narrative flow, and visual hierarchy — fixed so investors stay engaged from slide 1.</div>
+        </div>
+      </div>
+      <div class="lp-benefit-row">
+        <div class="lp-benefit-check"><i class="fa-solid fa-check"></i></div>
+        <div>
+          <div class="lp-benefit-t">Bottom-up market sizing that holds up</div>
+          <div class="lp-benefit-d">Replace top-down TAM guesses with a model built from real accounts and attach-rate assumptions.</div>
+        </div>
+      </div>
+      <div class="lp-benefit-row">
+        <div class="lp-benefit-check"><i class="fa-solid fa-check"></i></div>
+        <div>
+          <div class="lp-benefit-t">Hardened Q&amp;A readiness</div>
+          <div class="lp-benefit-d">Three live mock rounds mean no question will catch you off guard on the actual call.</div>
+        </div>
+      </div>
+      <div class="lp-benefit-row">
+        <div class="lp-benefit-check"><i class="fa-solid fa-check"></i></div>
+        <div>
+          <div class="lp-benefit-t">Action items you can ship immediately</div>
+          <div class="lp-benefit-d">A prioritised fix list emailed within 24 hours after every session — no vague takeaways.</div>
+        </div>
+      </div>
+      <div class="lp-benefit-row">
+        <div class="lp-benefit-check"><i class="fa-solid fa-check"></i></div>
+        <div>
+          <div class="lp-benefit-t">Recording &amp; transcript of every session</div>
+          <div class="lp-benefit-d">Revisit every piece of feedback at your own pace — never lose a key insight.</div>
+        </div>
+      </div>
+      <div class="lp-benefit-row">
+        <div class="lp-benefit-check"><i class="fa-solid fa-check"></i></div>
+        <div>
+          <div class="lp-benefit-t">Flexible scheduling, no rushing</div>
+          <div class="lp-benefit-d">Book on your timeline. One week between sessions gives you time to implement before the next review.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INCLUDED IN COACHING -->
+<div class="lp-included-wrap">
+  <div class="lp-included-eyebrow">What you get</div>
+  <div class="lp-included-label">Included in every coaching session</div>
+  <div class="lp-sessions">
+
+    <div class="lp-sess">
+      <div>
+        <div class="lp-sess-eyebrow">Session 1</div>
+        <div class="lp-sess-t">Portfolio Walkthrough &amp; Initial Feedback</div>
+        <div class="lp-sess-d">Walk through the full deck top to bottom. We'll pressure-test the narrative arc, market sizing, and competitive positioning, then surface the top 3 things to fix before the next session.</div>
+        <div class="lp-sess-takeaways">
+          <div class="lp-sess-takeaway"><i class="fa-solid fa-circle"></i><span>End-to-end deck review with line-by-line notes</span></div>
+          <div class="lp-sess-takeaway"><i class="fa-solid fa-circle"></i><span>Story-arc gap analysis &amp; quick wins</span></div>
+          <div class="lp-sess-takeaway"><i class="fa-solid fa-circle"></i><span>Action items emailed within 24 hours</span></div>
+        </div>
+      </div>
+      <div class="lp-sess-meta">
+        <span class="lp-sess-meta-pill">30 min</span>
+        <span>Week 1</span>
+      </div>
+    </div>
+
+    <div class="lp-sess">
+      <div>
+        <div class="lp-sess-eyebrow">Session 2</div>
+        <div class="lp-sess-t">Market Sizing Deep-Dive &amp; Competitor Mapping</div>
+        <div class="lp-sess-d">Walk through the revised TAM/SAM/SOM model. We'll pressure-test bottom-up assumptions, refine your competitor matrix, and rebuild the slides investors stress over the most.</div>
+        <div class="lp-sess-takeaways">
+          <div class="lp-sess-takeaway"><i class="fa-solid fa-circle"></i><span>Bottom-up market model that holds up to scrutiny</span></div>
+          <div class="lp-sess-takeaway"><i class="fa-solid fa-circle"></i><span>Competitor matrix with go-to-market &amp; moat axes</span></div>
+          <div class="lp-sess-takeaway"><i class="fa-solid fa-circle"></i><span>Updated slides 4–7 reviewed live</span></div>
+        </div>
+      </div>
+      <div class="lp-sess-meta">
+        <span class="lp-sess-meta-pill">30 min</span>
+        <span>Week 2</span>
+      </div>
+    </div>
+
+    <div class="lp-sess">
+      <div>
+        <div class="lp-sess-eyebrow">Session 3</div>
+        <div class="lp-sess-t">Final Investor Run-Through (Mock Pitch)</div>
+        <div class="lp-sess-d">Live mock pitch end-to-end with hard investor questions. We'll time the delivery, polish transitions, finalise the ask slide, and run three rounds of Q&amp;A so nothing surprises you on the call.</div>
+        <div class="lp-sess-takeaways">
+          <div class="lp-sess-takeaway"><i class="fa-solid fa-circle"></i><span>Full timed pitch (under 9 minutes)</span></div>
+          <div class="lp-sess-takeaway"><i class="fa-solid fa-circle"></i><span>3 rounds of investor-style Q&amp;A drilling</span></div>
+          <div class="lp-sess-takeaway"><i class="fa-solid fa-circle"></i><span>Final ask slide locked in &amp; rehearsed</span></div>
+        </div>
+      </div>
+      <div class="lp-sess-meta">
+        <span class="lp-sess-meta-pill">30 min</span>
+        <span>Week 3</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PICK A PLAN -->
+<div class="lp-plans-wrap">
+  <div class="lp-plans-h">Pick a plan</div>
+  <div class="lp-plans">
+    <div class="lp-plan-card">
+      <div class="lp-plan-cover"></div>
+      <div class="lp-plan-body">
+        <div class="lp-plan-name">Plan name</div>
+        <div class="lp-plan-price-row">
+          <div><span class="lp-plan-price">&#8377;499</span><span class="lp-plan-price-orig">&#8377;999</span></div>
+          <span class="lp-plan-badge-active">Active</span>
+        </div>
+        <div class="lp-plan-taxes">+ taxes</div>
+        <div class="lp-plan-type">Subscription &bull; &#8377;33/month</div>
+        <div class="lp-plan-billing"><i class="fa-regular fa-calendar"></i> Billed every 3 months</div>
+        <div class="lp-plan-btn"><button class="btn btn-renew" style="opacity:.5;cursor:not-allowed;" disabled>Renew Now</button></div>
+      </div>
+    </div>
+    <div class="lp-plan-card">
+      <div class="lp-plan-cover"></div>
+      <div class="lp-plan-body">
+        <div class="lp-plan-name">Plan name</div>
+        <div class="lp-plan-price-row"><div><span class="lp-plan-price">&#8377;5,000</span></div></div>
+        <div class="lp-plan-taxes">+ taxes</div>
+        <div class="lp-plan-type">One time payment</div>
+        <div class="lp-plan-billing"><i class="fa-regular fa-calendar"></i> Valid for 12 months</div>
+        <div class="lp-plan-btn"><button class="btn">Buy Now</button></div>
+      </div>
+    </div>
+    <div class="lp-plan-card">
+      <div class="lp-plan-cover"></div>
+      <div class="lp-plan-body">
+        <div class="lp-plan-name">Plan name</div>
+        <div class="lp-plan-price-row"><div><span class="lp-plan-price">&#8377;100</span></div></div>
+        <div class="lp-plan-taxes">+ taxes</div>
+        <div class="lp-plan-type">Subscription &bull; &#8377;33/month</div>
+        <div class="lp-plan-billing"><i class="fa-regular fa-calendar"></i> Billed every month</div>
+        <div class="lp-plan-btn"><button class="btn">Buy Now</button></div>
+      </div>
+    </div>
+    <div class="lp-plan-card">
+      <div class="lp-plan-cover"></div>
+      <div class="lp-plan-body">
+        <div class="lp-plan-name">Plan name</div>
+        <div class="lp-plan-price-row"><div><span class="lp-plan-price">&#8377;5,000</span></div></div>
+        <div class="lp-plan-taxes">+ taxes</div>
+        <div class="lp-plan-type">One time payment</div>
+        <div class="lp-plan-billing"><i class="fa-regular fa-calendar"></i> Valid for 12 months</div>
+        <div class="lp-plan-btn"><button class="btn">Buy Now</button></div>
+      </div>
+    </div>
+    <div class="lp-plan-card">
+      <div class="lp-plan-cover"></div>
+      <div class="lp-plan-body">
+        <div class="lp-plan-name">Plan name</div>
+        <div class="lp-plan-price-row"><div><span class="lp-plan-price">&#8377;100</span></div></div>
+        <div class="lp-plan-taxes">+ taxes</div>
+        <div class="lp-plan-type">Subscription &bull; &#8377;33/month</div>
+        <div class="lp-plan-billing"><i class="fa-regular fa-calendar"></i> Billed every month</div>
+        <div class="lp-plan-btn"><button class="btn">Buy Now</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT THE COACH -->
+<div class="lp-coach-wrap">
+  <div class="lp-coach-card">
+
+    <!-- LEFT -->
+    <div class="lp-coach-left">
+      <div class="lp-coach-eyebrow">Meet your coach</div>
+      <div class="lp-coach-name">Roshnara Anwar</div>
+      <div class="lp-coach-title">Angel Investor &amp; Startup Advisor</div>
+      <div class="lp-coach-divider"></div>
+      <p class="lp-coach-bio">Roshnara has spent a decade on both sides of the pitch table — first as a VC partner evaluating hundreds of decks, then as a two-time founder who raised seed and Series A capital herself. She now coaches early-stage founders full-time, helping them sharpen their narrative, stress-test their market assumptions, and walk into investor meetings fully prepared. Her sessions are direct, structured, and built around your specific deck — not generic frameworks.</p>
+      <a href="mailto:roshnara@rodhaacademy.com" class="lp-coach-email">
+        <i class="fa-regular fa-envelope"></i> roshnara@rodhaacademy.com
+      </a>
+    </div>
+
+    <!-- RIGHT: gradient placeholder -->
+    <div class="lp-coach-right">
+      <div class="lp-coach-photo-wrap">
+        <div class="lp-coach-photo-icon"><i class="fa-regular fa-image"></i></div>
+        <div class="lp-coach-photo-lbl">Coach photo</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FAQs -->
+<div class="lp-faqs-wrap">
+  <div class="lp-faqs-inner">
+    <div class="lp-faqs-h">FAQs</div>
+    <div class="lp-faq">
+      <div class="lp-faq-item open" onclick="this.classList.toggle('open')">
+        <div class="lp-faq-q">What's included in this coaching?<i class="fa-solid fa-chevron-down"></i></div>
+        <div class="lp-faq-a">3 x 30-minute private sessions over Zoom — Portfolio Walkthrough, Market Sizing Deep-Dive, and a Final Mock Pitch. Includes recording, transcript, and personalised action items after every session.</div>
+      </div>
+      <div class="lp-faq-item" onclick="this.classList.toggle('open')">
+        <div class="lp-faq-q">What happens if I need to reschedule?<i class="fa-solid fa-chevron-down"></i></div>
+        <div class="lp-faq-a">You can reschedule any session up to 4 hours before the start time, up to 2 times per session. Use the link in your booking email or the reschedule button in your dashboard.</div>
+      </div>
+      <div class="lp-faq-item" onclick="this.classList.toggle('open')">
+        <div class="lp-faq-q">How long do I have access to the recordings?<i class="fa-solid fa-chevron-down"></i></div>
+        <div class="lp-faq-a">Recordings are available for 15 days after each session. A download link is also emailed to you immediately after the session ends so you can save a copy.</div>
+      </div>
+      <div class="lp-faq-item" onclick="this.classList.toggle('open')">
+        <div class="lp-faq-q">Do I need to have a deck ready before session 1?<i class="fa-solid fa-chevron-down"></i></div>
+        <div class="lp-faq-a">Yes — session 1 is a full walkthrough of your existing deck. Even a rough draft works. The goal is to surface what needs fixing before we start building improvements in sessions 2 and 3.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA SECTION -->
+<div class="lp-cta-section">
+  <div class="lp-cta-gradient"></div>
+  <div class="lp-cta-content">
+    <div class="lp-cta-eyebrow">Ready to close your round?</div>
+    <div class="lp-cta-heading">Get your pitch deck investor-ready in 3 sessions</div>
+    <div class="lp-cta-sub">Join 300+ founders who walked into investor meetings fully prepared. Pick a plan, book your first session, and start getting real feedback — not generic advice.</div>
+    <div class="lp-cta-actions">
+      <button class="lp-cta-btn-primary">Pick a plan <i class="fa-solid fa-arrow-right" style="font-size:12px;"></i></button>
+      <button class="lp-cta-btn-ghost">View sessions</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="lp-foot">
+  <div style="text-align:center;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.08);">
+    <button style="background:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;color:var(--g-neutral-800);cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
+      <span style="width:16px;height:16px;background:var(--g-brand-primary);border-radius:4px;display:inline-block;"></span>
+      Launch your Graphy
+    </button>
+    <div style="font-size:12px;color:var(--g-neutral-600);margin-top:8px;">100K+ creators trust Graphy to launch courses, live sessions and newsletters</div>
+  </div>
+  <div style="display:flex;justify-content:center;padding-top:20px;">
+    <div class="lp-foot-links">
+      <a href="#">Privacy policy</a>
+      <a href="#">Terms of use</a>
+      <a href="#">Return policy</a>
+    </div>
+  </div>
+  <div class="lp-foot-copy">Rodha Academy &copy; 2026</div>
+</div>
+
+</body>
+</html>

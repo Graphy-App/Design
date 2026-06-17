@@ -729,6 +729,7 @@ textarea.input{height:120px;padding:12px 14px;resize:vertical;}
 
 /* ============ COACH PROFILE CARD ============ */
 .coach-profile-card{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--bd);border-radius:var(--g-radius-lg);padding:18px 20px;margin-bottom:20px;}
+.coach-assign-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--bd);border-radius:10px;background:#fff;}
 .coach-profile-avatar{width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--g-brand-100);}
 .coach-profile-avatar img{width:100%;height:100%;object-fit:cover;}
 .coach-profile-info{flex:1;min-width:0;}
@@ -2226,7 +2227,7 @@ select.dd-enhanced{position:absolute!important;left:0;top:0;width:1px!important;
         <div onclick="toggleWizProfile()" style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none;">
           <div style="flex:1;min-width:0;">
             <div style="font-size:13px;font-weight:600;color:var(--t1);margin-bottom:8px;">Coach profile</div>
-            <div id="wiz-profile-preview" style="font-size:12px;color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">You can edit in settings later</div>
+            <div id="wiz-profile-preview" style="font-size:12px;color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">You can edit in settings</div>
           </div>
           <i id="wiz-profile-chev" class="fa-solid fa-chevron-down" style="font-size:12px;color:var(--t4);transition:transform .2s;flex-shrink:0;"></i>
         </div>
@@ -5440,6 +5441,12 @@ function renderPD(){
     </div>
   </div>
   <div class="scard acc collapsed">
+    <div class="scard-h" onclick="togglePDCard(this,event)"><div class="scard-h-l"><div class="scard-t">Coaches</div><div class="scard-d">Assign coaches who can deliver sessions in this program</div></div><i class="fa-solid fa-chevron-down scard-chev"></i></div>
+    <div class="scard-b">
+      <div id="coaches-list" style="display:flex;flex-direction:column;gap:16px;"></div>
+    </div>
+  </div>
+  <div class="scard acc collapsed">
     <div class="scard-h" onclick="togglePDCard(this,event)"><div class="scard-h-l"><div class="scard-t">Availability</div><div class="scard-d">Working hours when learners can book</div></div><span class="gcal-pill"><i class="fa-solid fa-circle"></i>Google Calendar synced</span><i class="fa-solid fa-chevron-down scard-chev"></i></div>
     <div class="scard-b" id="av-body">${renderAvail()}</div>
   </div>
@@ -5481,6 +5488,9 @@ function renderPD(){
     </div>
   </div>
 `;
+  _pdCoachEntries = [];
+  _pdEntrySeed = 0;
+  pdAddCoachEntry(ALL_COACHES[0].id);
 }
 
 function renderLPTab(){
@@ -5829,6 +5839,12 @@ function applyRoute(){
         const s = document.querySelector('.mt-card');
         if(s) confirmCancelSession(s.id);
       }, 50); break;
+    case 'coach-empty':
+      setTab('programs');
+      setTimeout(()=>{
+        if(typeof openDr==='function') openDr();
+        setTimeout(()=>showCoachEmpty(), 120);
+      }, 50); break;
     case 'programs-empty':
       showProgramsEmpty(); break;
     case 'calendar-empty':
@@ -5871,6 +5887,35 @@ function applyRoute(){
       setTab('programs');
   }
 }
+function showCoachEmpty(){
+  // expand the Coaches accordion
+  const scards = document.querySelectorAll('#dt-pd .scard.acc');
+  scards.forEach(card=>{
+    const title = card.querySelector('.scard-t');
+    if(title && title.textContent.trim()==='Coaches'){
+      card.classList.remove('collapsed');
+      const body = card.querySelector('.scard-b');
+      if(body) body.style.display='';
+    }
+  });
+  // replace coaches-list with empty state banner
+  const list = document.getElementById('coaches-list');
+  if(!list) return;
+  list.innerHTML = `
+    <div class="gcal-banner" style="margin-bottom:4px;">
+      <div class="gcal-banner-l">
+        <div class="gcal-banner-icon"><i class="fa-regular fa-user"></i></div>
+        <div>
+          <div class="gcal-banner-title">No coaches assigned yet</div>
+          <div class="gcal-banner-sub">Assign coaches who can deliver sessions in this program. Each coach needs a connected calendar to accept bookings.</div>
+        </div>
+      </div>
+      <button class="btn btn-w btn-sm" onclick="pdAddCoachEntry(ALL_COACHES[0].id)" style="white-space:nowrap;flex-shrink:0;">
+        <i class="fa-solid fa-plus"></i> Add Coach
+      </button>
+    </div>`;
+}
+
 window.addEventListener('DOMContentLoaded', applyRoute);
 window.addEventListener('hashchange', applyRoute);
 
@@ -6023,6 +6068,136 @@ window.addEventListener('hashchange', applyRoute);
     boot();
   }
 })();
+</script>
+
+
+<script>
+const ALL_COACHES = [
+  { id:1, name:'Roshnara Anwar',  email:'chaudhuri.rupsha@graphy.com', avatar:'https://i.pravatar.cc/76?img=47', about:'' },
+  { id:2, name:'Alex Rivera',     email:'alex@example.com',            avatar:'https://i.pravatar.cc/76?img=33', about:'' },
+  { id:3, name:'Priya Sharma',    email:'priya@example.com',           avatar:'https://i.pravatar.cc/76?img=12', about:'' },
+  { id:4, name:'Marcus Lee',      email:'marcus@example.com',          avatar:'https://i.pravatar.cc/76?img=15', about:'' },
+  { id:5, name:'Emma Wilson',     email:'emma@example.com',            avatar:'https://i.pravatar.cc/76?img=9',  about:'' },
+];
+
+let _pdCoachEntries = []; // [{entryId, coachId}]
+let _pdEntrySeed = 0;
+
+function pdSelectedCoachIds(){
+  return new Set(_pdCoachEntries.map(e=>e.coachId).filter(Boolean));
+}
+
+function pdAddCoachEntry(defaultCoachId){
+  const entryId = ++_pdEntrySeed;
+  const coachId = defaultCoachId || null;
+  _pdCoachEntries.push({ entryId, coachId });
+  pdRenderCoachEntry(entryId, coachId);
+}
+
+function pdRenderCoachEntry(entryId, coachId){
+  const list = document.getElementById('coaches-list');
+  let entry = list.querySelector(`[data-entry-id="${entryId}"]`);
+  if(!entry){
+    entry = document.createElement('div');
+    entry.dataset.entryId = entryId;
+    entry.style.cssText = 'overflow:visible;';
+    list.appendChild(entry);
+  }
+  const coach = ALL_COACHES.find(c=>c.id===coachId) || null;
+  const avSrc = coach ? coach.avatar : '';
+  const aboutHtml = coach
+    ? (coach.about ? coach.about.replace(/</g,'&lt;') : '<span style="color:var(--t4);font-style:italic;">No description added.</span>')
+    : '<span style="color:var(--t4);font-style:italic;">No description added.</span>';
+
+  const dropdownId = `pd-coach-dd-${entryId}`;
+  const aboutId    = `pd-coach-about-${entryId}`;
+
+  const availableForEntry = ALL_COACHES.filter(c => {
+    if(c.id === coachId) return true;
+    return !pdSelectedCoachIds().has(c.id);
+  });
+
+  entry.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div>
+        <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">Select profile</div>
+        <div style="position:relative;">
+          <div class="input" onclick="pdToggleDropdown(event,'${dropdownId}')"
+            style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:8px 12px;">
+            ${coach ? `<div style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--g-brand-100);"><img src="${avSrc}" alt="" style="width:100%;height:100%;object-fit:cover;"></div>` : `<div style="width:28px;height:28px;border-radius:50%;background:var(--g-neutral-200);flex-shrink:0;"></div>`}
+            <div style="flex:1;min-width:0;text-align:left;">
+              ${coach
+                ? `<div style="font-size:13px;font-weight:600;color:var(--t1);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${coach.name}</div>
+                   <div style="font-size:12px;color:var(--t3);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${coach.email}</div>`
+                : `<div style="font-size:13px;color:var(--t4);">Select a coach…</div>`
+              }
+            </div>
+            <i class="fa-solid fa-chevron-down" style="font-size:11px;color:var(--t4);flex-shrink:0;"></i>
+          </div>
+          <div id="${dropdownId}" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid var(--bd);border-radius:var(--g-radius-md);box-shadow:var(--g-shadow-pop);z-index:200;overflow:hidden;">
+            ${availableForEntry.map(c=>`
+              <div onclick="pdSelectCoach(${entryId},${c.id})"
+                style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;${c.id===coachId?'background:var(--g-neutral-200);':''}"
+                onmouseover="this.style.background='var(--g-neutral-100)'"
+                onmouseout="this.style.background='${c.id===coachId?'var(--g-neutral-200)':'transparent'}'">
+                <div style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--g-brand-100);"><img src="${c.avatar}" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:13px;font-weight:600;color:var(--t1);line-height:1.2;">${c.name}</div>
+                  <div style="font-size:12px;color:var(--t3);line-height:1.3;">${c.email}</div>
+                </div>
+                ${c.id===coachId?'<i class="fa-solid fa-check" style="font-size:12px;color:var(--g-brand-primary);"></i>':''}
+              </div>`).join('')}
+            <div onclick="document.querySelectorAll('[id^=\\'pd-coach-dd-\\']').forEach(el=>el.style.display='none');openCoachingSettings('gcal')"
+              style="display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;border-top:1px solid var(--bd);color:var(--g-brand-primary);font-size:13px;font-weight:500;"
+              onmouseover="this.style.background='var(--g-neutral-100)'"
+              onmouseout="this.style.background='transparent'">
+              <i class="fa-solid fa-plus" style="font-size:11px;"></i> Add new calendar
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:500;color:var(--t3);margin-bottom:5px;">About the coach</div>
+        <p id="${aboutId}" style="margin:0;font-size:13px;color:var(--t2);line-height:1.6;">${aboutHtml}</p>
+      </div>
+    </div>`;
+}
+
+function pdToggleDropdown(e, ddId){
+  e.stopPropagation();
+  const dd = document.getElementById(ddId);
+  if(!dd) return;
+  const open = dd.style.display === 'block';
+  document.querySelectorAll('[id^="pd-coach-dd-"]').forEach(el=>el.style.display='none');
+  if(!open){
+    // position fixed relative to trigger so it escapes overflow:hidden on .scard
+    const trigger = dd.previousElementSibling;
+    const rect = trigger.getBoundingClientRect();
+    dd.style.position = 'fixed';
+    dd.style.top  = (rect.bottom + 4) + 'px';
+    dd.style.left = rect.left + 'px';
+    dd.style.width = rect.width + 'px';
+    dd.style.right = 'auto';
+    dd.style.display = 'block';
+    const close = ()=>{ dd.style.display='none'; document.removeEventListener('click',close); };
+    setTimeout(()=>document.addEventListener('click',close), 0);
+  }
+}
+
+function pdSelectCoach(entryId, coachId){
+  const entry = _pdCoachEntries.find(e=>e.entryId===entryId);
+  if(!entry) return;
+  entry.coachId = coachId;
+  document.querySelectorAll('[id^="pd-coach-dd-"]').forEach(el=>el.style.display='none');
+  pdRenderCoachEntry(entryId, coachId);
+}
+
+function pdRemoveCoachEntry(entryId){
+  _pdCoachEntries = _pdCoachEntries.filter(e=>e.entryId!==entryId);
+  const el = document.querySelector(`[data-entry-id="${entryId}"]`);
+  if(el) el.remove();
+}
+
 </script>
 </body>
 </html>
